@@ -1,0 +1,1080 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>NEON STOP · Restaurant</title>
+  <!-- Fonts & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,500;14..32,700;14..32,800;14..32,900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', monospace;
+      background: radial-gradient(circle at 20% 30%, #0b0b1a, #03030c);
+      color: #eef5ff;
+      scroll-behavior: smooth;
+    }
+
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #111122;
+      border-radius: 10px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #ff6a2e;
+      border-radius: 10px;
+      box-shadow: 0 0 6px #ff6a2e;
+    }
+
+    .app-container {
+      max-width: 1500px;
+      margin: 0 auto;
+      padding: 24px 20px;
+    }
+
+    /* ---------- NAVBAR ---------- */
+    .navbar {
+      background: rgba(10, 10, 25, 0.75);
+      backdrop-filter: blur(14px);
+      border-radius: 0 0 32px 32px;
+      padding: 0.8rem 2rem;
+      margin-bottom: 2rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(255, 100, 50, 0.4);
+      box-shadow: 0 0 15px rgba(255, 70, 30, 0.2);
+    }
+    .logo {
+      font-size: 2rem;
+      font-weight: 900;
+      background: linear-gradient(135deg, #ff884d, #ff3030);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 0 4px #ff5e2e30;
+      letter-spacing: -0.5px;
+    }
+    .nav-links {
+      display: flex;
+      gap: 30px;
+      flex-wrap: wrap;
+    }
+    .nav-links a {
+      color: #ffd6b0;
+      text-decoration: none;
+      font-weight: 600;
+      transition: 0.2s;
+      font-size: 1rem;
+    }
+    .nav-links a:hover {
+      color: #ff6a2e;
+      text-shadow: 0 0 8px #ff6a2e;
+    }
+
+    /* ---------- TABLE INFO ---------- */
+    .table-bar {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+    }
+    .table-badge {
+      background: linear-gradient(145deg, #ff4010, #b52b00);
+      color: #fff;
+      padding: 8px 22px;
+      border-radius: 60px;
+      font-weight: 800;
+      font-size: 0.9rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 0 10px #ff5a2e;
+    }
+    
+    .table-number-input {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(12, 12, 24, 0.85);
+      backdrop-filter: blur(12px);
+      border: 1px solid #ff6a2e;
+      border-radius: 60px;
+      padding: 6px 16px;
+      box-shadow: 0 0 15px rgba(255, 100, 50, 0.15);
+    }
+    .table-number-input label {
+      font-weight: 700;
+      color: #ffa06e;
+      font-size: 0.85rem;
+      white-space: nowrap;
+    }
+    .table-number-input input {
+      background: transparent;
+      border: none;
+      color: #ffe6d0;
+      font-weight: 700;
+      font-size: 1rem;
+      padding: 6px 8px;
+      width: 80px;
+      outline: none;
+    }
+    .table-number-input input:focus {
+      border-bottom: 2px solid #ff6a2e;
+    }
+    .table-number-input input::placeholder {
+      color: #665544;
+      font-weight: 400;
+      font-size: 0.8rem;
+    }
+    .table-number-input .table-error {
+      color: #ff4444;
+      font-size: 0.7rem;
+      font-weight: 600;
+      display: none;
+    }
+    .table-number-input .table-error.show {
+      display: inline;
+    }
+
+    .action-buttons {
+      display: flex;
+      gap: 14px;
+      margin-left: auto;
+    }
+    .btn-glass {
+      background: rgba(30, 25, 45, 0.8);
+      border: 1px solid #ff7640;
+      padding: 8px 22px;
+      border-radius: 40px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: #ffd6b0;
+      backdrop-filter: blur(4px);
+    }
+    .btn-glass:hover {
+      background: #ff6a2e;
+      color: #0a0a1a;
+      border-color: #ffb57c;
+      box-shadow: 0 0 12px #ff6a2e;
+      transform: translateY(-2px);
+    }
+    .btn-primary {
+      background: #ff6a2e;
+      border: none;
+      color: #0e0e1c;
+    }
+    .btn-primary:hover {
+      background: #ff884d;
+      box-shadow: 0 0 15px #ff6a2e;
+    }
+    .btn-glass:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none !important;
+    }
+
+    .dashboard {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 28px;
+    }
+    .menu-section {
+      flex: 2.4;
+      min-width: 280px;
+    }
+    .order-section {
+      flex: 1.2;
+      min-width: 320px;
+      align-self: start;
+      position: sticky;
+      top: 20px;
+    }
+
+    /* FILTER CARD */
+    .filter-card {
+      background: rgba(12, 12, 24, 0.85);
+      backdrop-filter: blur(12px);
+      border-radius: 36px;
+      padding: 18px 24px;
+      margin-bottom: 32px;
+      border: 1px solid #ff6020;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,100,50,0.2);
+    }
+    .filter-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      align-items: center;
+      margin-bottom: 18px;
+      border-bottom: 1px dashed #ff6a2e40;
+      padding-bottom: 12px;
+    }
+    .filter-row:last-child {
+      border-bottom: none;
+    }
+    .filter-label {
+      font-weight: 800;
+      font-size: 0.8rem;
+      letter-spacing: 0.5px;
+      color: #ffa06e;
+      text-transform: uppercase;
+    }
+    .pref-select, .search-input {
+      background: #17132a;
+      border: 1px solid #ff6a2e;
+      border-radius: 60px;
+      padding: 8px 20px;
+      color: #ffe6d0;
+      font-weight: 500;
+    }
+    .search-input {
+      min-width: 200px;
+      flex: 1;
+    }
+    .pill-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .pill {
+      background: #1f1b32;
+      border: 1px solid #ff6a2e60;
+      padding: 6px 20px;
+      border-radius: 60px;
+      font-weight: 700;
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      color: #ffcfaf;
+    }
+    .pill.active {
+      background: #ff6a2e;
+      color: #090a1a;
+      border-color: #ffb37c;
+      box-shadow: 0 0 8px #ff9f5e;
+    }
+    .allergy-group {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      font-size: 0.8rem;
+    }
+    .camera-scan-btn {
+      background: linear-gradient(95deg, #2a1f3a, #1a1230);
+      border: 1px solid #ff9940;
+      color: #ffbb8a;
+      padding: 8px 22px;
+      border-radius: 60px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    /* MENU SECTIONS */
+    .menu-category {
+      margin-bottom: 56px;
+    }
+    .section-title {
+      font-size: 2rem;
+      font-weight: 800;
+      margin-bottom: 24px;
+      letter-spacing: -0.3px;
+      text-transform: uppercase;
+      background: linear-gradient(145deg, #ffb47b, #ff6333);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 0 6px #ff6a2e40;
+      border-left: 4px solid #ff6a2e;
+      padding-left: 18px;
+    }
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+      gap: 28px;
+    }
+    .dish-card {
+      background: rgba(8, 8, 20, 0.9);
+      border-radius: 32px;
+      overflow: hidden;
+      transition: all 0.25s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+      border: 1px solid #ff6a2e60;
+      backdrop-filter: blur(4px);
+    }
+    .dish-card:hover {
+      transform: translateY(-8px);
+      border-color: #ff944e;
+      box-shadow: 0 0 20px rgba(255, 100, 50, 0.5);
+    }
+    .card-img {
+      height: 180px;
+      background-size: cover;
+      background-position: center;
+      position: relative;
+    }
+    .unavailable-overlay {
+      background: rgba(0,0,0,0.7);
+      backdrop-filter: blur(5px);
+      position: absolute;
+      top:0; left:0; right:0; bottom:0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      color: #ff9f6e;
+    }
+    .card-content {
+      padding: 18px 16px 20px;
+    }
+    .dish-title {
+      font-weight: 800;
+      font-size: 1.2rem;
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+    .price {
+      color: #ff9b5c;
+      font-weight: 800;
+      text-shadow: 0 0 4px #ff6a2e;
+    }
+    .meta-badges {
+      display: flex;
+      gap: 8px;
+      margin: 12px 0;
+      flex-wrap: wrap;
+    }
+    .badge {
+      font-size: 0.7rem;
+      padding: 4px 12px;
+      border-radius: 40px;
+      background: #1e1a32;
+      color: #ffc9a5;
+      border: 1px solid #ff6a2e;
+    }
+    .desc {
+      font-size: 0.75rem;
+      color: #bbaa99;
+      line-height: 1.4;
+      margin: 8px 0 14px;
+    }
+    .order-btn {
+      background: linear-gradient(95deg, #ff6a2e, #b5410c);
+      width: 100%;
+      border: none;
+      padding: 10px;
+      border-radius: 60px;
+      font-weight: 800;
+      color: #0f0f1a;
+      cursor: pointer;
+      transition: 0.2s;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .order-btn.disabled {
+      background: #2a241f;
+      color: #8a7a6a;
+      cursor: not-allowed;
+    }
+
+    /* RIGHT PANEL */
+    .order-panel {
+      background: rgba(10, 8, 18, 0.9);
+      backdrop-filter: blur(16px);
+      border-radius: 38px;
+      padding: 24px;
+      border: 1px solid #ff6a2e;
+      box-shadow: 0 0 20px rgba(255, 100, 50, 0.2);
+    }
+    .diner-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .diner-pill {
+      background: #1f1b32;
+      border: 1px solid #ff6a2e80;
+      padding: 8px 18px;
+      border-radius: 60px;
+      font-weight: 700;
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: all 0.1s;
+    }
+    .diner-pill.active {
+      background: #ff6a2e;
+      color: #000;
+      border-color: #ffaa70;
+      box-shadow: 0 0 10px #ff6a2e;
+    }
+    .items-list {
+      background: #0b091ac0;
+      border-radius: 28px;
+      padding: 14px;
+      margin: 16px 0;
+      border: 1px solid #ff6a2e40;
+    }
+    .order-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid #ff6a2e30;
+      font-size: 0.85rem;
+    }
+    .bill-breakdown {
+      background: #0a0718;
+      border-radius: 28px;
+      padding: 16px;
+      margin-top: 20px;
+      border: 1px solid #ff862e;
+    }
+    .refill-group {
+      display: flex;
+      gap: 12px;
+      margin-top: 24px;
+    }
+    .toast {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #1a162f;
+      backdrop-filter: blur(12px);
+      border: 1px solid #ff7e3a;
+      color: #ffcfaa;
+      padding: 12px 28px;
+      border-radius: 60px;
+      font-weight: 600;
+      z-index: 2000;
+      box-shadow: 0 0 20px #ff6a2e;
+    }
+    .modal {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.85);
+      backdrop-filter: blur(12px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 3000;
+    }
+    .modal-content {
+      background: #121028;
+      border-radius: 48px;
+      max-width: 400px;
+      width: 90%;
+      padding: 28px;
+      text-align: center;
+      border: 1px solid #ff7e3a;
+    }
+    @media (max-width: 800px) {
+      .order-section { position: static; margin-top: 20px; }
+      .navbar { flex-direction: column; gap: 15px; }
+      .table-bar { justify-content: center; margin-top: 10px; }
+      .table-number-input { width: 100%; justify-content: center; }
+      .action-buttons { margin-left: 0; width: 100%; justify-content: center; }
+    }
+
+    /* Music control button */
+    .music-control {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 1100;
+      background: rgba(10, 8, 18, 0.9);
+      backdrop-filter: blur(12px);
+      padding: 12px 18px;
+      border-radius: 60px;
+      border: 1px solid #ff6a2e;
+      box-shadow: 0 0 15px rgba(255, 100, 50, 0.3);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: 0.2s;
+      color: #ffd6b0;
+    }
+    .music-control i {
+      font-size: 1.4rem;
+      color: #ff6a2e;
+    }
+    .music-control span {
+      letter-spacing: 1px;
+      font-weight: 600;
+    }
+    .music-control:hover {
+      border-color: #ff884d;
+      box-shadow: 0 0 25px rgba(255, 100, 50, 0.5);
+      transform: scale(1.02);
+    }
+  </style>
+</head>
+<body>
+<div class="app-container">
+  <!-- NAVBAR -->
+  <div class="navbar">
+    <div class="logo"><i class="fas fa-utensils"></i> NEON STOP</div>
+    <div class="nav-links">
+      <a href="Home.html">Home</a>
+      <a href="Restaurant.html">Restaurant</a>
+      <a href="Bar.html">Bar</a>
+      <a href="Games.html">Games</a>
+    </div>
+  </div>
+
+  <!-- TABLE INFO & ACTION BUTTONS -->
+  <div class="table-bar">
+    <div class="table-badge">
+      <i class="fas fa-qrcode"></i> SCAN TO ORDER
+    </div>
+    
+    <div class="table-number-input">
+      <label for="tableNumberInput"><i class="fas fa-hashtag"></i> TABLE</label>
+      <input type="number" id="tableNumberInput" placeholder="Enter table #" min="1" step="1">
+      <span class="table-error" id="tableError">⚠️ Please enter table number</span>
+    </div>
+    
+    <div class="action-buttons">
+      <button class="btn-glass" id="callWaiterBtn"><i class="fas fa-bell"></i> CALL WAITER</button>
+      <button class="btn-glass btn-primary" id="sendToKitchenBtn"><i class="fas fa-utensils"></i> SEND ORDER</button>
+    </div>
+  </div>
+
+  <div class="dashboard">
+    <!-- LEFT MENU -->
+    <div class="menu-section">
+      <div class="filter-card">
+        <div class="filter-row">
+          <span class="filter-label"><i class="fas fa-dragon"></i> MEAT PREF</span>
+          <select id="meatPreference" class="pref-select">
+            <option value="all">ALL (VEG + NON-VEG)</option>
+            <option value="veg">🌱 VEG ONLY</option>
+            <option value="nonveg">🍗 NON-VEG ONLY</option>
+          </select>
+          <input type="text" id="searchDish" class="search-input" placeholder="🔍 SEARCH DISH... (e.g. biryani, pasta)">
+        </div>
+        <!-- CUISINE row -->
+        <div class="filter-row">
+          <span class="filter-label"><i class="fas fa-globe"></i> CUISINE</span>
+          <div class="pill-group">
+            <button data-cuisine="all" class="pill active">ALL</button>
+            <button data-cuisine="indian" class="pill">🇮🇳 INDIAN</button>
+            <button data-cuisine="italian" class="pill">🇮🇹 ITALIAN</button>
+            <button data-cuisine="chinese" class="pill">🥢 CHINESE</button>
+          </div>
+        </div>
+        <!-- TYPE row – now on its own line -->
+        <div class="filter-row">
+          <span class="filter-label"><i class="fas fa-tag"></i> TYPE</span>
+          <div class="pill-group">
+            <button data-type="all" class="pill active">ALL</button>
+            <button data-type="sizzler" class="pill">🔥 SIZZLERS</button>
+            <button data-type="burger" class="pill">🍔 BURGERS</button>
+          </div>
+        </div>
+        <div class="filter-row">
+          <span class="filter-label"><i class="fas fa-leaf"></i> DIET</span>
+          <div class="pill-group">
+            <button data-diet="all" class="pill active">ALL DIETS</button>
+            <button data-diet="veg" class="pill">🥬 VEG</button>
+            <button data-diet="vegan" class="pill">🌱 VEGAN</button>
+            <button data-diet="jain" class="pill">🕉️ JAIN</button>
+          </div>
+        </div>
+        <div class="filter-row">
+          <span class="filter-label"><i class="fas fa-allergies"></i> ALLERGENS</span>
+          <div class="allergy-group">
+            <label><input type="checkbox" value="gluten"> 🚫 GLUTEN</label>
+            <label><input type="checkbox" value="nuts"> 🥜 NUTS</label>
+            <label><input type="checkbox" value="dairy"> 🥛 DAIRY</label>
+          </div>
+          <button class="camera-scan-btn" id="scanDishBtn"><i class="fas fa-camera-retro"></i> SCAN DISH</button>
+        </div>
+      </div>
+
+      <!-- STARTERS -->
+      <div class="menu-category">
+        <div class="section-title">🔥 STARTERS & APPETIZERS</div>
+        <div id="starterGrid" class="menu-grid"></div>
+      </div>
+      <!-- MAIN COURSE -->
+      <div class="menu-category">
+        <div class="section-title">⚔️ MAIN COURSE</div>
+        <div id="mainGrid" class="menu-grid"></div>
+      </div>
+      <!-- DESSERTS -->
+      <div class="menu-category">
+        <div class="section-title">🍰 DESSERTS</div>
+        <div id="dessertGrid" class="menu-grid"></div>
+      </div>
+
+      <div class="refill-group">
+        <button class="btn-glass" id="waterRefillBtn"><i class="fas fa-tint"></i> WATER</button>
+        <button class="btn-glass" id="napkinsBtn"><i class="fas fa-paper-plane"></i> NAPKINS</button>
+        <button class="btn-glass" id="saucesBtn"><i class="fas fa-pepper-hot"></i> SAUCES</button>
+      </div>
+    </div>
+
+    <!-- RIGHT ORDER PANEL -->
+    <div class="order-section">
+      <div class="order-panel">
+        <h3 style="font-weight:800; margin-bottom: 14px;"><i class="fas fa-users"></i> PARTY SPLIT · AUTO BILL</h3>
+        <div id="dinerTabs" class="diner-tabs"></div>
+        <button class="btn-glass" id="addDinerBtn" style="font-size:0.7rem; padding:6px 16px;"><i class="fas fa-user-plus"></i> ADD PERSON</button>
+        <div style="margin-top: 12px;">
+          <strong id="activeDinerName" style="font-size:1.1rem;">Person 1</strong>'s order
+          <div id="dinerItemsList" class="items-list"></div>
+        </div>
+        <div class="bill-breakdown">
+          <strong><i class="fas fa-coins"></i> AUTO-SPLIT (pay what you ate)</strong>
+          <div id="splitDetails" style="margin-top: 12px;"></div>
+          <div id="totalGroupBill" style="font-weight:800; margin: 12px 0;"></div>
+          <div style="display: flex; align-items: center; gap: 12px; flex-wrap:wrap;">
+            <span>⚡ EQUAL SPLIT</span>
+            <input type="number" id="equalSplitPeople" placeholder="# people" style="width:80px; border-radius:60px; padding:6px 12px; background:#1a112a; border:1px solid #ff7e3a; color:#ffcfaa;">
+            <span id="equalSplitAmount" style="font-weight:600;"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MUSIC CONTROL (autoplay with levels.mp3) -->
+<audio id="bgMusic" loop preload="auto">
+  <source src="levels.mp3" type="audio/mpeg">
+</audio>
+
+<div class="music-control" id="musicToggleBtn">
+  <i class="fas fa-music" id="musicIcon"></i>
+  <span>🎵 LEVELS · AVICII</span>
+</div>
+
+<script>
+  // ============================================================
+  // MUSIC AUTOPLAY + TOGGLE (levels.mp3)
+  // ============================================================
+  const audio = document.getElementById('bgMusic');
+  const musicIcon = document.getElementById('musicIcon');
+  const toggleBtn = document.getElementById('musicToggleBtn');
+  let musicStarted = false;
+
+  // Attempt to autoplay on page load (will work if browser allows)
+  function tryAutoplay() {
+    audio.volume = 0.35;
+    audio.play().then(() => {
+      musicStarted = true;
+      musicIcon.className = "fas fa-music";
+      console.log("Music started: levels.mp3");
+    }).catch(err => {
+      console.log("Autoplay blocked — waiting for user interaction");
+      // We'll still show the control, user can click to start
+    });
+  }
+
+  // Click on music toggle: start/pause
+  toggleBtn.addEventListener('click', function(e) {
+    e.stopPropagation();
+    if (!musicStarted) {
+      audio.play().then(() => {
+        musicStarted = true;
+        musicIcon.className = "fas fa-music";
+      }).catch(err => {
+        console.log("Playback failed:", err);
+      });
+    } else {
+      if (audio.paused) {
+        audio.play();
+        musicIcon.className = "fas fa-music";
+      } else {
+        audio.pause();
+        musicIcon.className = "fas fa-pause-circle";
+      }
+    }
+  });
+
+  // Update icon when audio state changes
+  audio.addEventListener('play', () => { musicIcon.className = "fas fa-music"; });
+  audio.addEventListener('pause', () => { musicIcon.className = "fas fa-pause-circle"; });
+  audio.addEventListener('ended', () => {
+    audio.currentTime = 0;
+    audio.play().catch(e => console.log("loop replay"));
+  });
+
+  // Try autoplay after a short delay (page load)
+  setTimeout(tryAutoplay, 300);
+
+  // Also try on any user click (to overcome autoplay restrictions)
+  document.addEventListener('click', function() {
+    if (!musicStarted) {
+      audio.play().then(() => {
+        musicStarted = true;
+        musicIcon.className = "fas fa-music";
+      }).catch(() => {});
+    }
+  }, { once: false });
+
+  // ========== RESTAURANT LOGIC (unchanged) ==========
+  const menuData = [
+    // STARTERS
+    { id: 101, name: "Chicken Tikka (Lahori)", price: 9.9, diet: "nonveg", allergens: ["dairy"], inStock: true, cuisine: "indian", course: "starter", description: "Charcoal-grilled, spiced yoghurt chicken — electrifying flavor.", img: "https://www.eitanbernath.com/wp-content/uploads/2020/10/Chicken-Tikka-LOW-RES-1.jpg" },
+    { id: 102, name: "Veg Spring Rolls", price: 6.5, diet: "veg", allergens: ["gluten"], inStock: true, cuisine: "chinese", course: "starter", description: "Crispy rolls, sweet chili dip, crunchy veggies.", img: "https://i0.wp.com/s.lightorangebean.com/media/20240914144947/Thai-Veggie-Spring-Rolls_done.png?resize=480%2C270&quality=80&ssl=1" },
+    { id: 104, name: "Arancini (Saffron Balls)", price: 8.2, diet: "veg", allergens: ["dairy","gluten"], inStock: true, cuisine: "italian", course: "starter", description: "Crispy risotto, mozzarella core, marinara.", img: "https://www.homemadeitaliancooking.com/wp-content/uploads/2015/12/Lbster-Arancini-with-Saffron-Aioli-2.jpg" },
+    { id: 105, name: "Jain Crispy Lotus Stem", price: 7.4, diet: "jain", allergens: [], inStock: true, cuisine: "indian", course: "starter", description: "Thin lotus chips, Jain spices — crunchy AF.", img: "https://images.squarespace-cdn.com/content/5991274d197aea88ba19f055/1736171745094-GC7UW4ROH36QJIDU4G7V/Lotus+Stem+Chaat+1resized.jpg?format=1500w&content-type=image%2Fjpeg" },
+    { id: 106, name: "Chilli Paneer (Indo-Chinese)", price: 8.5, diet: "veg", allergens: ["dairy"], inStock: true, cuisine: "chinese", course: "starter", description: "Spicy paneer cubes, bell peppers, umami sauce.", img: "https://instamart-media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,h_960,w_960//InstamartAssets/chilli_paneer.webp?updatedAt=1727161410434" },
+    { id: 107, name: "Lamb Seekh Kebab", price: 10.9, diet: "nonveg", allergens: [], inStock: true, cuisine: "indian", course: "starter", description: "Minced lamb, herbs, charcoal grilled.", img: "https://www.carolinescooking.com/wp-content/uploads/2021/04/lamb-shish-kebab-featured-pic-sq-2.jpg" },
+    { id: 108, name: "Calamari Fritti", price: 9.5, diet: "nonveg", allergens: ["gluten"], inStock: true, cuisine: "italian", course: "starter", description: "Fried squid rings, lemon aioli.", img: "https://bottarga.com.mt/wp-content/uploads/2025/01/Calamari-Fritti.jpg" },
+    { id: 109, name: "Fish Fingers", price: 8.9, diet: "nonveg", allergens: ["gluten"], inStock: true, cuisine: "italian", course: "starter", description: "Crispy battered cod strips, tangy tartar sauce & lemon wedge.", img: "https://vaya.in/recipes/wp-content/uploads/2018/06/Popcorn-Crusted-Fish-Fingers.jpg" },
+    { id: 110, name: "Classic French Fries", price: 4.9, diet: "veg", allergens: [], inStock: true, cuisine: "italian", course: "starter", description: "Golden crispy fries, sea salt, served with house garlic aioli.", img: "https://images.themodernproper.com/production/posts/2022/Homemade-French-Fries_8.jpg?w=960&h=960&q=82&fm=jpg&fit=crop&dm=1662474181&s=50bccc38a736ef0e0a6e261ad23378f4" },
+    
+    // MAIN COURSE
+    { id: 201, name: "Butter Chicken + Garlic Naan", price: 18.9, diet: "nonveg", allergens: ["dairy","gluten"], inStock: true, cuisine: "indian", course: "main", description: "Creamy tomato curry, tandoori chicken, butter naan.", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSh2n-jJ_vdiNP4s1TBKSYLzNiv-FIkAudIdwqZ_n_DEft7JmR-rkutO0Nevl1n_1GtBPBuHZ3k5CBmAfHVu0SVeaHlnERG7_4sQ2iSTA&s=10" },
+    { id: 202, name: "Spaghetti Aglio e Olio", price: 13.9, diet: "vegan", allergens: ["gluten"], inStock: true, cuisine: "italian", course: "main", description: "Garlic, olive oil, chili, parsley — simple win.", img: "https://images.services.kitchenstories.io/UY89c4f471NaK1C-BQ07FGZ_qVA=/3840x0/filters:quality(80)/images.kitchenstories.io/wagtailOriginalImages/R131-final-photo-3-sg.jpg" },
+    { id: 203, name: "Wok Hakka Noodles (Veg)", price: 11.5, diet: "veg", allergens: ["gluten"], inStock: true, cuisine: "chinese", course: "main", description: "Stir-fried noodles, veggies, secret sauce.", img: "https://www.cubesnjuliennes.com/wp-content/uploads/2020/06/Chicken-Hakka-Noodles-Recipe-1.jpg" },
+    { id: 204, name: "Vegan Khao Suey", price: 14.8, diet: "vegan", allergens: ["nuts"], inStock: true, cuisine: "chinese", course: "main", description: "Coconut noodle soup, crispy toppings.", img: "https://www.mondaycampaigns.org/wp-content/uploads/2021/02/9dad4c_6a6a5bd7930e4b76aee03089796122f9mv2-Nara-Sandberg.jpg" },
+    { id: 205, name: "Jain Paneer Lababdar", price: 15.2, diet: "jain", allergens: ["dairy"], inStock: true, cuisine: "indian", course: "main", description: "No onion/garlic creamy paneer gravy.", img: "https://img-global.cpcdn.com/recipes/a6096cdaaf251115/680x781cq80/%E0%A4%AA%E0%A4%A8%E0%A4%B0-%E0%A4%B2%E0%A4%AC%E0%A4%AC%E0%A4%A6%E0%A4%B0-paneer-lababdar-recipe-in-hindi-%E0%A4%B0%E0%A4%B8%E0%A4%AA-%E0%A4%AE%E0%A4%96%E0%A4%AF-%E0%A4%A4%E0%A4%B8%E0%A4%B5%E0%A4%B0.jpg" },
+   { id: 206, name: "Ratatouille (Provençal)", price: 14.9, diet: "vegan", allergens: [], inStock: true, cuisine: "italian", course: "main", description: "Slow-cooked summer vegetables in herb tomato sauce – rustic and vibrant.", img: "https://media.hellofresh.com/q_100,w_3840,f_auto,c_limit,fl_lossy/recipes/image/oven-baked-ratatouille-risotto-3d2e0442.jpg" },
+    { id: 207, name: "Chicken Biryani (Hyderabadi)", price: 17.9, diet: "nonveg", allergens: ["nuts"], inStock: true, cuisine: "indian", course: "main", description: "Layered basmati, spiced chicken, caramelized onions.", img: "https://www.licious.in/blog/wp-content/uploads/2020/12/Hyderabadi-chicken-Biryani.jpg" },
+    { id: 208, name: "Goan Fish Curry", price: 19.5, diet: "nonveg", allergens: ["dairy"], inStock: true, cuisine: "indian", course: "main", description: "Coconut, tamarind, fresh catch.", img: "https://foodandhospitality.incrediblegoa.org/wp-content/uploads/2023/06/Goan-Fish-Curry.jpeg" },
+    { id: 209, name: "Penne Arrabbiata", price: 12.9, diet: "veg", allergens: ["gluten"], inStock: true, cuisine: "italian", course: "main", description: "Spicy tomato garlic penne.", img: "https://www.andy-cooks.com/cdn/shop/articles/20250710035519-andy-20cooks-20-20quick-20arrabbiata-20pasta-20recipe_daf853ef-dee8-4da0-8701-b8dda36397bf.jpg?v=1773806187" },
+    { id: 210, name: "Vegan Thai Green Curry", price: 15.9, diet: "vegan", allergens: ["nuts"], inStock: true, cuisine: "chinese", course: "main", description: "Coconut milk, bamboo, tofu, jasmine rice.", img: "https://hot-thai-kitchen.com/wp-content/uploads/2022/09/vegan-green-curry-sq-1.jpg" },
+    { id: 211, name: "Mutton Rogan Josh", price: 21.0, diet: "nonveg", allergens: [], inStock: true, cuisine: "indian", course: "main", description: "Kashmiri lamb gravy with fennel.", img: "https://static.toiimg.com/thumb/53192600.cms?width=1200&height=900" },
+    { id: 212, name: "Margherita Pizza", price: 14.5, diet: "veg", allergens: ["dairy","gluten"], inStock: true, cuisine: "italian", course: "main", description: "San Marzano, mozzarella, basil.", img: "https://safrescobaldistatic.blob.core.windows.net/media/2022/11/PIZZA-MARGHERITA.jpg" },
+    { id: 213, name: "Classic Lasagne al Forno", price: 17.9, diet: "nonveg", allergens: ["dairy","gluten"], inStock: true, cuisine: "italian", course: "main", description: "Layers of rich beef ragù, creamy béchamel, parmesan, baked to perfection.", img: "https://keepingitsimpleitalian.com/wp-content/uploads/2022/11/lasagna-bolognese-slice.jpg" },
+    { id: 214, name: "American Chop Suey (Chicken)", price: 14.9, diet: "nonveg", allergens: ["gluten"], inStock: true, cuisine: "chinese", course: "main", description: "Crispy noodles with shredded chicken, veggies, and sweet & sour sauce.", img: "https://instamart-media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,h_960,w_960//InstamartAssets/2/american_chop_suey.webp?updatedAt=1730797759314" },
+    { id: 215, name: "Paneer Tikka Sizzler", price: 15.9, diet: "veg", allergens: ["dairy"], inStock: true, cuisine: "indian", course: "main", description: "Sizzling paneer tikka, grilled veggies, herbed rice, and smoky barbecue sauce.", img: "https://instamart-media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,h_960,w_960//InstamartAssets/Receipes/paneer_tikka_sizzler.webp" },
+    { id: 216, name: "Chicken Steak Sizzler", price: 18.9, diet: "nonveg", allergens: ["dairy"], inStock: true, cuisine: "indian", course: "main", description: "Juicy chicken steak, peri-peri sauce, sauteed veggies, mashed potatoes, and a sizzling cast iron plate.", img: "https://swatisani.net/kitchen/wp-content/uploads/2014/10/IMG_6836.jpg" },
+    { id: 217, name: "Prawn & Fish Sizzler", price: 21.9, diet: "nonveg", allergens: ["gluten", "dairy"], inStock: true, cuisine: "italian", course: "main", description: "Grilled prawns and basa fillet, lemon butter sauce, roasted veggies, and garlic rice.", img: "https://i.pinimg.com/736x/e2/9c/00/e29c0082417fe16df8bdcc27a82314fc.jpg" },
+    { id: 218, name: "Vegan Tofu Mushroom Sizzler", price: 16.5, diet: "vegan", allergens: [], inStock: true, cuisine: "italian", course: "main", description: "Herbed tofu, portobello mushrooms, zucchini, bell peppers, served with dairy-free pepper sauce and quinoa.", img: "https://www.sainsburysmagazine.co.uk/uploads/media/1800x1800/03/13293-tofu-sisig.jpg?v=1-0" },
+    { id: 219, name: "Mixed Grill Sizzler", price: 24.9, diet: "nonveg", allergens: ["dairy", "gluten"], inStock: true, cuisine: "indian", course: "main", description: "Lamb chop, chicken sausage, grilled fish, fried egg, spiced rice, and smoky barbecue sauce.", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRki4NnhOFnbCVA4ddbc3hts07NELLjpBXUXfFO_hFu_INMdinOaM18cAE&s=10" },
+    { id: 220, name: "Chicken Shaslik Sizzler", price: 17.9, diet: "nonveg", allergens: [], inStock: true, cuisine: "indian", course: "main", description: "Tandoori chicken chunks skewered with bell peppers, onions, tomatoes, served sizzling with spiced rice and mint chutney.", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEHyAF6113gHhBmgqXhWI5xVsJDPZY_xQPkf0tYquJUYjkRmp7IFJ0_oIc&s=10" },
+    // BURGERS
+    { id: 221, name: "Classic Beef Burger", price: 14.9, diet: "nonveg", allergens: ["gluten", "dairy"], inStock: true, cuisine: "italian", course: "main", description: "Juicy beef patty, cheddar cheese, lettuce, tomato, onion, pickles, and special sauce in a toasted brioche bun.", img: "https://www.cottagedelight.co.uk/wp-content/uploads/2021/01/Classic-Burger-gourmet-Burger-Sauce-692x495.jpg" },
+    { id: 222, name: "Crispy Chicken Burger", price: 13.9, diet: "nonveg", allergens: ["gluten", "dairy"], inStock: true, cuisine: "italian", course: "main", description: "Fried chicken fillet, pepper jack cheese, lettuce, jalapeños, and chipotle mayo on a sesame seed bun.", img: "https://www.ajinomoto.com.my/sites/default/files/content/recipe/image/2022-10/Crispy-Chicken-Burger-new.jpg" },
+    { id: 223, name: "Veggie Supreme Burger", price: 11.9, diet: "veg", allergens: ["gluten", "dairy"], inStock: true, cuisine: "italian", course: "main", description: "House-made lentil & mushroom patty, melted Swiss cheese, caramelized onions, and garlic aioli.", img: "https://www.noracooks.com/wp-content/uploads/2023/04/veggie-burgers-1-2.jpg" },
+    { id: 224, name: "Double Cheeseburger", price: 16.9, diet: "nonveg", allergens: ["gluten", "dairy"], inStock: true, cuisine: "italian", course: "main", description: "Two beef patties, double cheddar, crispy bacon, lettuce, tomato, and smoky BBQ sauce.", img: "https://www.kitchensanctuary.com/wp-content/uploads/2021/05/Double-Cheeseburger-square-FS-42.jpg" },
+    { id: 225, name: "Vegan Black Bean Burger", price: 12.5, diet: "vegan", allergens: ["gluten"], inStock: true, cuisine: "italian", course: "main", description: "Spiced black bean patty, avocado, roasted red peppers, spinach, and dairy-free chipotle spread.", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNI7cBc6awCveXw1cCVo967gP64nns7eaEZYMjRcgvPpDYfgPtFpZ3hyR4&s=10" },
+    
+    // DESSERTS
+    { id: 301, name: "Tiramisu Classico", price: 7.5, diet: "veg", allergens: ["dairy","gluten"], inStock: true, cuisine: "italian", course: "dessert", description: "Coffee mascarpone layers, cocoa dust.", img: "https://cdn.nonnapaperina.it/wp-content/uploads/2024/02/tiramisu-classico.jpeg?strip=all&quality=80&webp=67&sharp=1" },
+    { id: 303, name: "Gulab Jamun (2 pcs)", price: 5.5, diet: "veg", allergens: ["dairy"], inStock: true, cuisine: "indian", course: "dessert", description: "Syrup-soaked milk dumplings.", img: "https://133309359.cdn6.editmysite.com/uploads/1/3/3/3/133309359/VUGI5REHBAQJFGIYDDLJFXMQ.png" },
+    { id: 304, name: "Vegan Chocolate Mousse", price: 7.2, diet: "vegan", allergens: ["nuts"], inStock: true, cuisine: "italian", course: "dessert", description: "Avocado dark chocolate, coconut whip.", img: "https://sweetpotatosoul.com/wp-content/uploads/2024/05/vegan-chocolate-mousse-in-clear-jar.jpg" },
+    { id: 305, name: "Jain Fruit Sorbet", price: 6.0, diet: "jain", allergens: [], inStock: true, cuisine: "indian", course: "dessert", description: "Mango & berry sorbet, dairy-free.", img: "https://foodal.com/wp-content/uploads/2016/04/berry-sorbet.jpg" },
+    { id: 306, name: "Caramel Custard", price: 5.8, diet: "nonveg", allergens: ["dairy","eggs"], inStock: true, cuisine: "italian", course: "dessert", description: "Silky custard, soft caramel top.", img: "https://foodiesterminal.com/wp-content/uploads/2020/01/pressure-cooker-caramel-custard-2.jpg" },
+    { id: 307, name: "Rasmalai", price: 6.9, diet: "veg", allergens: ["dairy"], inStock: true, cuisine: "indian", course: "dessert", description: "Cottage cheese dumplings in cardamom milk.", img: "https://kitchenflavours.net/wp-content/uploads/2015/06/Rasmalai.jpg" },
+    { id: 308, name: "Ice Cream (Vanilla Dream)", price: 4.9, diet: "veg", allergens: ["dairy"], inStock: true, cuisine: "italian", course: "dessert", description: "Creamy vanilla bean ice cream, served with a chocolate wafer.", img: "https://wearenotmartha.com/wp-content/uploads/White-Chocolate-Strawberry-Ice-Cream-Featured.jpg" },
+    { id: 309, name: "Classic Blueberry Cheesecake", price: 6.9, diet: "veg", allergens: ["dairy", "gluten"], inStock: true, cuisine: "italian", course: "dessert", description: "Creamy New York style cheesecake topped with luscious blueberry compote on a buttery graham crust.", img: "https://imgcdn.floweraura.com/classic-blueberry-cheese-slice-9725130caps-A.jpg" },
+    { id: 310, name: "Lotus Biscoff Cheesecake", price: 7.5, diet: "veg", allergens: ["dairy", "gluten"], inStock: true, cuisine: "italian", course: "dessert", description: "No-bake caramelized Biscoff cheesecake with cookie butter swirl, topped with crushed Biscoff crumbs.", img: "https://doughandcream.com/cdn/shop/files/NoBakeLotusBiscoffCheesecakeSlice_1024x1024.jpg?v=1732738536" },
+  ];
+
+  // State
+  let diners = [{ id: "d1", name: "Person 1", items: [] }];
+  let activeDinerId = "d1";
+  let currentDietFilter = "all";
+  let currentCuisineFilter = "all";
+  let currentTypeFilter = "all";
+  let currentAllergies = [];
+  let currentMeatPref = "all";
+  let searchQuery = "";
+
+  // Helper to get table number
+  function getTableNumber() {
+    const input = document.getElementById('tableNumberInput');
+    const val = parseInt(input.value);
+    if (!val || val <= 0) return null;
+    return val;
+  }
+
+  function showTableError(show) {
+    const errorEl = document.getElementById('tableError');
+    const input = document.getElementById('tableNumberInput');
+    if (show) {
+      errorEl.classList.add('show');
+      input.style.borderBottom = '2px solid #ff4444';
+    } else {
+      errorEl.classList.remove('show');
+      input.style.borderBottom = 'none';
+    }
+  }
+
+  function validateTableNumber() {
+    const val = getTableNumber();
+    if (!val) {
+      showTableError(true);
+      return false;
+    }
+    showTableError(false);
+    return true;
+  }
+
+  function renderAll() { renderMenuSections(); renderDinerTabs(); renderCurrentDinerItems(); renderSplitBill(); }
+  
+  function isItemVisible(item) {
+    if (currentMeatPref === "veg" && !["veg","vegan","jain"].includes(item.diet)) return false;
+    if (currentMeatPref === "nonveg" && item.diet !== "nonveg") return false;
+    if (currentCuisineFilter !== "all" && item.cuisine !== currentCuisineFilter) return false;
+    if (currentDietFilter !== "all" && item.diet !== currentDietFilter) return false;
+    if (currentAllergies.length && item.allergens.some(a => currentAllergies.includes(a))) return false;
+    if (searchQuery && !item.name.toLowerCase().includes(searchQuery) && !item.description.toLowerCase().includes(searchQuery)) return false;
+    // Type filter
+    if (currentTypeFilter !== "all") {
+      if (currentTypeFilter === "sizzler" && !item.name.toLowerCase().includes("sizzler")) return false;
+      if (currentTypeFilter === "burger" && !item.name.toLowerCase().includes("burger")) return false;
+    }
+    return true;
+  }
+
+  function renderMenuSection(containerId, courseType) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+    const filtered = menuData.filter(i => i.course === courseType && isItemVisible(i));
+    if (filtered.length === 0) { container.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:40px;">🎮 NO DISHES FOUND · TRY NEW FILTERS 🎮</div>`; return; }
+    container.innerHTML = filtered.map(item => `
+      <div class="dish-card">
+        <div class="card-img" style="background-image: url('${item.img}'); background-size: cover; background-position: center;">
+          ${!item.inStock ? `<div class="unavailable-overlay">❌ OUT OF STOCK</div>` : ''}
+        </div>
+        <div class="card-content">
+          <div class="dish-title">${item.name} <span class="price">$${item.price.toFixed(2)}</span></div>
+          <div class="meta-badges">
+            <span class="badge">${item.cuisine === 'indian' ? '🇮🇳 INDIAN' : item.cuisine === 'italian' ? '🇮🇹 ITALIAN' : '🥢 CHINESE'}</span>
+            <span class="badge">${item.diet.toUpperCase()}</span>
+          </div>
+          <div class="desc">${item.description}</div>
+          <button class="order-btn ${!item.inStock ? 'disabled' : ''}" data-id="${item.id}" ${!item.inStock ? 'disabled' : ''}>+ ADD TO ${diners.find(d=>d.id===activeDinerId)?.name}</button>
+        </div>
+      </div>
+    `).join('');
+    container.querySelectorAll('.order-btn[data-id]').forEach(btn => {
+      if (!btn.disabled) btn.addEventListener('click', () => { const found = menuData.find(i => i.id === parseInt(btn.dataset.id)); if(found && found.inStock) addItemToActiveDiner(found); else showToast("UNAVAILABLE"); });
+    });
+  }
+
+  function renderMenuSections() { renderMenuSection("starterGrid", "starter"); renderMenuSection("mainGrid", "main"); renderMenuSection("dessertGrid", "dessert"); }
+
+  function addItemToActiveDiner(item) {
+    const diner = diners.find(d => d.id === activeDinerId);
+    const existing = diner.items.find(i => i.id === item.id);
+    if (existing) existing.quantity++; else diner.items.push({ id: item.id, name: item.name, price: item.price, quantity: 1 });
+    renderAll(); showToast(`+1 ${item.name} → ${diner.name}`);
+  }
+
+  function renderDinerTabs() {
+    const container = document.getElementById("dinerTabs");
+    container.innerHTML = diners.map(d => `<div class="diner-pill ${activeDinerId === d.id ? 'active' : ''}" data-id="${d.id}">👤 ${d.name} (${d.items.reduce((s,i)=>s+i.quantity,0)}) ${diners.length>1?`<i class="fas fa-times-circle" style="margin-left:6px;"></i>`:''}</div>`).join('');
+    container.querySelectorAll('.diner-pill').forEach(el => {
+      const id = el.dataset.id;
+      el.addEventListener('click', (e) => { if(e.target.tagName === 'I') { if(diners.length>1){ diners = diners.filter(d=>d.id!==id); if(activeDinerId===id) activeDinerId=diners[0].id; renderAll(); } else showToast("At least one person needed"); } else { activeDinerId = id; renderAll(); } });
+    });
+  }
+
+  function renderCurrentDinerItems() {
+    const diner = diners.find(d => d.id === activeDinerId);
+    const container = document.getElementById("dinerItemsList");
+    if (!diner || diner.items.length === 0) { container.innerHTML = "<div style='padding:12px; color:#aa9f8a;'>No items — tap menu to order.</div>"; document.getElementById("activeDinerName").innerText = diner?.name; return; }
+    document.getElementById("activeDinerName").innerText = diner.name;
+    container.innerHTML = diner.items.map(it => `<div class="order-item"><span><strong>${it.name}</strong> x${it.quantity}</span><span>$${(it.price*it.quantity).toFixed(2)} <button class="qty-dec" data-id="${it.id}">-</button> <button class="qty-inc" data-id="${it.id}">+</button> <button class="item-remove" data-id="${it.id}"><i class="fas fa-trash-alt"></i></button></span></div>`).join('');
+    container.querySelectorAll('.qty-inc').forEach(btn => btn.addEventListener('click',()=>{ const id=parseInt(btn.dataset.id); const entry=diner.items.find(i=>i.id===id); if(entry){entry.quantity++; renderAll();} }));
+    container.querySelectorAll('.qty-dec').forEach(btn => btn.addEventListener('click',()=>{ const id=parseInt(btn.dataset.id); const entry=diner.items.find(i=>i.id===id); if(entry && entry.quantity>1){entry.quantity--; renderAll();} else if(entry && entry.quantity===1){ diner.items = diner.items.filter(i=>i.id!==id); renderAll();} }));
+    container.querySelectorAll('.item-remove').forEach(btn => btn.addEventListener('click',()=>{ const id=parseInt(btn.dataset.id); diner.items = diner.items.filter(i=>i.id!==id); renderAll(); }));
+  }
+
+  function renderSplitBill() {
+    const breakdown = diners.map(d => ({ name: d.name, total: d.items.reduce((s,i)=>s + i.price*i.quantity,0) }));
+    const groupTotal = breakdown.reduce((a,b)=>a+b.total,0);
+    document.getElementById("splitDetails").innerHTML = breakdown.map(p => `<div style="padding:6px 0; display:flex; justify-content:space-between;"><span>${p.name}</span><span>$${p.total.toFixed(2)}</span></div>`).join('');
+    document.getElementById("totalGroupBill").innerHTML = `💰 TOTAL BILL: $${groupTotal.toFixed(2)}`;
+    const people = parseInt(document.getElementById("equalSplitPeople").value);
+    if (people && people > 0) document.getElementById("equalSplitAmount").innerText = `EQUAL SPLIT: $${(groupTotal/people).toFixed(2)} each`;
+    else document.getElementById("equalSplitAmount").innerText = "";
+  }
+
+  // Event listeners
+  document.getElementById("meatPreference").addEventListener("change", e => { currentMeatPref = e.target.value; renderAll(); });
+  document.getElementById("searchDish").addEventListener("input", e => { searchQuery = e.target.value.toLowerCase(); renderAll(); });
+
+  document.querySelectorAll("[data-cuisine]").forEach(btn => btn.addEventListener("click", () => {
+    document.querySelectorAll("[data-cuisine]").forEach(b=>b.classList.remove("active"));
+    btn.classList.add("active");
+    currentCuisineFilter = btn.dataset.cuisine;
+    renderAll();
+  }));
+
+  document.querySelectorAll("[data-diet]").forEach(btn => btn.addEventListener("click", () => {
+    document.querySelectorAll("[data-diet]").forEach(b=>b.classList.remove("active"));
+    btn.classList.add("active");
+    currentDietFilter = btn.dataset.diet;
+    renderAll();
+  }));
+
+  document.querySelectorAll("[data-type]").forEach(btn => btn.addEventListener("click", () => {
+    document.querySelectorAll("[data-type]").forEach(b=>b.classList.remove("active"));
+    btn.classList.add("active");
+    currentTypeFilter = btn.dataset.type;
+    renderAll();
+  }));
+
+  document.querySelectorAll(".allergy-group input").forEach(cb => cb.addEventListener("change", () => {
+    currentAllergies = Array.from(document.querySelectorAll(".allergy-group input:checked")).map(c=>c.value);
+    renderAll();
+  }));
+
+  document.getElementById("addDinerBtn").addEventListener("click", () => {
+    diners.push({ id: "d"+Date.now(), name: `Person ${diners.length+1}`, items: [] });
+    activeDinerId = diners[diners.length-1].id;
+    renderAll();
+  });
+  
+  document.getElementById("callWaiterBtn").onclick = () => {
+    if (!validateTableNumber()) {
+      showToast("⚠️ Please enter your table number first!");
+      return;
+    }
+    const tableNum = getTableNumber();
+    showToast(`🛎️ WAITER ALERTED · TABLE ${tableNum}`);
+  };
+  
+  document.getElementById("waterRefillBtn").onclick = () => {
+    if (!validateTableNumber()) {
+      showToast("⚠️ Please enter your table number first!");
+      return;
+    }
+    const tableNum = getTableNumber();
+    showToast(`💧 WATER REFILL REQUESTED · TABLE ${tableNum}`);
+  };
+  document.getElementById("napkinsBtn").onclick = () => {
+    if (!validateTableNumber()) {
+      showToast("⚠️ Please enter your table number first!");
+      return;
+    }
+    const tableNum = getTableNumber();
+    showToast(`🧻 NAPKINS ON THE WAY · TABLE ${tableNum}`);
+  };
+  document.getElementById("saucesBtn").onclick = () => {
+    if (!validateTableNumber()) {
+      showToast("⚠️ Please enter your table number first!");
+      return;
+    }
+    const tableNum = getTableNumber();
+    showToast(`🥫 SAUCES REQUESTED · TABLE ${tableNum}`);
+  };
+  
+  document.getElementById("sendToKitchenBtn").onclick = async () => {
+  if (!validateTableNumber()) {
+    showToast("⚠️ Please enter your table number first!");
+    return;
+  }
+
+  const tableNum = getTableNumber();
+
+  let orders = diners
+    .map(d => `${d.name}: ${d.items.map(i => `${i.name} x${i.quantity}`).join(', ')}`)
+    .filter(o => o.includes(':'))
+    .join('\n');
+
+  if (!orders) {
+    showToast("⚠️ No items in order! Add some dishes first.");
+    return;
+  }
+
+  try {
+    await fetch(
+  "https://script.google.com/macros/s/AKfycbwXCSbR_i1LjvaCpRl768mC2MwTte-YKh7s-A0REq9gypXEDkQ2syGX3KiSZisN6EmZ/exec",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          tableNo: tableNum,
+          people: diners.length,
+          order: orders
+        })
+      }
+    );
+
+    alert(`⚡ ORDER SENT TO KITCHEN ⚡\nTABLE ${tableNum}\n${orders}`);
+    showToast(`🔥 ORDER SENT! TABLE ${tableNum}`);
+
+  } catch (error) {
+    console.error(error);
+    showToast("❌ Failed to send order");
+  }
+};
+  document.getElementById("tableNumberInput").addEventListener("input", () => {
+    if (getTableNumber()) {
+      showTableError(false);
+    }
+  });
+  
+  let modalActive = false;
+  document.getElementById("scanDishBtn").onclick = () => {
+    if(modalActive) return;
+    modalActive=true;
+    const modalDiv = document.createElement('div');
+    modalDiv.className='modal';
+    modalDiv.innerHTML=`
+      <div class="modal-content">
+        <h3><i class="fas fa-camera"></i> SCAN DISH</h3>
+        <video id="scanVideo" autoplay playsinline style="width:100%; border-radius:28px;"></video>
+        <button id="captureScanBtn" class="btn-primary" style="margin:12px;">🔍 IDENTIFY & REORDER</button>
+        <button id="closeScanBtn" class="btn-glass">CANCEL</button>
+        <p id="scanResult" style="margin-top:12px;"></p>
+      </div>
+    `;
+    document.body.appendChild(modalDiv);
+    let stream=null;
+    const video=modalDiv.querySelector('#scanVideo');
+    navigator.mediaDevices.getUserMedia({video:true})
+      .then(s=>{stream=s; video.srcObject=s; video.play();})
+      .catch(()=>document.getElementById("scanResult").innerText="[CAMERA MOCK MODE]");
+    modalDiv.querySelector('#captureScanBtn').onclick=()=>{
+      const avail=menuData.filter(i=>i.inStock && isItemVisible(i));
+      if(!avail.length){document.getElementById("scanResult").innerText="No available dishes with current filters."; return;}
+      const rand=avail[Math.floor(Math.random()*avail.length)];
+      document.getElementById("scanResult").innerHTML=`
+        🤖 RECOGNIZED: ${rand.name}<br>
+        <button id="confirmAddScan" class="btn-primary" style="margin-top:8px;">ADD TO ${diners.find(d=>d.id===activeDinerId)?.name}</button>
+      `;
+      document.getElementById("confirmAddScan")?.addEventListener("click",()=>{addItemToActiveDiner(rand); closeModal();});
+    };
+    function closeModal(){ if(stream) stream.getTracks().forEach(t=>t.stop()); modalDiv.remove(); modalActive=false; }
+    modalDiv.querySelector('#closeScanBtn').onclick=closeModal;
+  };
+
+  function showToast(msg) {
+    let t=document.querySelector('.toast');
+    if(t) t.remove();
+    let div=document.createElement('div');
+    div.className='toast';
+    div.innerHTML=msg;
+    document.body.appendChild(div);
+    setTimeout(()=>div.remove(),2500);
+  }
+
+  renderAll();
+</script>
+</body>
+</html>

@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Map Location</title>
+
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.2/dist/leaflet.css" />
+    <!-- Font Awesome for music icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Dark theme (default) */
+        :root {
+            --bg: #1a1a2e;
+            --status-bg: #16213e;
+            --status-border: #0f3460;
+            --status-text: #e0e0e0;
+            --badge-bg: #0f3460;
+            --badge-text: #a8d8ea;
+            --accent: #4fc3f7;
+            --attribution-bg: rgba(26, 26, 46, 0.8);
+            --attribution-text: #a0a0a0;
+            --toggle-bg: #0f3460;
+        }
+
+        /* Light theme overrides */
+        [data-theme="light"] {
+            --bg: #f4f6fa;
+            --status-bg: #ffffff;
+            --status-border: #dde3ee;
+            --status-text: #1f2a3c;
+            --badge-bg: #e8edf7;
+            --badge-text: #2a6ebb;
+            --accent: #1e88e5;
+            --attribution-bg: rgba(255, 255, 255, 0.85);
+            --attribution-text: #5a6577;
+            --toggle-bg: #e8edf7;
+        }
+
+        html, body {
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: var(--bg);
+            display: flex;
+            flex-direction: column;
+            transition: background 0.3s ease;
+        }
+
+        /* Slim status bar so the map gets nearly the whole screen */
+        #status {
+            padding: 8px 16px;
+            background: var(--status-bg);
+            color: var(--status-text);
+            border-bottom: 2px solid var(--status-border);
+            font-size: 13px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-shrink: 0;
+            min-height: 34px;
+            z-index: 1000;
+            position: relative;
+            transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+        }
+
+        #status .icon {
+            font-size: 16px;
+        }
+
+        #status .text {
+            flex: 1;
+        }
+
+        #status .badge {
+            background: var(--badge-bg);
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            color: var(--badge-text);
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        /* Light/dark toggle button */
+        #themeToggle {
+            background: var(--toggle-bg);
+            border: none;
+            cursor: pointer;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+
+        #themeToggle:hover {
+            transform: scale(1.08);
+        }
+
+        #themeToggle:active {
+            transform: scale(0.95);
+        }
+
+        /* Map container - fills nearly all the remaining space */
+        #map {
+            flex: 1;
+            width: 100%;
+            background: var(--bg);
+        }
+
+        .leaflet-control-attribution {
+            background: var(--attribution-bg) !important;
+            color: var(--attribution-text) !important;
+            backdrop-filter: blur(4px);
+        }
+
+        .leaflet-control-attribution a {
+            color: var(--accent) !important;
+        }
+
+        .leaflet-popup-content-wrapper {
+            background: var(--status-bg) !important;
+            color: var(--status-text) !important;
+            border-radius: 8px !important;
+            border: 1px solid var(--status-border);
+        }
+
+        .leaflet-popup-tip {
+            background: var(--status-bg) !important;
+        }
+
+        /* Bigger, brighter marker so it reads clearly on the map */
+        .pin-pulse {
+            position: relative;
+            width: 26px;
+            height: 26px;
+        }
+        .pin-pulse .core {
+            position: absolute;
+            top: 6px; left: 6px;
+            width: 14px;
+            height: 14px;
+            background: var(--accent);
+            border: 3px solid white;
+            border-radius: 50%;
+            box-shadow: 0 0 22px var(--accent);
+            z-index: 2;
+            transition: background 0.3s ease, box-shadow 0.3s ease;
+        }
+        .pin-pulse .ring {
+            position: absolute;
+            top: 0; left: 0;
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background: var(--accent);
+            opacity: 0.35;
+            animation: ring-pulse 1.8s ease-out infinite;
+        }
+        @keyframes ring-pulse {
+            0% { transform: scale(0.4); opacity: 0.8; }
+            100% { transform: scale(1.6); opacity: 0; }
+        }
+
+        /* Music control button */
+        .music-control {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 1100;
+            background: rgba(22, 33, 62, 0.9);
+            backdrop-filter: blur(12px);
+            padding: 12px 18px;
+            border-radius: 60px;
+            border: 1px solid #4fc3f7;
+            box-shadow: 0 0 15px rgba(79, 195, 247, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: 0.2s;
+            color: #e0e0e0;
+        }
+        .music-control i {
+            font-size: 1.4rem;
+            color: #4fc3f7;
+        }
+        .music-control span {
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+        .music-control:hover {
+            border-color: #81d4fa;
+            box-shadow: 0 0 25px rgba(79, 195, 247, 0.5);
+            transform: scale(1.02);
+        }
+        [data-theme="light"] .music-control {
+            background: rgba(255, 255, 255, 0.9);
+            color: #1f2a3c;
+            border-color: #1e88e5;
+            box-shadow: 0 0 15px rgba(30, 136, 229, 0.3);
+        }
+        [data-theme="light"] .music-control i {
+            color: #1e88e5;
+        }
+        [data-theme="light"] .music-control:hover {
+            border-color: #42a5f5;
+            box-shadow: 0 0 25px rgba(30, 136, 229, 0.5);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Status Bar -->
+    <div id="status">
+        <span class="icon">📍</span>
+        <span class="text" id="statusText">6 spots around Oxford</span>
+        <span class="badge" id="statusBadge">Fixed locations</span>
+        <button id="themeToggle" title="Switch theme" aria-label="Switch between light and dark mode">🌙</button>
+    </div>
+
+    <!-- Map Container -->
+    <div id="map"></div>
+
+    <!-- MUSIC CONTROL (autoplay with levels.mp3) -->
+    <audio id="bgMusic" loop preload="auto">
+        <source src="levels.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="music-control" id="musicToggleBtn">
+        <i class="fas fa-music" id="musicIcon"></i>
+        <span>🎵 LEVELS · AVICII</span>
+    </div>
+
+    <!-- Leaflet JavaScript -->
+    <script src="https://unpkg.com/leaflet@1.9.2/dist/leaflet.js"></script>
+
+    <script>
+        // ============================================================
+        // MUSIC AUTOPLAY + TOGGLE (levels.mp3)
+        // ============================================================
+        const audio = document.getElementById('bgMusic');
+        const musicIcon = document.getElementById('musicIcon');
+        const toggleBtn = document.getElementById('musicToggleBtn');
+        let musicStarted = false;
+
+        function tryAutoplay() {
+            audio.volume = 0.35;
+            audio.play().then(() => {
+                musicStarted = true;
+                musicIcon.className = "fas fa-music";
+                console.log("Music started: levels.mp3");
+            }).catch(err => {
+                console.log("Autoplay blocked — waiting for user interaction");
+            });
+        }
+
+        toggleBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            if (!musicStarted) {
+                audio.play().then(() => {
+                    musicStarted = true;
+                    musicIcon.className = "fas fa-music";
+                }).catch(err => {
+                    console.log("Playback failed:", err);
+                });
+            } else {
+                if (audio.paused) {
+                    audio.play();
+                    musicIcon.className = "fas fa-music";
+                } else {
+                    audio.pause();
+                    musicIcon.className = "fas fa-pause-circle";
+                }
+            }
+        });
+
+        audio.addEventListener('play', () => { 
+            musicIcon.className = "fas fa-music"; 
+        });
+        audio.addEventListener('pause', () => { 
+            musicIcon.className = "fas fa-pause-circle"; 
+        });
+        audio.addEventListener('ended', () => {
+            audio.currentTime = 0;
+            audio.play().catch(e => console.log("loop replay"));
+        });
+
+        // Try autoplay after a short delay
+        setTimeout(tryAutoplay, 500);
+
+        // Also try on any user click (to overcome autoplay restrictions)
+        document.addEventListener('click', function() {
+            if (!musicStarted) {
+                audio.play().then(() => {
+                    musicStarted = true;
+                    musicIcon.className = "fas fa-music";
+                }).catch(() => {});
+            }
+        }, { once: false });
+
+        // ============================================================
+        // MAP LOGIC (unchanged)
+        // ============================================================
+        // A handful of fixed spots around Oxford - no geolocation permission needed
+        const LOCATIONS = [
+            { name: "Carfax Tower", lat: 51.7520, lng: -1.2577, desc: "The historic crossroads at the heart of the city" },
+            { name: "Radcliffe Camera", lat: 51.7534, lng: -1.2540, desc: "Iconic round Bodleian Library reading room" },
+            { name: "Christ Church College", lat: 51.7501, lng: -1.2558, desc: "One of Oxford's grandest colleges" },
+            { name: "Headington Shark", lat: 51.7575, lng: -1.2155, desc: "A fibreglass shark crashing through a Headington roof" },
+            { name: "Oxford Brookes University", lat: 51.7558, lng: -1.2186, desc: "Headington campus" },
+            { name: "Cowley Road", lat: 51.7390, lng: -1.2280, desc: "Buzzing, multicultural street south-east of the centre" }
+        ];
+
+        // Carto basemap styles for each theme
+        const TILE_URLS = {
+            dark: 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',
+            light: 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png'
+        };
+
+        const map = L.map('map');
+
+        const tileLayer = L.tileLayer(TILE_URLS.dark, {
+            maxZoom: 19,
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/">CARTO</a>'
+        }).addTo(map);
+
+        // Bigger, pulsing marker icon - shared by every pin
+        const pulseIcon = L.divIcon({
+            className: 'pin-pulse',
+            html: '<div class="ring"></div><div class="core"></div>',
+            iconSize: [26, 26],
+            iconAnchor: [13, 13]
+        });
+
+        // Drop a pin for every location and collect them to fit the map view
+        const markers = LOCATIONS.map(loc => {
+            const marker = L.marker([loc.lat, loc.lng], { icon: pulseIcon }).addTo(map);
+            marker.bindPopup(`📍 <b>${loc.name}</b><br><small>${loc.desc}</small>`);
+            return marker;
+        });
+
+        // Frame all the pins on load, with some breathing room
+        const bounds = L.featureGroup(markers).getBounds();
+        map.fitBounds(bounds, { padding: [40, 40] });
+
+        // Open the first pin's popup so the map doesn't look empty on load
+        markers[0].openPopup();
+
+        // --- Light / dark theme toggle ---
+        const root = document.documentElement;
+        const toggleBtnTheme = document.getElementById('themeToggle');
+        let theme = 'dark';
+
+        function applyTheme(next) {
+            theme = next;
+            root.setAttribute('data-theme', theme);
+            tileLayer.setUrl(TILE_URLS[theme]);
+            toggleBtnTheme.textContent = theme === 'dark' ? '🌙' : '☀️';
+        }
+
+        toggleBtnTheme.addEventListener('click', () => {
+            applyTheme(theme === 'dark' ? 'light' : 'dark');
+        });
+
+        applyTheme('dark');
+    </script>
+
+</body>
+</html>
