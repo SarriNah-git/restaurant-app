@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,6 +8,80 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,500;14..32,700;14..32,800;14..32,900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
+    /* ============================================================
+       THEMING (CSS Variables)
+    ============================================================ */
+    :root {
+      /* Dark theme (default) */
+      --bg-primary: #0b0b1a;
+      --bg-gradient-from: #0b0b1a;
+      --bg-gradient-to: #03030c;
+      --bg-navbar: rgba(10, 10, 25, 0.75);
+      --bg-card: rgba(8, 8, 20, 0.9);
+      --bg-filter: rgba(12, 12, 24, 0.85);
+      --bg-panel: rgba(10, 8, 18, 0.9);
+      --bg-items: #0b091ac0;
+      --bg-bill: #0a0718;
+      --bg-modal: #121028;
+      --text-primary: #eef5ff;
+      --text-secondary: #ffd6b0;
+      --text-muted: #bbaa99;
+      --text-dark: #0f0f1a;
+      --border-primary: rgba(255, 100, 50, 0.4);
+      --border-secondary: #ff6a2e;
+      --shadow-neon: 0 0 15px rgba(255, 70, 30, 0.2);
+      --shadow-card: 0 0 20px rgba(255, 100, 50, 0.5);
+      --input-bg: #17132a;
+      --input-border: #ff6a2e;
+      --input-text: #ffe6d0;
+      --pill-bg: #1f1b32;
+      --pill-border: #ff6a2e60;
+      --pill-active: #ff6a2e;
+      --badge-bg: #1e1a32;
+      --badge-color: #ffc9a5;
+      --scrollbar-track: #111122;
+      --scrollbar-thumb: #ff6a2e;
+      --toast-bg: #1a162f;
+      --toast-border: #ff7e3a;
+      --toggle-bg: #1c1c2a;
+    }
+
+    /* Light theme – applied when body has class .light-mode */
+    body.light-mode {
+      --bg-primary: #f5f0f0;
+      --bg-gradient-from: #f5f0f0;
+      --bg-gradient-to: #e8e0e0;
+      --bg-navbar: rgba(255, 248, 248, 0.85);
+      --bg-card: rgba(255, 255, 255, 0.92);
+      --bg-filter: rgba(255, 248, 248, 0.9);
+      --bg-panel: rgba(255, 248, 248, 0.92);
+      --bg-items: #f5f0f0;
+      --bg-bill: #faf5f5;
+      --bg-modal: #ffffff;
+      --text-primary: #1a1a2e;
+      --text-secondary: #3d2a1a;
+      --text-muted: #5a4a3a;
+      --text-dark: #1a1a2e;
+      --border-primary: rgba(200, 100, 50, 0.4);
+      --border-secondary: #cc6633;
+      --shadow-neon: 0 0 15px rgba(200, 100, 50, 0.15);
+      --shadow-card: 0 0 20px rgba(200, 100, 50, 0.2);
+      --input-bg: #ffffff;
+      --input-border: #cc6633;
+      --input-text: #1a1a2e;
+      --pill-bg: #f0ecec;
+      --pill-border: #cc663360;
+      --pill-active: #cc6633;
+      --badge-bg: #f0e8e8;
+      --badge-color: #4a3a2a;
+      --scrollbar-track: #e8e0e0;
+      --scrollbar-thumb: #cc6633;
+      --toast-bg: #f5f0f0;
+      --toast-border: #cc6633;
+      --toggle-bg: #d0c8c8;
+    }
+
+    /* Reset & base */
     * {
       margin: 0;
       padding: 0;
@@ -17,22 +90,24 @@
 
     body {
       font-family: 'Inter', monospace;
-      background: radial-gradient(circle at 20% 30%, #0b0b1a, #03030c);
-      color: #eef5ff;
+      background: radial-gradient(circle at 20% 30%, var(--bg-gradient-from), var(--bg-gradient-to));
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
       scroll-behavior: smooth;
+      transition: background 0.3s, color 0.3s;
     }
 
     ::-webkit-scrollbar {
       width: 6px;
     }
     ::-webkit-scrollbar-track {
-      background: #111122;
+      background: var(--scrollbar-track);
       border-radius: 10px;
     }
     ::-webkit-scrollbar-thumb {
-      background: #ff6a2e;
+      background: var(--scrollbar-thumb);
       border-radius: 10px;
-      box-shadow: 0 0 6px #ff6a2e;
+      box-shadow: 0 0 6px var(--scrollbar-thumb);
     }
 
     .app-container {
@@ -43,7 +118,7 @@
 
     /* ---------- NAVBAR ---------- */
     .navbar {
-      background: rgba(10, 10, 25, 0.75);
+      background: var(--bg-navbar);
       backdrop-filter: blur(14px);
       border-radius: 0 0 32px 32px;
       padding: 0.8rem 2rem;
@@ -52,8 +127,9 @@
       flex-wrap: wrap;
       align-items: center;
       justify-content: space-between;
-      border-bottom: 1px solid rgba(255, 100, 50, 0.4);
-      box-shadow: 0 0 15px rgba(255, 70, 30, 0.2);
+      border-bottom: 1px solid var(--border-primary);
+      box-shadow: var(--shadow-neon);
+      transition: background 0.3s, border-color 0.3s, box-shadow 0.3s;
     }
     .logo {
       font-size: 2rem;
@@ -69,9 +145,10 @@
       display: flex;
       gap: 30px;
       flex-wrap: wrap;
+      align-items: center;
     }
     .nav-links a {
-      color: #ffd6b0;
+      color: var(--text-secondary);
       text-decoration: none;
       font-weight: 600;
       transition: 0.2s;
@@ -80,6 +157,27 @@
     .nav-links a:hover {
       color: #ff6a2e;
       text-shadow: 0 0 8px #ff6a2e;
+    }
+
+    /* Theme toggle button */
+    .theme-toggle {
+      background: none;
+      border: 1px solid var(--border-primary);
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: 0.2s;
+      background: var(--bg-card);
+    }
+    .theme-toggle:hover {
+      border-color: var(--border-secondary);
+      transform: scale(1.05);
     }
 
     /* ---------- TABLE INFO ---------- */
@@ -108,12 +206,13 @@
       display: flex;
       align-items: center;
       gap: 10px;
-      background: rgba(12, 12, 24, 0.85);
+      background: var(--bg-card);
       backdrop-filter: blur(12px);
-      border: 1px solid #ff6a2e;
+      border: 1px solid var(--border-secondary);
       border-radius: 60px;
       padding: 6px 16px;
-      box-shadow: 0 0 15px rgba(255, 100, 50, 0.15);
+      box-shadow: var(--shadow-neon);
+      transition: background 0.3s, border-color 0.3s;
     }
     .table-number-input label {
       font-weight: 700;
@@ -124,7 +223,7 @@
     .table-number-input input {
       background: transparent;
       border: none;
-      color: #ffe6d0;
+      color: var(--input-text);
       font-weight: 700;
       font-size: 1rem;
       padding: 6px 8px;
@@ -132,7 +231,7 @@
       outline: none;
     }
     .table-number-input input:focus {
-      border-bottom: 2px solid #ff6a2e;
+      border-bottom: 2px solid var(--border-secondary);
     }
     .table-number-input input::placeholder {
       color: #665544;
@@ -155,8 +254,8 @@
       margin-left: auto;
     }
     .btn-glass {
-      background: rgba(30, 25, 45, 0.8);
-      border: 1px solid #ff7640;
+      background: var(--bg-card);
+      border: 1px solid var(--border-secondary);
       padding: 8px 22px;
       border-radius: 40px;
       font-weight: 700;
@@ -166,7 +265,7 @@
       display: inline-flex;
       align-items: center;
       gap: 10px;
-      color: #ffd6b0;
+      color: var(--text-secondary);
       backdrop-filter: blur(4px);
     }
     .btn-glass:hover {
@@ -210,13 +309,14 @@
 
     /* FILTER CARD */
     .filter-card {
-      background: rgba(12, 12, 24, 0.85);
+      background: var(--bg-filter);
       backdrop-filter: blur(12px);
       border-radius: 36px;
       padding: 18px 24px;
       margin-bottom: 32px;
       border: 1px solid #ff6020;
       box-shadow: 0 8px 20px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,100,50,0.2);
+      transition: background 0.3s, border-color 0.3s;
     }
     .filter-row {
       display: flex;
@@ -238,12 +338,13 @@
       text-transform: uppercase;
     }
     .pref-select, .search-input {
-      background: #17132a;
-      border: 1px solid #ff6a2e;
+      background: var(--input-bg);
+      border: 1px solid var(--input-border);
       border-radius: 60px;
       padding: 8px 20px;
-      color: #ffe6d0;
+      color: var(--input-text);
       font-weight: 500;
+      transition: background 0.3s, border-color 0.3s, color 0.3s;
     }
     .search-input {
       min-width: 200px;
@@ -255,18 +356,18 @@
       gap: 12px;
     }
     .pill {
-      background: #1f1b32;
-      border: 1px solid #ff6a2e60;
+      background: var(--pill-bg);
+      border: 1px solid var(--pill-border);
       padding: 6px 20px;
       border-radius: 60px;
       font-weight: 700;
       font-size: 0.8rem;
       cursor: pointer;
       transition: all 0.2s;
-      color: #ffcfaf;
+      color: var(--text-secondary);
     }
     .pill.active {
-      background: #ff6a2e;
+      background: var(--pill-active);
       color: #090a1a;
       border-color: #ffb37c;
       box-shadow: 0 0 8px #ff9f5e;
@@ -276,6 +377,7 @@
       gap: 20px;
       flex-wrap: wrap;
       font-size: 0.8rem;
+      color: var(--text-secondary);
     }
     .camera-scan-btn {
       background: linear-gradient(95deg, #2a1f3a, #1a1230);
@@ -285,6 +387,12 @@
       border-radius: 60px;
       font-weight: 700;
       cursor: pointer;
+      transition: background 0.3s, color 0.3s, border-color 0.3s;
+    }
+    .light-mode .camera-scan-btn {
+      background: #f0e8e8;
+      color: #3d2a1a;
+      border-color: #cc6633;
     }
 
     /* MENU SECTIONS */
@@ -311,11 +419,11 @@
       gap: 28px;
     }
     .dish-card {
-      background: rgba(8, 8, 20, 0.9);
+      background: var(--bg-card);
       border-radius: 32px;
       overflow: hidden;
       transition: all 0.25s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-      border: 1px solid #ff6a2e60;
+      border: 1px solid var(--border-primary);
       backdrop-filter: blur(4px);
     }
     .dish-card:hover {
@@ -349,6 +457,7 @@
       display: flex;
       justify-content: space-between;
       margin-bottom: 8px;
+      color: var(--text-primary);
     }
     .price {
       color: #ff9b5c;
@@ -365,13 +474,13 @@
       font-size: 0.7rem;
       padding: 4px 12px;
       border-radius: 40px;
-      background: #1e1a32;
-      color: #ffc9a5;
-      border: 1px solid #ff6a2e;
+      background: var(--badge-bg);
+      color: var(--badge-color);
+      border: 1px solid var(--border-secondary);
     }
     .desc {
       font-size: 0.75rem;
-      color: #bbaa99;
+      color: var(--text-muted);
       line-height: 1.4;
       margin: 8px 0 14px;
     }
@@ -397,12 +506,13 @@
 
     /* RIGHT PANEL */
     .order-panel {
-      background: rgba(10, 8, 18, 0.9);
+      background: var(--bg-panel);
       backdrop-filter: blur(16px);
       border-radius: 38px;
       padding: 24px;
-      border: 1px solid #ff6a2e;
-      box-shadow: 0 0 20px rgba(255, 100, 50, 0.2);
+      border: 1px solid var(--border-secondary);
+      box-shadow: var(--shadow-neon);
+      transition: background 0.3s, border-color 0.3s, box-shadow 0.3s;
     }
     .diner-tabs {
       display: flex;
@@ -411,42 +521,47 @@
       margin-bottom: 20px;
     }
     .diner-pill {
-      background: #1f1b32;
-      border: 1px solid #ff6a2e80;
+      background: var(--pill-bg);
+      border: 1px solid var(--pill-border);
       padding: 8px 18px;
       border-radius: 60px;
       font-weight: 700;
       font-size: 0.8rem;
       cursor: pointer;
       transition: all 0.1s;
+      color: var(--text-secondary);
     }
     .diner-pill.active {
-      background: #ff6a2e;
+      background: var(--pill-active);
       color: #000;
       border-color: #ffaa70;
       box-shadow: 0 0 10px #ff6a2e;
     }
     .items-list {
-      background: #0b091ac0;
+      background: var(--bg-items);
       border-radius: 28px;
       padding: 14px;
       margin: 16px 0;
-      border: 1px solid #ff6a2e40;
+      border: 1px solid var(--border-primary);
+      transition: background 0.3s, border-color 0.3s;
     }
     .order-item {
       display: flex;
       justify-content: space-between;
       align-items: center;
       padding: 10px 0;
-      border-bottom: 1px solid #ff6a2e30;
+      border-bottom: 1px solid var(--border-primary);
       font-size: 0.85rem;
+      color: var(--text-primary);
     }
     .bill-breakdown {
-      background: #0a0718;
+      background: var(--bg-bill);
       border-radius: 28px;
       padding: 16px;
       margin-top: 20px;
       border: 1px solid #ff862e;
+      transition: background 0.3s, border-color 0.3s;
+      color: var(--text-primary);
     }
     .refill-group {
       display: flex;
@@ -458,15 +573,16 @@
       bottom: 30px;
       left: 50%;
       transform: translateX(-50%);
-      background: #1a162f;
+      background: var(--toast-bg);
       backdrop-filter: blur(12px);
-      border: 1px solid #ff7e3a;
-      color: #ffcfaa;
+      border: 1px solid var(--toast-border);
+      color: var(--text-secondary);
       padding: 12px 28px;
       border-radius: 60px;
       font-weight: 600;
       z-index: 2000;
-      box-shadow: 0 0 20px #ff6a2e;
+      box-shadow: 0 0 20px var(--border-secondary);
+      transition: background 0.3s, border-color 0.3s, color 0.3s;
     }
     .modal {
       position: fixed;
@@ -479,13 +595,15 @@
       z-index: 3000;
     }
     .modal-content {
-      background: #121028;
+      background: var(--bg-modal);
       border-radius: 48px;
       max-width: 400px;
       width: 90%;
       padding: 28px;
       text-align: center;
       border: 1px solid #ff7e3a;
+      transition: background 0.3s, border-color 0.3s;
+      color: var(--text-primary);
     }
     @media (max-width: 800px) {
       .order-section { position: static; margin-top: 20px; }
@@ -501,12 +619,12 @@
       bottom: 24px;
       right: 24px;
       z-index: 1100;
-      background: rgba(10, 8, 18, 0.9);
+      background: var(--bg-card);
       backdrop-filter: blur(12px);
       padding: 12px 18px;
       border-radius: 60px;
-      border: 1px solid #ff6a2e;
-      box-shadow: 0 0 15px rgba(255, 100, 50, 0.3);
+      border: 1px solid var(--border-primary);
+      box-shadow: var(--shadow-neon);
       display: flex;
       align-items: center;
       gap: 12px;
@@ -514,7 +632,7 @@
       font-size: 0.8rem;
       cursor: pointer;
       transition: 0.2s;
-      color: #ffd6b0;
+      color: var(--text-secondary);
     }
     .music-control i {
       font-size: 1.4rem;
@@ -541,6 +659,10 @@
       <a href="Restaurant.html">Restaurant</a>
       <a href="Bar.html">Bar</a>
       <a href="Games.html">Games</a>
+      <!-- Theme toggle -->
+      <button class="theme-toggle" id="themeToggle" title="Toggle light/dark mode">
+        <i class="fas fa-sun" id="themeIcon"></i>
+      </button>
     </div>
   </div>
 
@@ -585,7 +707,7 @@
             <button data-cuisine="chinese" class="pill">🥢 CHINESE</button>
           </div>
         </div>
-        <!-- TYPE row – now on its own line -->
+        <!-- TYPE row -->
         <div class="filter-row">
           <span class="filter-label"><i class="fas fa-tag"></i> TYPE</span>
           <div class="pill-group">
@@ -640,10 +762,10 @@
     <!-- RIGHT ORDER PANEL -->
     <div class="order-section">
       <div class="order-panel">
-        <h3 style="font-weight:800; margin-bottom: 14px;"><i class="fas fa-users"></i> PARTY SPLIT · AUTO BILL</h3>
+        <h3 style="font-weight:800; margin-bottom: 14px; color: var(--text-primary);"><i class="fas fa-users"></i> PARTY SPLIT · AUTO BILL</h3>
         <div id="dinerTabs" class="diner-tabs"></div>
         <button class="btn-glass" id="addDinerBtn" style="font-size:0.7rem; padding:6px 16px;"><i class="fas fa-user-plus"></i> ADD PERSON</button>
-        <div style="margin-top: 12px;">
+        <div style="margin-top: 12px; color: var(--text-primary);">
           <strong id="activeDinerName" style="font-size:1.1rem;">Person 1</strong>'s order
           <div id="dinerItemsList" class="items-list"></div>
         </div>
@@ -653,7 +775,7 @@
           <div id="totalGroupBill" style="font-weight:800; margin: 12px 0;"></div>
           <div style="display: flex; align-items: center; gap: 12px; flex-wrap:wrap;">
             <span>⚡ EQUAL SPLIT</span>
-            <input type="number" id="equalSplitPeople" placeholder="# people" style="width:80px; border-radius:60px; padding:6px 12px; background:#1a112a; border:1px solid #ff7e3a; color:#ffcfaa;">
+            <input type="number" id="equalSplitPeople" placeholder="# people" style="width:80px; border-radius:60px; padding:6px 12px; background:var(--input-bg); border:1px solid var(--border-secondary); color:var(--input-text);">
             <span id="equalSplitAmount" style="font-weight:600;"></span>
           </div>
         </div>
@@ -674,6 +796,37 @@
 
 <script>
   // ============================================================
+  // THEME TOGGLE + LOCALSTORAGE
+  // ============================================================
+  const themeToggle = document.getElementById('themeToggle');
+  const themeIcon = document.getElementById('themeIcon');
+
+  function setTheme(light) {
+    if (light) {
+      document.body.classList.add('light-mode');
+      themeIcon.className = 'fas fa-moon';
+      localStorage.setItem('neonStopThemeRestaurant', 'light');
+    } else {
+      document.body.classList.remove('light-mode');
+      themeIcon.className = 'fas fa-sun';
+      localStorage.setItem('neonStopThemeRestaurant', 'dark');
+    }
+  }
+
+  // Load saved preference (default dark)
+  const savedTheme = localStorage.getItem('neonStopThemeRestaurant');
+  if (savedTheme === 'light') {
+    setTheme(true);
+  } else {
+    setTheme(false); // default dark
+  }
+
+  themeToggle.addEventListener('click', () => {
+    const isLight = document.body.classList.contains('light-mode');
+    setTheme(!isLight);
+  });
+
+  // ============================================================
   // MUSIC AUTOPLAY + TOGGLE (levels.mp3)
   // ============================================================
   const audio = document.getElementById('bgMusic');
@@ -681,7 +834,6 @@
   const toggleBtn = document.getElementById('musicToggleBtn');
   let musicStarted = false;
 
-  // Attempt to autoplay on page load (will work if browser allows)
   function tryAutoplay() {
     audio.volume = 0.35;
     audio.play().then(() => {
@@ -690,11 +842,9 @@
       console.log("Music started: levels.mp3");
     }).catch(err => {
       console.log("Autoplay blocked — waiting for user interaction");
-      // We'll still show the control, user can click to start
     });
   }
 
-  // Click on music toggle: start/pause
   toggleBtn.addEventListener('click', function(e) {
     e.stopPropagation();
     if (!musicStarted) {
@@ -715,7 +865,6 @@
     }
   });
 
-  // Update icon when audio state changes
   audio.addEventListener('play', () => { musicIcon.className = "fas fa-music"; });
   audio.addEventListener('pause', () => { musicIcon.className = "fas fa-pause-circle"; });
   audio.addEventListener('ended', () => {
@@ -723,10 +872,8 @@
     audio.play().catch(e => console.log("loop replay"));
   });
 
-  // Try autoplay after a short delay (page load)
   setTimeout(tryAutoplay, 300);
 
-  // Also try on any user click (to overcome autoplay restrictions)
   document.addEventListener('click', function() {
     if (!musicStarted) {
       audio.play().then(() => {
@@ -850,7 +997,7 @@
     const container = document.getElementById(containerId);
     if (!container) return;
     const filtered = menuData.filter(i => i.course === courseType && isItemVisible(i));
-    if (filtered.length === 0) { container.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:40px;">🎮 NO DISHES FOUND · TRY NEW FILTERS 🎮</div>`; return; }
+    if (filtered.length === 0) { container.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:40px; color: var(--text-muted);">🎮 NO DISHES FOUND · TRY NEW FILTERS 🎮</div>`; return; }
     container.innerHTML = filtered.map(item => `
       <div class="dish-card">
         <div class="card-img" style="background-image: url('${item.img}'); background-size: cover; background-position: center;">
@@ -893,7 +1040,7 @@
   function renderCurrentDinerItems() {
     const diner = diners.find(d => d.id === activeDinerId);
     const container = document.getElementById("dinerItemsList");
-    if (!diner || diner.items.length === 0) { container.innerHTML = "<div style='padding:12px; color:#aa9f8a;'>No items — tap menu to order.</div>"; document.getElementById("activeDinerName").innerText = diner?.name; return; }
+    if (!diner || diner.items.length === 0) { container.innerHTML = "<div style='padding:12px; color: var(--text-muted);'>No items — tap menu to order.</div>"; document.getElementById("activeDinerName").innerText = diner?.name; return; }
     document.getElementById("activeDinerName").innerText = diner.name;
     container.innerHTML = diner.items.map(it => `<div class="order-item"><span><strong>${it.name}</strong> x${it.quantity}</span><span>$${(it.price*it.quantity).toFixed(2)} <button class="qty-dec" data-id="${it.id}">-</button> <button class="qty-inc" data-id="${it.id}">+</button> <button class="item-remove" data-id="${it.id}"><i class="fas fa-trash-alt"></i></button></span></div>`).join('');
     container.querySelectorAll('.qty-inc').forEach(btn => btn.addEventListener('click',()=>{ const id=parseInt(btn.dataset.id); const entry=diner.items.find(i=>i.id===id); if(entry){entry.quantity++; renderAll();} }));
@@ -981,48 +1128,21 @@
     showToast(`🥫 SAUCES REQUESTED · TABLE ${tableNum}`);
   };
   
-  document.getElementById("sendToKitchenBtn").onclick = async () => {
-  if (!validateTableNumber()) {
-    showToast("⚠️ Please enter your table number first!");
-    return;
-  }
-
-  const tableNum = getTableNumber();
-
-  let orders = diners
-    .map(d => `${d.name}: ${d.items.map(i => `${i.name} x${i.quantity}`).join(', ')}`)
-    .filter(o => o.includes(':'))
-    .join('\n');
-
-  if (!orders) {
-    showToast("⚠️ No items in order! Add some dishes first.");
-    return;
-  }
-
-  try {
-    await fetch(
-  "https://script.google.com/macros/s/AKfycbwXCSbR_i1LjvaCpRl768mC2MwTte-YKh7s-A0REq9gypXEDkQ2syGX3KiSZisN6EmZ/exec",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          tableNo: tableNum,
-          people: diners.length,
-          order: orders
-        })
-      }
-    );
-
+  document.getElementById("sendToKitchenBtn").onclick = () => {
+    if (!validateTableNumber()) {
+      showToast("⚠️ Please enter your table number first!");
+      return;
+    }
+    const tableNum = getTableNumber();
+    let orders = diners.map(d => `${d.name}: ${d.items.map(i=>`${i.name} x${i.quantity}`).join(', ')}`).filter(o=>o.includes(':')).join('\n');
+    if (!orders) {
+      showToast("⚠️ No items in order! Add some dishes first.");
+      return;
+    }
     alert(`⚡ ORDER SENT TO KITCHEN ⚡\nTABLE ${tableNum}\n${orders}`);
     showToast(`🔥 ORDER SENT! TABLE ${tableNum}`);
-
-  } catch (error) {
-    console.error(error);
-    showToast("❌ Failed to send order");
-  }
-};
+  };
+  
   document.getElementById("tableNumberInput").addEventListener("input", () => {
     if (getTableNumber()) {
       showTableError(false);
