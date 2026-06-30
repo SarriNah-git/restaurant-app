@@ -4,11 +4,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <title>Neon Stop | Gaming Club & Pub</title>
-    <!-- Google Fonts + Font Awesome -->
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Orbitron:wght@400;600;800;900&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
     <style>
-        /* ===== CSS VARIABLES ===== */
         :root {
             --bg-primary: #0a0a0f;
             --bg-secondary: #0d0d14;
@@ -41,8 +39,6 @@
             --btn-primary-bg: linear-gradient(95deg, #0ff, #f0f);
             --btn-primary-text: #fff;
         }
-
-        /* ===== LIGHT MODE VARIABLES ===== */
         body.light-mode {
             --bg-primary: #f0f4ff;
             --bg-secondary: #e8ecf8;
@@ -77,14 +73,7 @@
             --btn-primary-bg: linear-gradient(95deg, #0088cc, #cc44dd);
             --btn-primary-text: #fff;
         }
-
-        /* ===== RESET & BASE ===== */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Space Grotesk', sans-serif;
             background: var(--bg-primary);
@@ -94,855 +83,218 @@
             overflow-x: hidden;
             transition: background var(--transition-speed) ease, color var(--transition-speed) ease;
         }
+        ::-webkit-scrollbar { width: 8px; height: 6px; }
+        ::-webkit-scrollbar-track { background: var(--scrollbar-track); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb { background: var(--scrollbar-thumb); border-radius: 10px; box-shadow: 0 0 6px var(--scrollbar-thumb); }
+        .container { max-width: 1280px; margin: 0 auto; padding: 0 32px; }
 
-        ::-webkit-scrollbar {
-            width: 8px;
-            height: 6px;
-        }
-        ::-webkit-scrollbar-track {
-            background: var(--scrollbar-track);
-            border-radius: 10px;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: var(--scrollbar-thumb);
-            border-radius: 10px;
-            box-shadow: 0 0 6px var(--scrollbar-thumb);
-        }
-
-        .container {
-            max-width: 1280px;
-            margin: 0 auto;
-            padding: 0 32px;
-        }
-
-        /* ===== ENTRANCE SCREEN ===== */
+        /* ENTRANCE */
         .entrance-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: radial-gradient(circle at center, #0a0a1a 0%, #020208 100%);
-            z-index: 10000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.8s ease;
-            overflow: hidden;
+            z-index: 10000; display: flex; align-items: center; justify-content: center;
+            cursor: pointer; transition: opacity 0.8s cubic-bezier(0.4,0,0.2,1), visibility 0.8s ease; overflow: hidden;
         }
-        body.light-mode .entrance-screen {
-            background: radial-gradient(circle at center, #dce4f8 0%, #b0bce0 100%);
-        }
-        .entrance-screen.hidden {
-            opacity: 0;
-            visibility: hidden;
-            pointer-events: none;
-        }
-
+        body.light-mode .entrance-screen { background: radial-gradient(circle at center, #dce4f8 0%, #b0bce0 100%); }
+        .entrance-screen.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
         .entrance-card {
-            text-align: center;
-            background: var(--bg-entrance);
-            backdrop-filter: blur(20px);
-            padding: 60px 80px;
-            border-radius: 80px;
-            border: 2px solid var(--border-entrance);
+            text-align: center; background: var(--bg-entrance); backdrop-filter: blur(20px);
+            padding: 60px 80px; border-radius: 80px; border: 2px solid var(--border-entrance);
             box-shadow: 0 0 50px var(--shadow-neon), inset 0 0 30px var(--shadow-neon);
-            animation: borderPulse 1.5s infinite alternate;
-            transform: scale(1);
-            transition: transform 0.3s ease;
+            animation: borderPulse 1.5s infinite alternate; transform: scale(1); transition: transform 0.3s ease;
         }
-        .entrance-card:hover {
-            transform: scale(1.02);
-        }
+        .entrance-card:hover { transform: scale(1.02); }
         @keyframes borderPulse {
-            0% {
-                border-color: var(--border-neon-strong);
-                box-shadow: 0 0 30px var(--shadow-neon);
-            }
-            100% {
-                border-color: rgba(255, 0, 255, 0.8);
-                box-shadow: 0 0 70px var(--shadow-neon-pink);
-            }
+            0% { border-color: var(--border-neon-strong); box-shadow: 0 0 30px var(--shadow-neon); }
+            100% { border-color: rgba(255,0,255,0.8); box-shadow: 0 0 70px var(--shadow-neon-pink); }
         }
-
         .neon-sign {
-            font-family: 'Orbitron', monospace;
-            font-size: 4.5rem;
-            font-weight: 900;
+            font-family: 'Orbitron', monospace; font-size: 4.5rem; font-weight: 900;
             background: linear-gradient(135deg, var(--glow-cyan), var(--glow-pink), var(--glow-yellow));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            text-shadow: 0 0 20px var(--shadow-neon);
-            letter-spacing: 4px;
-            margin-bottom: 20px;
+            -webkit-background-clip: text; background-clip: text; color: transparent;
+            text-shadow: 0 0 20px var(--shadow-neon); letter-spacing: 4px; margin-bottom: 20px;
         }
-        .glow-text {
-            font-size: 1.3rem;
-            color: var(--text-secondary);
-            margin: 20px 0;
-            letter-spacing: 2px;
-        }
-        .click-arrow {
-            margin-top: 30px;
-            animation: bounce 1.2s infinite;
-        }
-        .click-arrow i {
-            font-size: 2.5rem;
-            color: var(--glow-cyan);
-            text-shadow: 0 0 10px var(--glow-cyan);
-        }
-        @keyframes bounce {
-            0%,
-            100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(10px);
-            }
-        }
-        .entrance-footer {
-            position: absolute;
-            bottom: 30px;
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            letter-spacing: 1px;
-        }
+        .glow-text { font-size: 1.3rem; color: var(--text-secondary); margin: 20px 0; letter-spacing: 2px; }
+        .click-arrow { margin-top: 30px; animation: bounce 1.2s infinite; }
+        .click-arrow i { font-size: 2.5rem; color: var(--glow-cyan); text-shadow: 0 0 10px var(--glow-cyan); }
+        @keyframes bounce { 0%,100% { transform: translateY(0); } 50% { transform: translateY(10px); } }
+        .entrance-footer { position: absolute; bottom: 30px; font-size: 0.8rem; color: var(--text-muted); letter-spacing: 1px; }
 
-        /* ===== NAV ===== */
+        /* NAV */
         nav {
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            background: var(--bg-nav);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid var(--border-neon);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
-            padding: 18px 0;
+            position: sticky; top: 0; z-index: 1000; background: var(--bg-nav);
+            backdrop-filter: blur(12px); border-bottom: 1px solid var(--border-neon);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.6); padding: 18px 0;
             transition: background var(--transition-speed) ease, border-color var(--transition-speed) ease;
         }
-        body.light-mode nav {
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-        }
+        body.light-mode nav { box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
         .nav-container {
-            max-width: 1280px;
-            margin: 0 auto;
-            padding: 0 32px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 16px;
+            max-width: 1280px; margin: 0 auto; padding: 0 32px;
+            display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;
         }
-        .logo {
-            font-family: 'Orbitron', monospace;
-            font-size: 32px;
-            font-weight: 900;
-            letter-spacing: 2px;
-            background: linear-gradient(135deg, var(--glow-cyan), var(--glow-pink));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            text-shadow: 0 0 5px var(--shadow-neon);
-        }
-        .logo i {
-            color: var(--glow-cyan);
-            text-shadow: 0 0 6px var(--glow-cyan);
-            margin-right: 6px;
-        }
-        .nav-links {
-            display: flex;
-            gap: 28px;
-            flex-wrap: wrap;
-            align-items: center;
-        }
-        .nav-links a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1rem;
-            font-family: 'Orbitron', monospace;
-            transition: 0.2s;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            letter-spacing: 1px;
-        }
-        .nav-links a i {
-            font-size: 0.9rem;
-            color: var(--glow-cyan);
-        }
-        .nav-links a:hover {
-            color: var(--glow-pink);
-            text-shadow: 0 0 5px var(--glow-pink);
-            transform: translateY(-2px);
-        }
+        .logo { font-family: 'Orbitron', monospace; font-size: 32px; font-weight: 900; letter-spacing: 2px; background: linear-gradient(135deg, var(--glow-cyan), var(--glow-pink)); -webkit-background-clip: text; background-clip: text; color: transparent; text-shadow: 0 0 5px var(--shadow-neon); }
+        .logo i { color: var(--glow-cyan); text-shadow: 0 0 6px var(--glow-cyan); margin-right: 6px; }
+        .nav-links { display: flex; gap: 28px; flex-wrap: wrap; align-items: center; }
+        .nav-links a { color: var(--text-secondary); text-decoration: none; font-weight: 600; font-size: 1rem; font-family: 'Orbitron', monospace; transition: 0.2s; display: inline-flex; align-items: center; gap: 8px; letter-spacing: 1px; }
+        .nav-links a i { font-size: 0.9rem; color: var(--glow-cyan); }
+        .nav-links a:hover { color: var(--glow-pink); text-shadow: 0 0 5px var(--glow-pink); transform: translateY(-2px); }
+        .theme-toggle { background: none; border: 1px solid var(--border-neon); border-radius: 60px; padding: 8px 16px 8px 14px; color: var(--text-primary); font-size: 1rem; font-family: 'Orbitron', monospace; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; transition: 0.25s ease; background: var(--bg-card); backdrop-filter: blur(4px); }
+        .theme-toggle i { font-size: 1.2rem; color: var(--glow-cyan); transition: 0.3s; }
+        .theme-toggle:hover { border-color: var(--glow-pink); box-shadow: 0 0 12px var(--shadow-neon-pink); transform: scale(1.03); }
+        .theme-toggle .toggle-label { font-size: 0.7rem; letter-spacing: 1px; font-weight: 600; }
 
-        /* ===== THEME TOGGLE BUTTON ===== */
-        .theme-toggle {
-            background: none;
-            border: 1px solid var(--border-neon);
-            border-radius: 60px;
-            padding: 8px 16px 8px 14px;
-            color: var(--text-primary);
-            font-size: 1rem;
-            font-family: 'Orbitron', monospace;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            transition: 0.25s ease;
-            background: var(--bg-card);
-            backdrop-filter: blur(4px);
-        }
-        .theme-toggle i {
-            font-size: 1.2rem;
-            color: var(--glow-cyan);
-            transition: 0.3s;
-        }
-        .theme-toggle:hover {
-            border-color: var(--glow-pink);
-            box-shadow: 0 0 12px var(--shadow-neon-pink);
-            transform: scale(1.03);
-        }
-        .theme-toggle .toggle-label {
-            font-size: 0.7rem;
-            letter-spacing: 1px;
-            font-weight: 600;
-        }
-
-        /* ===== HERO ===== */
+        /* HERO */
         .hero {
-            position: relative;
-            min-height: 85vh;
+            position: relative; min-height: 85vh;
             background: linear-gradient(115deg, var(--hero-overlay) 0%, var(--hero-overlay) 100%),
                 url('https://wallpapers.com/images/hd/night-club-pictures-fvcgvtqe3qy6jts6.jpg');
-            background-size: cover;
-            background-position: center 30%;
-            background-blend-mode: overlay;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
+            background-size: cover; background-position: center 30%; background-blend-mode: overlay;
+            display: flex; align-items: center; justify-content: center; text-align: center;
             border-bottom: 2px solid var(--glow-cyan);
-            box-shadow: inset 0 0 60px var(--shadow-neon), 0 10px 30px rgba(0, 0, 0, 0.5);
+            box-shadow: inset 0 0 60px var(--shadow-neon), 0 10px 30px rgba(0,0,0,0.5);
             transition: border-color var(--transition-speed) ease;
         }
-        .hero-content {
-            max-width: 900px;
-            padding: 0 20px;
-            z-index: 2;
-        }
-        .hero h1 {
-            font-family: 'Orbitron', monospace;
-            font-size: clamp(3rem, 8vw, 5.5rem);
-            font-weight: 900;
-            background: linear-gradient(135deg, var(--glow-cyan), var(--glow-pink), var(--glow-yellow));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            text-shadow: 0 0 15px var(--shadow-neon);
-            letter-spacing: 3px;
-        }
-        .hero p {
-            font-size: clamp(1.2rem, 4vw, 1.8rem);
-            margin-top: 20px;
-            color: var(--text-primary);
-            font-weight: 500;
-            background: var(--bg-card);
-            backdrop-filter: blur(8px);
-            display: inline-block;
-            padding: 8px 28px;
-            border-radius: 60px;
-            border: 1px solid var(--glow-cyan);
-            box-shadow: 0 0 12px var(--shadow-neon);
-            transition: background var(--transition-speed) ease, color var(--transition-speed) ease;
-        }
-        .buttons {
-            margin-top: 40px;
-            display: flex;
-            gap: 20px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-        .buttons a {
-            text-decoration: none;
-            background: var(--bg-card);
-            color: var(--glow-cyan);
-            padding: 14px 32px;
-            font-weight: 700;
-            font-family: 'Orbitron', monospace;
-            font-size: 1.1rem;
-            border-radius: 48px;
-            transition: 0.25s ease;
-            border: 1px solid var(--glow-cyan);
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            box-shadow: 0 0 8px var(--shadow-neon);
-            backdrop-filter: blur(4px);
-            letter-spacing: 1px;
-        }
-        .buttons a:hover {
-            background: var(--glow-cyan);
-            color: #0a0a0f;
-            border-color: var(--glow-pink);
-            box-shadow: 0 0 20px var(--glow-cyan);
-            transform: scale(1.03);
-        }
-        body.light-mode .buttons a:hover {
-            color: #fff;
-        }
+        .hero-content { max-width: 900px; padding: 0 20px; z-index: 2; }
+        .hero h1 { font-family: 'Orbitron', monospace; font-size: clamp(3rem,8vw,5.5rem); font-weight: 900; background: linear-gradient(135deg, var(--glow-cyan), var(--glow-pink), var(--glow-yellow)); -webkit-background-clip: text; background-clip: text; color: transparent; text-shadow: 0 0 15px var(--shadow-neon); letter-spacing: 3px; }
+        .hero p { font-size: clamp(1.2rem,4vw,1.8rem); margin-top: 20px; color: var(--text-primary); font-weight: 500; background: var(--bg-card); backdrop-filter: blur(8px); display: inline-block; padding: 8px 28px; border-radius: 60px; border: 1px solid var(--glow-cyan); box-shadow: 0 0 12px var(--shadow-neon); transition: background var(--transition-speed) ease, color var(--transition-speed) ease; }
+        .buttons { margin-top: 40px; display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; }
+        .buttons a { text-decoration: none; background: var(--bg-card); color: var(--glow-cyan); padding: 14px 32px; font-weight: 700; font-family: 'Orbitron', monospace; font-size: 1.1rem; border-radius: 48px; transition: 0.25s ease; border: 1px solid var(--glow-cyan); display: inline-flex; align-items: center; gap: 10px; box-shadow: 0 0 8px var(--shadow-neon); backdrop-filter: blur(4px); letter-spacing: 1px; }
+        .buttons a:hover { background: var(--glow-cyan); color: #0a0a0f; border-color: var(--glow-pink); box-shadow: 0 0 20px var(--glow-cyan); transform: scale(1.03); }
+        body.light-mode .buttons a:hover { color: #fff; }
 
-        /* ===== OFFERS ===== */
-        #offers-spin {
-            padding: 90px 0;
-            background: var(--bg-secondary);
-            transition: background var(--transition-speed) ease;
-        }
-        .section-title {
-            text-align: center;
-            font-family: 'Orbitron', monospace;
-            font-size: clamp(2.4rem, 6vw, 3.8rem);
-            font-weight: 800;
-            letter-spacing: 2px;
-            margin-bottom: 16px;
-            background: linear-gradient(135deg, var(--glow-cyan), var(--glow-pink));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-        .section-sub {
-            text-align: center;
-            max-width: 700px;
-            margin: 0 auto 50px auto;
-            color: var(--text-secondary);
-            font-size: 1.2rem;
-            border-bottom: 1px dashed var(--glow-cyan);
-            display: inline-block;
-            width: auto;
-            padding-bottom: 8px;
-        }
+        /* OFFERS */
+        #offers-spin { padding: 90px 0; background: var(--bg-secondary); transition: background var(--transition-speed) ease; }
+        .section-title { text-align: center; font-family: 'Orbitron', monospace; font-size: clamp(2.4rem,6vw,3.8rem); font-weight: 800; letter-spacing: 2px; margin-bottom: 16px; background: linear-gradient(135deg, var(--glow-cyan), var(--glow-pink)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        .section-sub { text-align: center; max-width: 700px; margin: 0 auto 50px auto; color: var(--text-secondary); font-size: 1.2rem; border-bottom: 1px dashed var(--glow-cyan); display: inline-block; width: auto; padding-bottom: 8px; }
+        .offers-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; margin-bottom: 80px; }
+        .offer-card { background: var(--bg-card); backdrop-filter: blur(12px); border-radius: 40px; padding: 28px 24px; width: 280px; text-align: center; transition: 0.3s; border: 1px solid var(--border-neon); }
+        .offer-card:hover { transform: translateY(-8px); border-color: var(--glow-pink); box-shadow: 0 0 20px var(--shadow-neon-pink); }
+        .offer-icon { font-size: 3rem; color: var(--glow-cyan); text-shadow: 0 0 10px var(--glow-cyan); margin-bottom: 20px; }
+        .offer-card h3 { font-family: 'Orbitron', monospace; font-size: 1.6rem; color: var(--glow-pink); }
+        .offer-desc { font-size: 0.95rem; color: var(--text-secondary); margin: 12px 0; }
+        .offer-badge { display: inline-block; background: var(--offer-badge-bg); padding: 6px 18px; border-radius: 40px; font-size: 0.9rem; color: var(--glow-cyan); border: 1px solid var(--glow-cyan); }
 
-        .offers-grid {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 30px;
-            margin-bottom: 80px;
-        }
-        .offer-card {
-            background: var(--bg-card);
-            backdrop-filter: blur(12px);
-            border-radius: 40px;
-            padding: 28px 24px;
-            width: 280px;
-            text-align: center;
-            transition: 0.3s;
-            border: 1px solid var(--border-neon);
-        }
-        .offer-card:hover {
-            transform: translateY(-8px);
-            border-color: var(--glow-pink);
-            box-shadow: 0 0 20px var(--shadow-neon-pink);
-        }
-        .offer-icon {
-            font-size: 3rem;
-            color: var(--glow-cyan);
-            text-shadow: 0 0 10px var(--glow-cyan);
-            margin-bottom: 20px;
-        }
-        .offer-card h3 {
-            font-family: 'Orbitron', monospace;
-            font-size: 1.6rem;
-            color: var(--glow-pink);
-        }
-        .offer-desc {
-            font-size: 0.95rem;
-            color: var(--text-secondary);
-            margin: 12px 0;
-        }
-        .offer-badge {
-            display: inline-block;
-            background: var(--offer-badge-bg);
-            padding: 6px 18px;
-            border-radius: 40px;
-            font-size: 0.9rem;
-            color: var(--glow-cyan);
-            border: 1px solid var(--glow-cyan);
-        }
+        /* WHEEL */
+        .wheel-container { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 50px; margin-top: 40px; background: var(--bg-card); border-radius: 80px; padding: 40px 30px; border: 1px solid var(--border-neon); transition: background var(--transition-speed) ease, border-color var(--transition-speed) ease; }
+        .wheel-wrapper { position: relative; width: 400px; height: 400px; }
+        canvas { width: 100% !important; height: 100% !important; border-radius: 50%; box-shadow: 0 0 0 6px var(--border-neon), 0 0 0 12px var(--bg-secondary); transition: box-shadow var(--transition-speed) ease; }
+        .spin-btn { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); background: var(--bg-card); border: 2px solid var(--glow-cyan); color: var(--glow-cyan); font-family: 'Orbitron', monospace; font-weight: bold; font-size: 1.2rem; width: 90px; height: 90px; border-radius: 50%; cursor: pointer; z-index: 20; transition: 0.2s; box-shadow: 0 0 15px var(--shadow-neon); }
+        .spin-btn:hover:not(:disabled) { background: var(--glow-cyan); color: #000; transform: translate(-50%,-50%) scale(1.05); }
 
-        /* ===== WHEEL ===== */
-        .wheel-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            align-items: center;
-            gap: 50px;
-            margin-top: 40px;
-            background: var(--bg-card);
-            border-radius: 80px;
-            padding: 40px 30px;
-            border: 1px solid var(--border-neon);
-            transition: background var(--transition-speed) ease, border-color var(--transition-speed) ease;
-        }
-        .wheel-wrapper {
-            position: relative;
-            width: 400px;
-            height: 400px;
-        }
-        canvas {
-            width: 100% !important;
-            height: 100% !important;
-            border-radius: 50%;
-            box-shadow: 0 0 0 6px var(--border-neon), 0 0 0 12px var(--bg-secondary);
-            transition: box-shadow var(--transition-speed) ease;
-        }
-        .spin-btn {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: var(--bg-card);
-            border: 2px solid var(--glow-cyan);
-            color: var(--glow-cyan);
-            font-family: 'Orbitron', monospace;
-            font-weight: bold;
-            font-size: 1.2rem;
-            width: 90px;
-            height: 90px;
-            border-radius: 50%;
-            cursor: pointer;
-            z-index: 20;
-            transition: 0.2s;
-            box-shadow: 0 0 15px var(--shadow-neon);
-        }
-        .spin-btn:hover:not(:disabled) {
-            background: var(--glow-cyan);
-            color: #000;
-            transform: translate(-50%, -50%) scale(1.05);
-        }
-        .result-area {
-            background: var(--bg-result);
-            backdrop-filter: blur(12px);
-            border-radius: 48px;
-            padding: 25px 35px;
-            min-width: 280px;
-            text-align: center;
-            border: 1px solid var(--glow-cyan);
-            transition: background var(--transition-speed) ease, border-color var(--transition-speed) ease;
-        }
-        .result-area h3 {
-            font-family: 'Orbitron', monospace;
-            font-size: 1.7rem;
-            color: var(--glow-pink);
-        }
-        .prize-display {
-            font-size: 1.6rem;
-            font-weight: bold;
-            color: var(--glow-cyan);
-            margin: 12px 0;
-        }
-        .coupon-code {
-            background: var(--bg-input);
-            padding: 12px;
-            border-radius: 40px;
-            font-family: monospace;
-            margin-top: 15px;
-            border: 1px dashed var(--glow-cyan);
-            color: var(--text-primary);
-            transition: background var(--transition-speed) ease, color var(--transition-speed) ease;
-        }
-        .spin-limit-badge {
-            margin-top: 20px;
-            font-size: 0.85rem;
-            color: #ff66aa;
-            background: rgba(255, 0, 100, 0.2);
-            display: inline-block;
-            padding: 6px 18px;
-            border-radius: 60px;
-        }
-
-        /* ===== CONTACT ===== */
-        #contact {
-            background: var(--bg-primary);
-            padding: 80px 0 60px;
-            border-top: 2px solid var(--glow-cyan);
-            transition: background var(--transition-speed) ease, border-color var(--transition-speed) ease;
-        }
-        .contact-grid {
-            max-width: 1000px;
-            margin: 0 auto;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 48px;
-            text-align: center;
-        }
-        .contact-card {
-            background: var(--bg-card);
-            backdrop-filter: blur(12px);
-            border-radius: 48px;
-            padding: 32px 28px;
-            min-width: 220px;
-            border: 1px solid var(--glow-cyan);
-            transition: background var(--transition-speed) ease, border-color var(--transition-speed) ease;
-            flex: 1 1 200px;
-        }
-        .contact-card i {
-            font-size: 2.6rem;
-            color: var(--glow-cyan);
-            margin-bottom: 20px;
-        }
-        .contact-card h3 {
-            font-family: 'Orbitron', monospace;
-            font-size: 1.7rem;
-            color: var(--glow-pink);
-        }
-        .contact-card p,
-        .contact-card a {
-            color: var(--text-secondary);
-            text-decoration: none;
-        }
-
-        /* ===== LOCATION BUTTON (inside contact card) ===== */
-        .directions-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            margin-top: 18px;
-            padding: 10px 24px;
-            background: var(--btn-primary-bg);
-            color: var(--btn-primary-text);
-            border: none;
-            border-radius: 60px;
-            font-family: 'Orbitron', monospace;
-            font-weight: 700;
-            font-size: 0.85rem;
-            letter-spacing: 1px;
-            cursor: pointer;
-            transition: 0.25s ease;
-            text-decoration: none;
-            border: 1px solid transparent;
-            box-shadow: 0 0 12px var(--shadow-neon);
-        }
-        .directions-btn i {
-            font-size: 1rem;
-            margin-bottom: 0;
-            color: inherit;
-        }
-        .directions-btn:hover {
-            transform: scale(1.04);
-            box-shadow: 0 0 20px var(--shadow-neon-strong);
-            border-color: var(--glow-pink);
-            filter: brightness(1.1);
-        }
-        body.light-mode .directions-btn {
-            color: #fff;
-        }
-
-        /* ===== SOCIAL ICONS ===== */
-        .social-icons {
-            margin-top: 48px;
-            display: flex;
-            justify-content: center;
-            gap: 32px;
-        }
-        .social-icons a {
-            color: var(--glow-cyan);
-            font-size: 1.8rem;
-            transition: 0.2s;
-        }
-        .social-icons a:hover {
-            color: var(--glow-pink);
-            transform: translateY(-5px);
-        }
-
-        /* ===== FEEDBACK ===== */
-        .feedback-section {
-            background: var(--bg-secondary);
-            padding: 70px 0 80px;
-            transition: background var(--transition-speed) ease;
-        }
-        .feedback-card {
-            max-width: 700px;
-            margin: 0 auto;
-            background: var(--feedback-bg);
-            backdrop-filter: blur(16px);
-            border-radius: 64px;
-            padding: 40px 42px;
-            border: 1px solid var(--border-neon);
-            transition: background var(--transition-speed) ease, border-color var(--transition-speed) ease;
-        }
-        .feedback-header {
-            text-align: center;
-            margin-bottom: 32px;
-        }
-        .feedback-header i {
-            font-size: 3rem;
-            color: var(--glow-cyan);
-            background: var(--bg-input);
-            padding: 15px;
-            border-radius: 60px;
-            border: 1px solid var(--glow-cyan);
-            transition: background var(--transition-speed) ease, color var(--transition-speed) ease;
-        }
-        .feedback-header h2 {
-            font-family: 'Orbitron', monospace;
-            font-size: 2.2rem;
-            margin-top: 16px;
-            background: linear-gradient(135deg, var(--glow-cyan), var(--glow-pink));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-        .feedback-header p {
-            color: var(--text-secondary);
-            margin-top: 8px;
-            font-size: 0.95rem;
-        }
-        .feedback-form .input-group {
-            margin-bottom: 24px;
-        }
-        .feedback-form input,
-        .feedback-form textarea,
-        .feedback-form select {
-            width: 100%;
-            background: var(--bg-input);
-            border: 1px solid var(--border-neon);
-            padding: 14px 20px;
-            border-radius: 48px;
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 1rem;
-            color: var(--text-primary);
-            transition: 0.2s, background var(--transition-speed) ease, color var(--transition-speed) ease;
-            outline: none;
-        }
-        .feedback-form textarea {
-            border-radius: 32px;
-            resize: vertical;
-            min-height: 100px;
-        }
-        .feedback-form input:focus,
-        .feedback-form textarea:focus,
-        .feedback-form select:focus {
-            border-color: var(--glow-cyan);
-            box-shadow: 0 0 12px var(--shadow-neon);
-        }
-        .feedback-form select option {
-            background: var(--bg-primary);
-            color: var(--text-primary);
-        }
-        .rating-stars {
-            display: flex;
-            gap: 12px;
-            justify-content: center;
-            margin: 10px 0 18px;
-        }
-        .rating-stars i {
-            font-size: 32px;
-            color: var(--star-inactive);
-            cursor: pointer;
-            transition: 0.15s;
-        }
-        .rating-stars i.active-star,
-        .rating-stars i:hover {
-            color: var(--star-active);
-            text-shadow: 0 0 8px var(--star-active);
-        }
-        .feedback-form button {
-            background: linear-gradient(95deg, var(--glow-cyan), var(--glow-pink));
-            border: 1px solid var(--glow-cyan);
-            color: #fff;
-            font-family: 'Orbitron', monospace;
-            font-weight: bold;
-            font-size: 1.15rem;
-            padding: 14px 28px;
-            border-radius: 60px;
-            width: 100%;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-        .feedback-form button:hover {
-            background: var(--glow-cyan);
-            color: #0a0a0f;
-            border-color: var(--glow-pink);
-            box-shadow: 0 0 20px var(--glow-cyan);
-            transform: scale(1.02);
-        }
-        body.light-mode .feedback-form button:hover {
-            color: #fff;
-        }
-        .feedback-success {
-            text-align: center;
-            background: var(--success-bg);
-            border-radius: 60px;
-            padding: 18px;
-            margin-top: 20px;
-            border: 1px solid #0f4;
-            color: var(--success-text);
-            display: none;
-            transition: background var(--transition-speed) ease, color var(--transition-speed) ease;
-        }
-        .feedback-success.show {
-            display: block;
-            animation: fadeGlow 0.5s;
-        }
-        @keyframes fadeGlow {
-            0% {
-                opacity: 0;
-                transform: translateY(-10px);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* ===== MUSIC CONTROL ===== */
-        .music-control {
-            position: fixed;
-            bottom: 24px;
-            right: 24px;
-            z-index: 1100;
-            background: var(--music-bg);
-            backdrop-filter: blur(12px);
-            padding: 12px 16px;
-            border-radius: 60px;
-            border: 1px solid var(--glow-cyan);
-            box-shadow: 0 0 12px var(--shadow-neon);
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-family: 'Orbitron', monospace;
-            font-size: 0.8rem;
-            cursor: pointer;
-            transition: 0.2s, background var(--transition-speed) ease, border-color var(--transition-speed) ease;
-            color: var(--text-primary);
-        }
-        .music-control i {
+        /* RESULT AREA */
+        .result-area { background: var(--bg-result); backdrop-filter: blur(12px); border-radius: 48px; padding: 25px 35px; min-width: 280px; text-align: center; border: 1px solid var(--glow-cyan); transition: background var(--transition-speed) ease, border-color var(--transition-speed) ease; }
+        .result-area h3 { font-family: 'Orbitron', monospace; font-size: 1.7rem; color: var(--glow-pink); }
+        .prize-display { font-size: 1.6rem; font-weight: bold; color: var(--glow-cyan); margin: 12px 0; }
+        /* Better luck styling */
+        .prize-display.bad-luck {
             font-size: 1.4rem;
-            color: var(--glow-cyan);
+            color: #ff4488;
+            text-shadow: 0 0 10px rgba(255, 68, 136, 0.6);
+            animation: pulseBad 1.5s ease-in-out infinite alternate;
         }
-        .music-control span {
-            color: var(--text-primary);
+        @keyframes pulseBad {
+            0% { text-shadow: 0 0 6px rgba(255,68,136,0.4); }
+            100% { text-shadow: 0 0 18px rgba(255,68,136,0.9); }
+        }
+        .better-luck-msg {
+            margin-top: 14px;
+            font-family: 'Orbitron', monospace;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
             letter-spacing: 1px;
+            line-height: 1.6;
         }
-        .music-control:hover {
-            border-color: var(--glow-pink);
-            box-shadow: 0 0 18px var(--shadow-neon-pink);
-            transform: scale(1.02);
+        .better-luck-msg .offer-hint {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 8px 18px;
+            border-radius: 40px;
+            background: rgba(255, 68, 136, 0.12);
+            border: 1px dashed #ff4488;
+            color: #ff99bb;
+            font-size: 0.78rem;
         }
+        .coupon-code { background: var(--bg-input); padding: 12px; border-radius: 40px; font-family: monospace; margin-top: 15px; border: 1px dashed var(--glow-cyan); color: var(--text-primary); transition: background var(--transition-speed) ease, color var(--transition-speed) ease; }
+        .spin-limit-badge { margin-top: 20px; font-size: 0.85rem; color: #ff66aa; background: rgba(255,0,100,0.2); display: inline-block; padding: 6px 18px; border-radius: 60px; }
 
-        /* ===== FOOTER ===== */
-        footer {
-            background: var(--bg-primary);
-            color: var(--text-muted);
-            text-align: center;
-            padding: 28px 20px;
-            font-size: 0.9rem;
-            transition: background var(--transition-speed) ease, color var(--transition-speed) ease;
-        }
+        /* CONTACT */
+        #contact { background: var(--bg-primary); padding: 80px 0 60px; border-top: 2px solid var(--glow-cyan); transition: background var(--transition-speed) ease, border-color var(--transition-speed) ease; }
+        .contact-grid { max-width: 1000px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: center; gap: 48px; text-align: center; }
+        .contact-card { background: var(--bg-card); backdrop-filter: blur(12px); border-radius: 48px; padding: 32px 28px; min-width: 220px; border: 1px solid var(--glow-cyan); transition: background var(--transition-speed) ease, border-color var(--transition-speed) ease; flex: 1 1 200px; }
+        .contact-card i { font-size: 2.6rem; color: var(--glow-cyan); margin-bottom: 20px; }
+        .contact-card h3 { font-family: 'Orbitron', monospace; font-size: 1.7rem; color: var(--glow-pink); }
+        .contact-card p, .contact-card a { color: var(--text-secondary); text-decoration: none; }
+        .directions-btn { display: inline-flex; align-items: center; gap: 10px; margin-top: 18px; padding: 10px 24px; background: var(--btn-primary-bg); color: var(--btn-primary-text); border: none; border-radius: 60px; font-family: 'Orbitron', monospace; font-weight: 700; font-size: 0.85rem; letter-spacing: 1px; cursor: pointer; transition: 0.25s ease; text-decoration: none; border: 1px solid transparent; box-shadow: 0 0 12px var(--shadow-neon); }
+        .directions-btn i { font-size: 1rem; margin-bottom: 0; color: inherit; }
+        .directions-btn:hover { transform: scale(1.04); box-shadow: 0 0 20px var(--shadow-neon-strong); border-color: var(--glow-pink); filter: brightness(1.1); }
+        body.light-mode .directions-btn { color: #fff; }
+        .social-icons { margin-top: 48px; display: flex; justify-content: center; gap: 32px; }
+        .social-icons a { color: var(--glow-cyan); font-size: 1.8rem; transition: 0.2s; }
+        .social-icons a:hover { color: var(--glow-pink); transform: translateY(-5px); }
 
-        /* ===== RESPONSIVE ===== */
+        /* FEEDBACK */
+        .feedback-section { background: var(--bg-secondary); padding: 70px 0 80px; transition: background var(--transition-speed) ease; }
+        .feedback-card { max-width: 700px; margin: 0 auto; background: var(--feedback-bg); backdrop-filter: blur(16px); border-radius: 64px; padding: 40px 42px; border: 1px solid var(--border-neon); transition: background var(--transition-speed) ease, border-color var(--transition-speed) ease; }
+        .feedback-header { text-align: center; margin-bottom: 32px; }
+        .feedback-header i { font-size: 3rem; color: var(--glow-cyan); background: var(--bg-input); padding: 15px; border-radius: 60px; border: 1px solid var(--glow-cyan); transition: background var(--transition-speed) ease, color var(--transition-speed) ease; }
+        .feedback-header h2 { font-family: 'Orbitron', monospace; font-size: 2.2rem; margin-top: 16px; background: linear-gradient(135deg, var(--glow-cyan), var(--glow-pink)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        .feedback-header p { color: var(--text-secondary); margin-top: 8px; font-size: 0.95rem; }
+        .feedback-form .input-group { margin-bottom: 24px; }
+        .feedback-form input, .feedback-form textarea, .feedback-form select { width: 100%; background: var(--bg-input); border: 1px solid var(--border-neon); padding: 14px 20px; border-radius: 48px; font-family: 'Space Grotesk', sans-serif; font-size: 1rem; color: var(--text-primary); transition: 0.2s, background var(--transition-speed) ease, color var(--transition-speed) ease; outline: none; }
+        .feedback-form textarea { border-radius: 32px; resize: vertical; min-height: 100px; }
+        .feedback-form input:focus, .feedback-form textarea:focus, .feedback-form select:focus { border-color: var(--glow-cyan); box-shadow: 0 0 12px var(--shadow-neon); }
+        .feedback-form select option { background: var(--bg-primary); color: var(--text-primary); }
+        .rating-stars { display: flex; gap: 12px; justify-content: center; margin: 10px 0 18px; }
+        .rating-stars i { font-size: 32px; color: var(--star-inactive); cursor: pointer; transition: 0.15s; }
+        .rating-stars i.active-star, .rating-stars i:hover { color: var(--star-active); text-shadow: 0 0 8px var(--star-active); }
+        .feedback-form button { background: linear-gradient(95deg, var(--glow-cyan), var(--glow-pink)); border: 1px solid var(--glow-cyan); color: #fff; font-family: 'Orbitron', monospace; font-weight: bold; font-size: 1.15rem; padding: 14px 28px; border-radius: 60px; width: 100%; cursor: pointer; transition: 0.2s; }
+        .feedback-form button:hover { background: var(--glow-cyan); color: #0a0a0f; border-color: var(--glow-pink); box-shadow: 0 0 20px var(--glow-cyan); transform: scale(1.02); }
+        body.light-mode .feedback-form button:hover { color: #fff; }
+        .feedback-success { text-align: center; background: var(--success-bg); border-radius: 60px; padding: 18px; margin-top: 20px; border: 1px solid #0f4; color: var(--success-text); display: none; transition: background var(--transition-speed) ease, color var(--transition-speed) ease; }
+        .feedback-success.show { display: block; animation: fadeGlow 0.5s; }
+        @keyframes fadeGlow { 0% { opacity: 0; transform: translateY(-10px); } 100% { opacity: 1; transform: translateY(0); } }
+
+        /* MUSIC */
+        .music-control { position: fixed; bottom: 24px; right: 24px; z-index: 1100; background: var(--music-bg); backdrop-filter: blur(12px); padding: 12px 16px; border-radius: 60px; border: 1px solid var(--glow-cyan); box-shadow: 0 0 12px var(--shadow-neon); display: flex; align-items: center; gap: 12px; font-family: 'Orbitron', monospace; font-size: 0.8rem; cursor: pointer; transition: 0.2s, background var(--transition-speed) ease, border-color var(--transition-speed) ease; color: var(--text-primary); }
+        .music-control i { font-size: 1.4rem; color: var(--glow-cyan); }
+        .music-control span { color: var(--text-primary); letter-spacing: 1px; }
+        .music-control:hover { border-color: var(--glow-pink); box-shadow: 0 0 18px var(--shadow-neon-pink); transform: scale(1.02); }
+        footer { background: var(--bg-primary); color: var(--text-muted); text-align: center; padding: 28px 20px; font-size: 0.9rem; transition: background var(--transition-speed) ease, color var(--transition-speed) ease; }
+
         @media (max-width: 880px) {
-            .nav-container {
-                flex-direction: column;
-                gap: 12px;
-            }
-            .wheel-container {
-                flex-direction: column;
-            }
-            .wheel-wrapper {
-                width: 320px;
-                height: 320px;
-            }
-            .result-area {
-                width: 80%;
-            }
-            .spin-btn {
-                width: 75px;
-                height: 75px;
-                font-size: 1rem;
-            }
-            .feedback-card {
-                padding: 28px 22px;
-                margin: 0 20px;
-            }
-            .music-control {
-                bottom: 16px;
-                right: 16px;
-                padding: 8px 12px;
-            }
-            .entrance-card {
-                padding: 40px 30px;
-                border-radius: 50px;
-            }
-            .neon-sign {
-                font-size: 3rem;
-            }
+            .nav-container { flex-direction: column; gap: 12px; }
+            .wheel-container { flex-direction: column; }
+            .wheel-wrapper { width: 320px; height: 320px; }
+            .result-area { width: 80%; }
+            .spin-btn { width: 75px; height: 75px; font-size: 1rem; }
+            .feedback-card { padding: 28px 22px; margin: 0 20px; }
+            .music-control { bottom: 16px; right: 16px; padding: 8px 12px; }
+            .entrance-card { padding: 40px 30px; border-radius: 50px; }
+            .neon-sign { font-size: 3rem; }
         }
         @media (max-width: 550px) {
-            .container,
-            .nav-container {
-                padding: 0 20px;
-            }
-            .offer-card {
-                width: 90%;
-            }
-            .wheel-wrapper {
-                width: 280px;
-                height: 280px;
-            }
-            .entrance-card {
-                padding: 30px 18px;
-                border-radius: 40px;
-            }
-            .neon-sign {
-                font-size: 2.2rem;
-            }
-            .theme-toggle .toggle-label {
-                display: none;
-            }
-            .contact-card {
-                min-width: 160px;
-            }
-        }
-        @keyframes glowPulse {
-            0% {
-                text-shadow: 0 0 2px var(--glow-cyan);
-            }
-            100% {
-                text-shadow: 0 0 12px var(--glow-pink);
-            }
+            .container, .nav-container { padding: 0 20px; }
+            .offer-card { width: 90%; }
+            .wheel-wrapper { width: 280px; height: 280px; }
+            .entrance-card { padding: 30px 18px; border-radius: 40px; }
+            .neon-sign { font-size: 2.2rem; }
+            .theme-toggle .toggle-label { display: none; }
+            .contact-card { min-width: 160px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- ===== ENTRANCE SCREEN ===== -->
     <div id="entranceScreen" class="entrance-screen">
         <div class="entrance-card">
-            <div class="neon-sign">
-                <i class="fas fa-gamepad"></i> NEON STOP
-            </div>
-            <div class="glow-text">
-                <i class="fas fa-cocktail"></i> GAMING • PUB • RESTAURANT <i class="fas fa-utensils"></i>
-            </div>
-            <div class="click-arrow">
-                <i class="fas fa-arrow-down"></i>
-            </div>
-            <div style="margin-top:20px; font-size:0.9rem; color:var(--text-secondary);">
-                ✨ tap anywhere to enter ✨
-            </div>
+            <div class="neon-sign"><i class="fas fa-gamepad"></i> NEON STOP</div>
+            <div class="glow-text"><i class="fas fa-cocktail"></i> GAMING • PUB • RESTAURANT <i class="fas fa-utensils"></i></div>
+            <div class="click-arrow"><i class="fas fa-arrow-down"></i></div>
+            <div style="margin-top:20px; font-size:0.9rem; color:var(--text-secondary);">✨ tap anywhere to enter ✨</div>
         </div>
-        <div class="entrance-footer">
-            <i class="fas fa-shield-alt"></i> 18+ ONLY • VIBES GUARANTEED
-        </div>
+        <div class="entrance-footer"><i class="fas fa-shield-alt"></i> 18+ ONLY • VIBES GUARANTEED</div>
     </div>
 
-    <!-- ===== NAV ===== -->
     <nav>
         <div class="nav-container">
             <div class="logo"><i class="fas fa-gamepad"></i> NEON STOP</div>
@@ -952,10 +304,8 @@
                 <a href="Games.html"><i class="fas fa-dice-d6"></i> GAMES</a>
                 <a href="#offers-spin"><i class="fas fa-gift"></i> OFFERS & SPIN</a>
                 <a href="#contact"><i class="fas fa-phone-alt"></i> CONTACT</a>
-                <!-- ===== NEW LOCATION BUTTON ===== -->
                 <a href="#contact"><i class="fas fa-map-pin"></i> LOCATION</a>
                 <a href="#feedback"><i class="fas fa-comment-dots"></i> REVIEW</a>
-                <!-- ===== THEME TOGGLE BUTTON ===== -->
                 <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
                     <i class="fas fa-moon" id="themeIcon"></i>
                     <span class="toggle-label" id="themeLabel">DARK</span>
@@ -964,7 +314,6 @@
         </div>
     </nav>
 
-    <!-- ===== HERO ===== -->
     <section class="hero">
         <div class="hero-content">
             <h1>NEON STOP</h1>
@@ -977,7 +326,6 @@
         </div>
     </section>
 
-    <!-- ===== OFFERS & SPIN ===== -->
     <section id="offers-spin">
         <div class="container">
             <h2 class="section-title">[ HOT OFFERS & SPIN FOR REWARDS ]</h2>
@@ -989,38 +337,31 @@
                 <div class="offer-card"><div class="offer-icon"><i class="fas fa-wine-glass-alt"></i></div><h3>GROUP BONANZA</h3><div class="offer-desc">Table for 4+: Free nachos & shots</div><span class="offer-badge">WEEKEND</span></div>
             </div>
             <div class="wheel-container">
-                <div class="wheel-wrapper"><canvas id="wheelCanvas" width="500" height="500"></canvas><button class="spin-btn" id="spinButton"><i class="fas fa-sync-alt"></i><br>SPIN</button></div>
-                <div class="result-area"><h3><i class="fas fa-chart-line"></i> YOUR REWARD</h3><div class="prize-display" id="prizeDisplay">✨ SPIN THE WHEEL ✨</div><div class="spin-message" id="spinMessage">One spin per customer!</div><div class="coupon-code" id="couponCode">🎰 SPIN TO WIN</div></div>
+                <div class="wheel-wrapper">
+                    <canvas id="wheelCanvas" width="500" height="500"></canvas>
+                    <button class="spin-btn" id="spinButton"><i class="fas fa-sync-alt"></i><br>SPIN</button>
+                </div>
+                <div class="result-area">
+                    <h3><i class="fas fa-chart-line"></i> YOUR REWARD</h3>
+                    <div class="prize-display" id="prizeDisplay">✨ SPIN THE WHEEL ✨</div>
+                    <div class="spin-message" id="spinMessage">One spin per customer!</div>
+                    <div class="coupon-code" id="couponCode">🎰 SPIN TO WIN</div>
+                </div>
             </div>
             <div style="text-align:center;"><span class="spin-limit-badge"><i class="fas fa-exclamation-triangle"></i> ONLY ONE SPIN ALLOWED</span></div>
         </div>
     </section>
 
-    <!-- ===== CONTACT + LOCATION ===== -->
     <section id="contact">
         <div class="container">
             <h2 class="section-title">CONNECTION</h2>
             <div class="section-sub">join the grid</div>
             <div class="contact-grid">
+                <div class="contact-card"><i class="fas fa-phone-alt"></i><h3>HOTLINE</h3><p>+1 800 555 0199</p></div>
+                <div class="contact-card"><i class="fas fa-envelope"></i><h3>DIGITAL</h3><a href="mailto:neonstop@example.com">neonstop@example.com</a></div>
                 <div class="contact-card">
-                    <i class="fas fa-phone-alt"></i>
-                    <h3>HOTLINE</h3>
-                    <p>+1 800 555 0199</p>
-                </div>
-                <div class="contact-card">
-                    <i class="fas fa-envelope"></i>
-                    <h3>DIGITAL</h3>
-                    <a href="mailto:neonstop@example.com">neonstop@example.com</a>
-                </div>
-                <!-- ===== LOCATION CARD with Directions Button ===== -->
-                <div class="contact-card">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <h3>NEON DISTRICT</h3>
-                    <p>Headington, Oxford · UK</p>
-                    <!-- Get Directions button -->
-                    <a href="map.html" target="_blank" rel="noopener noreferrer" class="directions-btn">
-                        <i class="fas fa-directions"></i> GET DIRECTIONS
-                    </a>
+                    <i class="fas fa-map-marker-alt"></i><h3>NEON DISTRICT</h3><p>Headington, Oxford · UK</p>
+                    <a href="map.html" target="_blank" rel="noopener noreferrer" class="directions-btn"><i class="fas fa-directions"></i> GET DIRECTIONS</a>
                 </div>
             </div>
             <div class="social-icons">
@@ -1032,32 +373,38 @@
         </div>
     </section>
 
-    <!-- ===== FEEDBACK ===== -->
     <section id="feedback" class="feedback-section">
         <div class="container"><div class="feedback-card"><div class="feedback-header"><i class="fas fa-microphone-alt"></i><h2>VOICE THE GRID</h2><p>Tell us about your neon journey</p></div>
-                <div class="feedback-form"><input type="text" id="feedbackName" placeholder="YOUR ALIAS"><select id="feedbackCategory"><option value="ambiance">✨ Ambiance</option><option value="drinks">🍹 Drinks</option><option value="food">🍔 Food</option><option value="service">💎 Service</option></select>
-                    <div class="rating-stars" id="ratingStars"><i class="far fa-star" data-rate="1"></i><i class="far fa-star" data-rate="2"></i><i class="far fa-star" data-rate="3"></i><i class="far fa-star" data-rate="4"></i><i class="far fa-star" data-rate="5"></i></div>
-                    <textarea id="feedbackMsg" placeholder="Your feedback..."></textarea><button id="submitFeedbackBtn"><i class="fas fa-paper-plane"></i> SEND FEEDBACK</button>
-                    <div id="feedbackSuccessMsg" class="feedback-success"><i class="fas fa-check-circle"></i> Thanks for your feedback!</div></div></div></div>
+            <div class="feedback-form">
+                <input type="text" id="feedbackName" placeholder="YOUR ALIAS">
+                <select id="feedbackCategory">
+                    <option value="ambiance">✨ Ambiance</option>
+                    <option value="drinks">🍹 Drinks</option>
+                    <option value="food">🍔 Food</option>
+                    <option value="service">💎 Service</option>
+                </select>
+                <div class="rating-stars" id="ratingStars">
+                    <i class="far fa-star" data-rate="1"></i><i class="far fa-star" data-rate="2"></i><i class="far fa-star" data-rate="3"></i><i class="far fa-star" data-rate="4"></i><i class="far fa-star" data-rate="5"></i>
+                </div>
+                <textarea id="feedbackMsg" placeholder="Your feedback..."></textarea>
+                <button id="submitFeedbackBtn"><i class="fas fa-paper-plane"></i> SEND FEEDBACK</button>
+                <div id="feedbackSuccessMsg" class="feedback-success"><i class="fas fa-check-circle"></i> Thanks for your feedback!</div>
+            </div>
+        </div></div>
     </section>
 
-    <!-- ===== MUSIC ===== -->
-    <audio id="bgMusic" loop preload="auto">
-        <source src="levels.mp3" type="audio/mpeg">
-    </audio>
-
+    <audio id="bgMusic" loop preload="auto"><source src="levels.mp3" type="audio/mpeg"></audio>
     <div class="music-control" id="musicToggleBtn"><i class="fas fa-music" id="musicIcon"></i><span>🎵 LEVELS · AVICII</span></div>
 
     <footer><div class="container"><p>© 2025 NEON STOP · CYBER PUB & LOUNGE</p></div></footer>
 
     <script>
         // ============================================================
-        // 1. THEME TOGGLE (Light / Dark)
+        // 1. THEME TOGGLE
         // ============================================================
         const themeToggle = document.getElementById('themeToggle');
         const themeIcon = document.getElementById('themeIcon');
         const themeLabel = document.getElementById('themeLabel');
-
         let currentTheme = localStorage.getItem('neonTheme') || 'dark';
 
         function applyTheme(theme) {
@@ -1073,128 +420,138 @@
             localStorage.setItem('neonTheme', theme);
             currentTheme = theme;
         }
-
         applyTheme(currentTheme);
-
         themeToggle.addEventListener('click', function(e) {
             e.stopPropagation();
-            const next = currentTheme === 'dark' ? 'light' : 'dark';
-            applyTheme(next);
+            applyTheme(currentTheme === 'dark' ? 'light' : 'dark');
         });
 
         // ============================================================
-        // 2. ENTRANCE SCREEN + MUSIC START
+        // 2. ENTRANCE SCREEN + MUSIC
         // ============================================================
         const entranceScreen = document.getElementById('entranceScreen');
         const audio = document.getElementById('bgMusic');
         const musicIcon = document.getElementById('musicIcon');
         const toggleBtn = document.getElementById('musicToggleBtn');
-
         let musicStarted = false;
 
         function startMusicAndEnter() {
             if (musicStarted) return;
-
             audio.volume = 0.4;
-            audio.play().then(() => {
-                musicStarted = true;
-                musicIcon.className = "fas fa-music";
-                console.log("Music started: Levels by Avicii!");
-            }).catch(err => {
-                console.log("Audio play needed user interaction first");
-                musicStarted = true;
-            });
-
+            audio.play().then(() => { musicStarted = true; musicIcon.className = "fas fa-music"; }).catch(() => { musicStarted = true; });
             entranceScreen.classList.add('hidden');
-            setTimeout(() => {
-                entranceScreen.style.display = 'none';
-            }, 800);
+            setTimeout(() => { entranceScreen.style.display = 'none'; }, 800);
         }
-
         entranceScreen.addEventListener('click', startMusicAndEnter);
-        document.body.addEventListener('click', function(e) {
-            if (entranceScreen && !entranceScreen.classList.contains('hidden')) {
-                startMusicAndEnter();
-            }
+        document.body.addEventListener('click', function() {
+            if (entranceScreen && !entranceScreen.classList.contains('hidden')) startMusicAndEnter();
         });
-
         toggleBtn.addEventListener('click', function(e) {
             e.stopPropagation();
-            if (!musicStarted) {
-                startMusicAndEnter();
-            } else {
-                if (audio.paused) {
-                    audio.play();
-                    musicIcon.className = "fas fa-music";
-                } else {
-                    audio.pause();
-                    musicIcon.className = "fas fa-pause-circle";
-                }
-            }
+            if (!musicStarted) { startMusicAndEnter(); }
+            else { if (audio.paused) { audio.play(); musicIcon.className = "fas fa-music"; } else { audio.pause(); musicIcon.className = "fas fa-pause-circle"; } }
         });
-
         audio.addEventListener('play', () => { musicIcon.className = "fas fa-music"; });
         audio.addEventListener('pause', () => { musicIcon.className = "fas fa-pause-circle"; });
-        audio.addEventListener('ended', () => {
-            audio.currentTime = 0;
-            audio.play().catch(e => console.log("loop replay"));
-        });
 
         // ============================================================
-        // 3. SPIN WHEEL — 2% WIN RATE (2 out of 100)
+        // 3. SPIN WHEEL — 5% WIN RATE
         // ============================================================
-        // Only 2 winning segments out of 8 → 2/8 = 25% if all segments equal.
-        // To get 2% overall, we make 6 segments "NO WIN" and 2 segments "WIN"
-        // but each segment has equal area. So we set 6 losing, 2 winning.
-        // That gives 2/8 = 25% win rate — NOT 2%.
-        // To get 2%, we need to adjust probability: 2 out of 100 means 1 out of 50.
-        // With 8 segments, if we want exactly 2% win rate, we need to make only 1 segment "WIN"
-        // and the other 7 "NO WIN". That gives 1/8 = 12.5% — still not 2%.
-        // To get 2% with 8 segments, we can use a weighted random approach:
-        // we pick a random number 0-99, if < 2 → win, else lose.
-        // We'll implement that while keeping the wheel visual as before.
-        // But we must keep the wheel segments as before for visual consistency.
-        // So we'll keep 8 segments, but we'll override the result using a 2% random check.
-        // That way the wheel spins visually, but the outcome is determined by 2% chance.
-
         const SEGMENTS = [
-            { label: "🍕 FREE PIZZA", desc: "Free Margherita Pizza!", code: "FREEPIZZA", win: false },
-            { label: "🥂 2 SHOTS", desc: "2 Complimentary Shots", code: "SHOT2WIN", win: false },
-            { label: "😔 BETTER LUCK", desc: "No prize! Try offers above.", code: "TRYAGAIN", win: false },
-            { label: "🍔 50% OFF", desc: "50% Off Burger Combo", code: "BURGER50", win: false },
-            { label: "🍹 FREE MOCKTAIL", desc: "Free Signature Mocktail", code: "MOCKFUN", win: false },
-            { label: "😔 BETTER LUCK", desc: "Better luck next time!", code: "NOLUCK", win: false },
-            { label: "🍰 FREE DESSERT", desc: "Free Dessert Platter", code: "DESSERTVIP", win: false },
-            { label: "💸 20% OFF", desc: "20% OFF total bill", code: "20OFF", win: false }
-        ];
-        // We'll keep the visual segments but the actual win is decided by 2% random.
-        // However, we want to show a winning message only 2% of the time.
-        // So we'll pick a random prize from the list of winning prizes (we have 2 winning visual segments)
-        // but only if the 2% random check passes.
-
-        // Define winning prizes (these are the ones we want to show when user wins)
-        const WINNING_PRIZES = [
-            { label: "🍕 FREE PIZZA", desc: "Free Margherita Pizza!", code: "FREEPIZZA" },
-            { label: "🥂 2 SHOTS", desc: "2 Complimentary Shots", code: "SHOT2WIN" },
-            { label: "🍔 50% OFF", desc: "50% Off Burger Combo", code: "BURGER50" },
-            { label: "🍹 FREE MOCKTAIL", desc: "Free Signature Mocktail", code: "MOCKFUN" },
-            { label: "🍰 FREE DESSERT", desc: "Free Dessert Platter", code: "DESSERTVIP" },
-            { label: "💸 20% OFF", desc: "20% OFF total bill", code: "20OFF" }
+            { label: "🍕 FREE PIZZA",   short: "PIZZA",    color: "#c0392b", desc: "Free Margherita Pizza!",  code: "FREEPIZZA"  },
+            { label: "😔 NO LUCK",      short: "NO LUCK",  color: "#2c2c3a", desc: null,                      code: null         },
+            { label: "🍔 50% OFF",      short: "50% OFF",  color: "#e67e22", desc: "50% Off Burger Combo",    code: "BURGER50"   },
+            { label: "😔 NO LUCK",      short: "NO LUCK",  color: "#2c2c3a", desc: null,                      code: null         },
+            { label: "🍹 MOCKTAIL",     short: "MOCKTAIL", color: "#1a6b8a", desc: "Free Signature Mocktail", code: "MOCKFUN"    },
+            { label: "😔 NO LUCK",      short: "NO LUCK",  color: "#2c2c3a", desc: null,                      code: null         },
+            { label: "🍰 DESSERT",      short: "DESSERT",  color: "#8e44ad", desc: "Free Dessert Platter",    code: "DESSERTVIP" },
+            { label: "😔 NO LUCK",      short: "NO LUCK",  color: "#2c2c3a", desc: null,                      code: null         },
+            { label: "💸 20% OFF",      short: "20% OFF",  color: "#27ae60", desc: "20% OFF total bill",      code: "20OFF"      },
+            { label: "😔 NO LUCK",      short: "NO LUCK",  color: "#2c2c3a", desc: null,                      code: null         },
         ];
 
-        const SEGMENT_COLORS = ["#ff3366", "#33ff66", "#2c2c3a", "#ffcc33", "#33ccff", "#2c2c3a", "#ff66cc", "#ff9933"];
-        const PI = Math.PI,
-            TAU = PI * 2;
-        let currentAngle = 0,
-            spinning = false,
-            animationId = null,
-            hasSpun = false;
-        let wheelCanvas = document.getElementById('wheelCanvas');
-        let ctx = wheelCanvas.getContext('2d');
-        let spinBtn = document.getElementById('spinButton');
-        let prizeDisplay = document.getElementById('prizeDisplay');
-        let spinMessage = document.getElementById('spinMessage');
-        let couponSpan = document.getElementById('couponCode');
+        const WINNING_PRIZES = SEGMENTS.filter(s => s.short !== "NO LUCK");
+
+        const NO_LUCK_MSGS = [
+            "😔 BETTER LUCK NEXT TIME",
+            "😔 NOT TODAY, CHAMP",
+            "😔 THE NEON GODS DISAGREE",
+            "😔 CLOSE, BUT NO CIGAR",
+        ];
+
+        const PI = Math.PI, TAU = PI * 2;
+        let currentAngle = 0, spinning = false, animationId = null, hasSpun = false;
+        const wheelCanvas = document.getElementById('wheelCanvas');
+        const ctx = wheelCanvas.getContext('2d');
+        const spinBtn = document.getElementById('spinButton');
+        const prizeDisplay = document.getElementById('prizeDisplay');
+        const spinMessage = document.getElementById('spinMessage');
+        const couponSpan = document.getElementById('couponCode');
+
+        function drawWheel() {
+            if (!ctx) return;
+            const w = wheelCanvas.width, h = wheelCanvas.height;
+            const cx = w / 2, cy = h / 2, radius = w / 2 - 8;
+            const angleStep = TAU / SEGMENTS.length;
+            ctx.clearRect(0, 0, w, h);
+
+            // Draw segments
+            for (let i = 0; i < SEGMENTS.length; i++) {
+                const start = currentAngle + i * angleStep;
+                const end = start + angleStep;
+                ctx.beginPath();
+                ctx.moveTo(cx, cy);
+                ctx.arc(cx, cy, radius, start, end);
+                ctx.fillStyle = SEGMENTS[i].color;
+                ctx.fill();
+                ctx.strokeStyle = "#ffffff22";
+                ctx.lineWidth = 1.5;
+                ctx.stroke();
+
+                // Label text
+                ctx.save();
+                ctx.translate(cx, cy);
+                ctx.rotate(start + angleStep / 2);
+                ctx.textAlign = "center";
+                ctx.textBaseline = "middle";
+                let fontSize = Math.max(10, radius * 0.075);
+                ctx.font = `bold ${fontSize}px "Orbitron", monospace`;
+                const isLose = SEGMENTS[i].short === "NO LUCK";
+                ctx.fillStyle = isLose ? "#ff4488" : "#ffffff";
+                ctx.fillText(SEGMENTS[i].short, radius * 0.65, 0);
+                ctx.restore();
+            }
+
+            // Centre hub
+            ctx.beginPath();
+            ctx.arc(cx, cy, radius * 0.12, 0, TAU);
+            ctx.fillStyle = "#0ff";
+            ctx.shadowColor = "#0ff";
+            ctx.shadowBlur = 12;
+            ctx.fill();
+            ctx.shadowBlur = 0;
+
+            // ── POINTER (top, pointing DOWN into the wheel) ──
+            // Drawn at the top-centre, outside the rim, pointing inward
+            const pointerTip   = cy - radius + 4;          // just inside rim
+            const pointerBase  = cy - radius - 26;         // above the rim
+            const pointerHalf  = 14;                        // half-width of base
+
+            ctx.beginPath();
+            ctx.moveTo(cx, pointerTip);                              // tip (inside wheel)
+            ctx.lineTo(cx - pointerHalf, pointerBase);               // base left
+            ctx.lineTo(cx + pointerHalf, pointerBase);               // base right
+            ctx.closePath();
+            ctx.fillStyle = "#ff00ff";
+            ctx.shadowColor = "#ff00ff";
+            ctx.shadowBlur = 18;
+            ctx.fill();
+            // white outline for crispness
+            ctx.strokeStyle = "#ffffff";
+            ctx.lineWidth = 1.5;
+            ctx.stroke();
+            ctx.shadowBlur = 0;
+        }
 
         function resizeCanvas() {
             const container = document.querySelector('.wheel-wrapper');
@@ -1205,69 +562,23 @@
             drawWheel();
         }
 
-        function drawWheel() {
-            if (!ctx) return;
-            const w = wheelCanvas.width,
-                h = wheelCanvas.height;
-            const cx = w / 2,
-                cy = h / 2,
-                radius = w / 2 - 8;
+        // Returns which segment index the pointer (top = -PI/2) is currently pointing at
+        function getLandedSegmentIndex(angle) {
             const angleStep = TAU / SEGMENTS.length;
-            ctx.clearRect(0, 0, w, h);
-            for (let i = 0; i < SEGMENTS.length; i++) {
-                const start = currentAngle + i * angleStep;
-                const end = start + angleStep;
-                ctx.beginPath();
-                ctx.moveTo(cx, cy);
-                ctx.arc(cx, cy, radius, start, end);
-                ctx.fillStyle = SEGMENT_COLORS[i % SEGMENT_COLORS.length];
-                ctx.fill();
-                ctx.strokeStyle = "#ffffffaa";
-                ctx.lineWidth = 1.5;
-                ctx.stroke();
-                ctx.save();
-                ctx.translate(cx, cy);
-                ctx.rotate(start + angleStep / 2);
-                ctx.textAlign = "center";
-                ctx.textBaseline = "middle";
-                let fontSize = Math.max(11, radius * 0.08);
-                ctx.font = `bold ${fontSize}px "Orbitron"`;
-                let label = SEGMENTS[i].label;
-                if (label.includes("BETTER LUCK")) {
-                    ctx.fillStyle = "#ffaa88";
-                    ctx.fillText("NO LUCK", radius * 0.68, 5);
-                } else {
-                    ctx.fillStyle = "#ffffff";
-                    let short = label.substring(0, 8);
-                    ctx.fillText(short, radius * 0.68, 5);
-                }
-                ctx.restore();
-            }
-            ctx.beginPath();
-            ctx.arc(cx, cy, radius * 0.12, 0, TAU);
-            ctx.fillStyle = "#0ff";
-            ctx.fill();
-            ctx.beginPath();
-            ctx.moveTo(cx - 10, cy - radius - 4);
-            ctx.lineTo(cx, cy - radius - 16);
-            ctx.lineTo(cx + 10, cy - radius - 4);
-            ctx.fillStyle = "#f0f";
-            ctx.fill();
+            // The pointer is at the top of the canvas = -PI/2 in standard canvas coords.
+            // The wheel rotates by `angle`, so the segment under the pointer is the one
+            // whose arc contains (-PI/2 - angle) normalised to [0, TAU).
+            const pointerRelative = ((-Math.PI / 2 - angle) % TAU + TAU) % TAU;
+            return Math.floor(pointerRelative / angleStep) % SEGMENTS.length;
         }
 
-        function getPrizeIndex() {
-            const pointerAngle = -PI / 2;
-            let step = TAU / SEGMENTS.length;
-            for (let i = 0; i < SEGMENTS.length; i++) {
-                let start = currentAngle + i * step;
-                let end = start + step;
-                let pointerNorm = (pointerAngle % TAU + TAU) % TAU;
-                let startNorm = (start % TAU + TAU) % TAU;
-                let endNorm = (end % TAU + TAU) % TAU;
-                if (startNorm < endNorm) { if (pointerNorm >= startNorm && pointerNorm < endNorm) return i; } else { if (
-                        pointerNorm >= startNorm || pointerNorm < endNorm) return i; }
-            }
-            return 0;
+        // Given a desired segment index, return an angle (offset from 0) that places
+        // the centre of that segment under the pointer.
+        function angleForSegmentCentre(segIndex) {
+            const angleStep = TAU / SEGMENTS.length;
+            const segCentre = segIndex * angleStep + angleStep / 2;
+            // pointer is at -PI/2; we need: (-PI/2 - angle) ≡ segCentre  =>  angle = -PI/2 - segCentre
+            return (-Math.PI / 2 - segCentre + TAU * 10) % TAU;  // keep positive
         }
 
         function spinWheel() {
@@ -1278,44 +589,64 @@
             spinning = true;
             spinBtn.disabled = true;
             spinMessage.innerHTML = "🌀 Spinning...";
-            const spins = 10 + Math.random() * 10;
-            const extra = Math.random() * TAU;
-            const target = currentAngle + (spins * TAU) + extra;
-            const final = target;
-            const startAng = currentAngle;
+            prizeDisplay.className = "prize-display";
+
+            // ── Decide outcome FIRST (5% win), then steer the wheel to match ──
+            const isWinner = Math.random() * 100 < 5;
+
+            // Collect segment indices for the chosen outcome
+            const winIndices  = SEGMENTS.map((s, i) => s.short !== "NO LUCK" ? i : -1).filter(i => i >= 0);
+            const loseIndices = SEGMENTS.map((s, i) => s.short === "NO LUCK" ? i : -1).filter(i => i >= 0);
+            const pool = isWinner ? winIndices : loseIndices;
+
+            // Pick a random segment from the pool and find an angle that lands there
+            const targetSegIndex = pool[Math.floor(Math.random() * pool.length)];
+            // Add a small random offset within the segment so it doesn't always hit dead-centre
+            const angleStep = TAU / SEGMENTS.length;
+            const jitter = (Math.random() - 0.5) * angleStep * 0.6;
+            const landingAngle = (angleForSegmentCentre(targetSegIndex) + jitter + TAU) % TAU;
+
+            // Add multiple full rotations so the spin looks natural (10–15 full turns)
+            const fullSpins = (10 + Math.floor(Math.random() * 6)) * TAU;
+            const target    = landingAngle + fullSpins;
+            const startAng  = currentAngle % TAU;
             const startTime = performance.now();
 
             function animate(now) {
                 const elapsed = now - startTime;
-                let t = Math.min(1, elapsed / 2200);
+                const t = Math.min(1, elapsed / 2400);
                 const ease = 1 - Math.pow(1 - t, 3);
-                currentAngle = startAng + (final - startAng) * ease;
+                currentAngle = startAng + (target - startAng) * ease;
                 drawWheel();
-                if (t < 1) animationId = requestAnimationFrame(animate);
-                else {
-                    currentAngle = final % TAU;
+                if (t < 1) {
+                    animationId = requestAnimationFrame(animate);
+                } else {
+                    currentAngle = target % TAU;
                     drawWheel();
-                    
-                    // ---- 2% WIN RATE LOGIC ----
-                    const randomChance = Math.random() * 100; // 0-99.999
-                    const isWinner = randomChance < 2; // 2% win rate
-                    
-                    if (isWinner) {
-                        // Pick a random winning prize from the list
-                        const winPrize = WINNING_PRIZES[Math.floor(Math.random() * WINNING_PRIZES.length)];
-                        prizeDisplay.innerHTML = `🏆 ${winPrize.label} 🏆<br><span style="font-size:1rem;">${winPrize.desc}</span>`;
-                        couponSpan.innerHTML = `💰 COUPON: ${winPrize.code} | Show at counter!`;
-                        spinMessage.innerHTML = `🎉 You won ${winPrize.label}!`;
+
+                    // Read exactly which segment the pointer landed on
+                    const landedIndex = getLandedSegmentIndex(currentAngle);
+                    const landedSeg   = SEGMENTS[landedIndex];
+                    const actualWin   = landedSeg.short !== "NO LUCK";
+
+                    if (actualWin) {
+                        prizeDisplay.className = "prize-display";
+                        prizeDisplay.innerHTML = `🏆 ${landedSeg.label} 🏆<br><span style="font-size:1rem;">${landedSeg.desc}</span>`;
+                        couponSpan.innerHTML = `💰 COUPON: ${landedSeg.code} | Show at counter!`;
+                        spinMessage.innerHTML = `🎉 You won ${landedSeg.label}!`;
                     } else {
-                        // Lose: show a random "no luck" message
-                        const noLuckMsgs = ["😔 BETTER LUCK NEXT TIME", "😔 TRY AGAIN", "😔 NO PRIZE THIS TIME", "😔 SORRY, NOT TODAY"];
-                        const msg = noLuckMsgs[Math.floor(Math.random() * noLuckMsgs.length)];
+                        const msg = NO_LUCK_MSGS[Math.floor(Math.random() * NO_LUCK_MSGS.length)];
+                        prizeDisplay.className = "prize-display bad-luck";
                         prizeDisplay.innerHTML = msg;
-                        couponSpan.innerHTML = "🎫 TRY AGAIN TOMORROW";
-                        spinMessage.innerHTML = "No reward! Check our daily offers.";
+                        couponSpan.innerHTML   = "🎫 CHECK OUR DAILY OFFERS ABOVE";
+                        spinMessage.innerHTML  = `<div class="better-luck-msg">
+                            The wheel wasn't in your favour today —<br>
+                            but our daily offers always are! 🎯
+                            <span class="offer-hint">👆 Scroll up to claim a deal</span>
+                        </div>`;
                     }
-                    
-                    hasSpun = true;
+
+                    hasSpun  = true;
                     spinning = false;
                     spinBtn.disabled = false;
                     cancelAnimationFrame(animationId);
@@ -1333,19 +664,18 @@
             star.addEventListener('click', function() {
                 currentRating = parseInt(this.getAttribute('data-rate'));
                 document.querySelectorAll('#ratingStars i').forEach((s, idx) => {
-                    if (idx < currentRating) s.className = 'fas fa-star active-star';
-                    else s.className = 'far fa-star';
+                    s.className = idx < currentRating ? 'fas fa-star active-star' : 'far fa-star';
                 });
             });
         });
         document.getElementById('submitFeedbackBtn').addEventListener('click', () => {
             const name = document.getElementById('feedbackName').value.trim();
-            const msg = document.getElementById('feedbackMsg').value.trim();
+            const msg  = document.getElementById('feedbackMsg').value.trim();
             if (!name || !msg) { alert("Please fill name and feedback"); return; }
             document.getElementById('feedbackSuccessMsg').classList.add('show');
             setTimeout(() => document.getElementById('feedbackSuccessMsg').classList.remove('show'), 3000);
             document.getElementById('feedbackName').value = '';
-            document.getElementById('feedbackMsg').value = '';
+            document.getElementById('feedbackMsg').value  = '';
             document.querySelectorAll('#ratingStars i').forEach(s => s.className = 'far fa-star');
             currentRating = 0;
         });
@@ -1353,12 +683,10 @@
         // ============================================================
         // 5. INIT
         // ============================================================
-        window.addEventListener('resize', () => { resizeCanvas();
-            drawWheel(); });
+        window.addEventListener('resize', resizeCanvas);
         spinBtn.addEventListener('click', spinWheel);
         resizeCanvas();
 
-        // Smooth scroll for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
                 const href = this.getAttribute('href');
