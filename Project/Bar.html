@@ -7,6 +7,79 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800;14..32,900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
+    /* ============================================================
+       THEMING (CSS Variables)
+    ============================================================ */
+    :root {
+      /* Dark theme (default) */
+      --bg-primary: #0b0b1a;
+      --bg-gradient-from: #0b0b1a;
+      --bg-gradient-to: #03030c;
+      --bg-navbar: rgba(10, 10, 25, 0.75);
+      --bg-card: rgba(8, 8, 20, 0.9);
+      --bg-filter: rgba(12, 12, 24, 0.85);
+      --bg-panel: rgba(10, 8, 18, 0.9);
+      --bg-items: #0b091ac0;
+      --bg-bill: #0a0718;
+      --bg-modal: #121028;
+      --text-primary: #eef5ff;
+      --text-secondary: #d0fffc;
+      --text-muted: #c5bcb0;
+      --text-dark: #0e0e1c;
+      --border-primary: rgba(0, 230, 210, 0.5);
+      --border-secondary: #00e6c0;
+      --shadow-neon: 0 0 15px rgba(0, 230, 210, 0.25);
+      --shadow-card: 0 0 20px rgba(0,230,200,0.5);
+      --input-bg: #17132a;
+      --input-border: #00e6c0;
+      --input-text: #e0fffc;
+      --pill-bg: #1f1b32;
+      --pill-border: #00e6c060;
+      --pill-active: #00e6c0;
+      --badge-bg: #1e1a32;
+      --badge-color: #b0fff5;
+      --scrollbar-track: #111122;
+      --scrollbar-thumb: #00c9b7;
+      --toast-bg: #1a162f;
+      --toast-border: #00e6c0;
+      --toggle-bg: #1c1c2a;
+    }
+
+    /* Light theme – applied when body has class .light-mode */
+    body.light-mode {
+      --bg-primary: #f5f5ff;
+      --bg-gradient-from: #f5f5ff;
+      --bg-gradient-to: #e8e8f5;
+      --bg-navbar: rgba(255, 250, 250, 0.85);
+      --bg-card: rgba(255, 255, 255, 0.92);
+      --bg-filter: rgba(255, 250, 250, 0.9);
+      --bg-panel: rgba(255, 250, 250, 0.92);
+      --bg-items: #f5f5ff;
+      --bg-bill: #fafaff;
+      --bg-modal: #ffffff;
+      --text-primary: #1a1a2e;
+      --text-secondary: #2a3d3a;
+      --text-muted: #4a5a55;
+      --text-dark: #1a1a2e;
+      --border-primary: rgba(0, 180, 170, 0.4);
+      --border-secondary: #00b8a8;
+      --shadow-neon: 0 0 15px rgba(0, 180, 170, 0.15);
+      --shadow-card: 0 0 20px rgba(0,180,170,0.2);
+      --input-bg: #ffffff;
+      --input-border: #00b8a8;
+      --input-text: #1a1a2e;
+      --pill-bg: #f0f5f5;
+      --pill-border: #00b8a860;
+      --pill-active: #00b8a8;
+      --badge-bg: #eaf5f2;
+      --badge-color: #1a3a35;
+      --scrollbar-track: #e8eef0;
+      --scrollbar-thumb: #00b8a8;
+      --toast-bg: #f5faff;
+      --toast-border: #00b8a8;
+      --toggle-bg: #d0d8d8;
+    }
+
     * {
       margin: 0;
       padding: 0;
@@ -15,14 +88,16 @@
 
     body {
       font-family: 'Inter', monospace;
-      background: radial-gradient(circle at 20% 30%, #0b0b1a, #03030c);
-      color: #eef5ff;
+      background: radial-gradient(circle at 20% 30%, var(--bg-gradient-from), var(--bg-gradient-to));
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
       scroll-behavior: smooth;
+      transition: background 0.3s, color 0.3s;
     }
 
     ::-webkit-scrollbar { width: 6px; }
-    ::-webkit-scrollbar-track { background: #111122; border-radius: 10px; }
-    ::-webkit-scrollbar-thumb { background: #00c9b7; border-radius: 10px; box-shadow: 0 0 6px #00f7e0; }
+    ::-webkit-scrollbar-track { background: var(--scrollbar-track); border-radius: 10px; }
+    ::-webkit-scrollbar-thumb { background: var(--scrollbar-thumb); border-radius: 10px; box-shadow: 0 0 6px var(--scrollbar-thumb); }
 
     .app-container {
       max-width: 1500px;
@@ -32,7 +107,7 @@
 
     /* ---------- NAVBAR (cyan/teal theme) ---------- */
     .navbar {
-      background: rgba(10, 10, 25, 0.75);
+      background: var(--bg-navbar);
       backdrop-filter: blur(14px);
       border-radius: 0 0 32px 32px;
       padding: 0.8rem 2rem;
@@ -41,8 +116,9 @@
       flex-wrap: wrap;
       align-items: center;
       justify-content: space-between;
-      border-bottom: 1px solid rgba(0, 230, 210, 0.5);
-      box-shadow: 0 0 15px rgba(0, 230, 210, 0.25);
+      border-bottom: 1px solid var(--border-primary);
+      box-shadow: var(--shadow-neon);
+      transition: background 0.3s, border-color 0.3s, box-shadow 0.3s;
     }
     .logo {
       font-size: 2rem;
@@ -58,9 +134,10 @@
       display: flex;
       gap: 30px;
       flex-wrap: wrap;
+      align-items: center;
     }
     .nav-links a {
-      color: #d0fffc;
+      color: var(--text-secondary);
       text-decoration: none;
       font-weight: 600;
       transition: 0.2s;
@@ -69,6 +146,27 @@
     .nav-links a:hover {
       color: #00e6c0;
       text-shadow: 0 0 8px #00e6c0;
+    }
+
+    /* Theme toggle button */
+    .theme-toggle {
+      background: none;
+      border: 1px solid var(--border-primary);
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: 0.2s;
+      background: var(--bg-card);
+    }
+    .theme-toggle:hover {
+      border-color: var(--border-secondary);
+      transform: scale(1.05);
     }
 
     /* TABLE INFO ROW */
@@ -93,17 +191,65 @@
       box-shadow: 0 0 10px #00e6c0;
     }
     
+    /* CUSTOMER NAME INPUT */
+    .customer-name-input {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--bg-card);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--border-secondary);
+      border-radius: 60px;
+      padding: 6px 16px;
+      box-shadow: var(--shadow-neon);
+      transition: background 0.3s, border-color 0.3s;
+    }
+    .customer-name-input label {
+      font-weight: 700;
+      color: #5efff0;
+      font-size: 0.85rem;
+      white-space: nowrap;
+    }
+    .customer-name-input input {
+      background: transparent;
+      border: none;
+      color: var(--input-text);
+      font-weight: 700;
+      font-size: 1rem;
+      padding: 6px 8px;
+      width: 140px;
+      outline: none;
+    }
+    .customer-name-input input:focus {
+      border-bottom: 2px solid var(--border-secondary);
+    }
+    .customer-name-input input::placeholder {
+      color: #556666;
+      font-weight: 400;
+      font-size: 0.8rem;
+    }
+    .customer-name-input .name-error {
+      color: #ff4444;
+      font-size: 0.7rem;
+      font-weight: 600;
+      display: none;
+    }
+    .customer-name-input .name-error.show {
+      display: inline;
+    }
+
     /* TABLE NUMBER INPUT */
     .table-number-input {
       display: flex;
       align-items: center;
       gap: 10px;
-      background: rgba(12, 12, 24, 0.85);
+      background: var(--bg-card);
       backdrop-filter: blur(12px);
-      border: 1px solid #00e6c0;
+      border: 1px solid var(--border-secondary);
       border-radius: 60px;
       padding: 6px 16px;
-      box-shadow: 0 0 15px rgba(0, 230, 200, 0.15);
+      box-shadow: var(--shadow-neon);
+      transition: background 0.3s, border-color 0.3s;
     }
     .table-number-input label {
       font-weight: 700;
@@ -114,7 +260,7 @@
     .table-number-input input {
       background: transparent;
       border: none;
-      color: #e0fffc;
+      color: var(--input-text);
       font-weight: 700;
       font-size: 1rem;
       padding: 6px 8px;
@@ -122,7 +268,7 @@
       outline: none;
     }
     .table-number-input input:focus {
-      border-bottom: 2px solid #00e6c0;
+      border-bottom: 2px solid var(--border-secondary);
     }
     .table-number-input input::placeholder {
       color: #556666;
@@ -144,8 +290,8 @@
       gap: 14px;
     }
     .btn-glass {
-      background: rgba(30, 25, 45, 0.8);
-      border: 1px solid #00e6c0;
+      background: var(--bg-card);
+      border: 1px solid var(--border-secondary);
       padding: 8px 22px;
       border-radius: 40px;
       font-weight: 700;
@@ -155,24 +301,24 @@
       display: inline-flex;
       align-items: center;
       gap: 10px;
-      color: #d0fffc;
+      color: var(--text-secondary);
       backdrop-filter: blur(4px);
     }
     .btn-glass:hover {
-      background: #00e6c0;
+      background: var(--border-secondary);
       color: #0a0a1a;
       border-color: #aafff0;
-      box-shadow: 0 0 12px #00e6c0;
+      box-shadow: 0 0 12px var(--border-secondary);
       transform: translateY(-2px);
     }
     .btn-primary {
-      background: #00e6c0;
+      background: var(--border-secondary);
       border: none;
       color: #0e0e1c;
     }
     .btn-primary:hover {
       background: #00ffd0;
-      box-shadow: 0 0 15px #00e6c0;
+      box-shadow: 0 0 15px var(--border-secondary);
     }
     .btn-glass:disabled {
       opacity: 0.5;
@@ -199,13 +345,14 @@
 
     /* FILTER CARD - dark neon cyan */
     .filter-card {
-      background: rgba(12, 12, 24, 0.85);
+      background: var(--bg-filter);
       backdrop-filter: blur(12px);
       border-radius: 36px;
       padding: 18px 24px;
       margin-bottom: 32px;
-      border: 1px solid #00e6c0;
+      border: 1px solid var(--border-secondary);
       box-shadow: 0 8px 20px rgba(0,0,0,0.6);
+      transition: background 0.3s, border-color 0.3s;
     }
     .filter-row {
       display: flex;
@@ -213,7 +360,7 @@
       gap: 20px;
       align-items: center;
       margin-bottom: 18px;
-      border-bottom: 1px dashed #00e6c040;
+      border-bottom: 1px dashed var(--border-secondary)40;
       padding-bottom: 12px;
     }
     .filter-row:last-child { border-bottom: none; }
@@ -224,12 +371,13 @@
       text-transform: uppercase;
     }
     .pref-select, .search-input {
-      background: #17132a;
-      border: 1px solid #00e6c0;
+      background: var(--input-bg);
+      border: 1px solid var(--input-border);
       border-radius: 60px;
       padding: 8px 20px;
-      color: #e0fffc;
+      color: var(--input-text);
       font-weight: 500;
+      transition: background 0.3s, border-color 0.3s, color 0.3s;
     }
     .search-input { min-width: 200px; flex: 1; }
     .pill-group {
@@ -238,27 +386,28 @@
       gap: 12px;
     }
     .pill {
-      background: #1f1b32;
-      border: 1px solid #00e6c060;
+      background: var(--pill-bg);
+      border: 1px solid var(--pill-border);
       padding: 6px 20px;
       border-radius: 60px;
       font-weight: 700;
       font-size: 0.8rem;
       cursor: pointer;
       transition: all 0.2s;
-      color: #c0fff8;
+      color: var(--text-secondary);
     }
     .pill.active {
-      background: #00e6c0;
+      background: var(--pill-active);
       color: #090a1a;
       border-color: #aafff0;
-      box-shadow: 0 0 8px #00e6c0;
+      box-shadow: 0 0 8px var(--border-secondary);
     }
     .allergy-group {
       display: flex;
       gap: 20px;
       flex-wrap: wrap;
       font-size: 0.8rem;
+      color: var(--text-secondary);
     }
     .camera-scan-btn {
       background: linear-gradient(95deg, #2a1f3a, #1a1230);
@@ -268,6 +417,12 @@
       border-radius: 60px;
       font-weight: 700;
       cursor: pointer;
+      transition: background 0.3s, color 0.3s, border-color 0.3s;
+    }
+    .light-mode .camera-scan-btn {
+      background: #f0f5f5;
+      color: #1a3a35;
+      border-color: #00b8a8;
     }
 
     .menu-category {
@@ -282,7 +437,7 @@
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
-      border-left: 4px solid #00e6c0;
+      border-left: 4px solid var(--border-secondary);
       padding-left: 18px;
     }
     .menu-grid {
@@ -291,11 +446,11 @@
       gap: 28px;
     }
     .dish-card {
-      background: rgba(8, 8, 20, 0.9);
+      background: var(--bg-card);
       border-radius: 32px;
       overflow: hidden;
       transition: all 0.25s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-      border: 1px solid #00e6c060;
+      border: 1px solid var(--border-primary);
       backdrop-filter: blur(4px);
     }
     .dish-card:hover {
@@ -329,11 +484,12 @@
       display: flex;
       justify-content: space-between;
       margin-bottom: 8px;
+      color: var(--text-primary);
     }
     .price {
       color: #2effe0;
       font-weight: 800;
-      text-shadow: 0 0 4px #00e6c0;
+      text-shadow: 0 0 4px var(--border-secondary);
     }
     .meta-badges {
       display: flex;
@@ -345,13 +501,13 @@
       font-size: 0.7rem;
       padding: 4px 12px;
       border-radius: 40px;
-      background: #1e1a32;
-      color: #b0fff5;
-      border: 1px solid #00e6c0;
+      background: var(--badge-bg);
+      color: var(--badge-color);
+      border: 1px solid var(--border-secondary);
     }
     .desc {
       font-size: 0.75rem;
-      color: #c5bcb0;
+      color: var(--text-muted);
       line-height: 1.4;
       margin: 8px 0 14px;
     }
@@ -377,12 +533,13 @@
 
     /* RIGHT PANEL */
     .order-panel {
-      background: rgba(10, 8, 18, 0.9);
+      background: var(--bg-panel);
       backdrop-filter: blur(16px);
       border-radius: 38px;
       padding: 24px;
-      border: 1px solid #00e6c0;
+      border: 1px solid var(--border-secondary);
       box-shadow: 0 0 20px rgba(0,230,200,0.2);
+      transition: background 0.3s, border-color 0.3s, box-shadow 0.3s;
     }
     .diner-tabs {
       display: flex;
@@ -391,42 +548,47 @@
       margin-bottom: 20px;
     }
     .diner-pill {
-      background: #1f1b32;
-      border: 1px solid #00e6c080;
+      background: var(--pill-bg);
+      border: 1px solid var(--pill-border);
       padding: 8px 18px;
       border-radius: 60px;
       font-weight: 700;
       font-size: 0.8rem;
       cursor: pointer;
       transition: all 0.1s;
+      color: var(--text-secondary);
     }
     .diner-pill.active {
-      background: #00e6c0;
+      background: var(--pill-active);
       color: #000;
       border-color: #aafff0;
-      box-shadow: 0 0 10px #00e6c0;
+      box-shadow: 0 0 10px var(--border-secondary);
     }
     .items-list {
-      background: #0b091ac0;
+      background: var(--bg-items);
       border-radius: 28px;
       padding: 14px;
       margin: 16px 0;
-      border: 1px solid #00e6c040;
+      border: 1px solid var(--border-primary);
+      transition: background 0.3s, border-color 0.3s;
     }
     .order-item {
       display: flex;
       justify-content: space-between;
       align-items: center;
       padding: 10px 0;
-      border-bottom: 1px solid #00e6c030;
+      border-bottom: 1px solid var(--border-primary);
       font-size: 0.85rem;
+      color: var(--text-primary);
     }
     .bill-breakdown {
-      background: #0a0718;
+      background: var(--bg-bill);
       border-radius: 28px;
       padding: 16px;
       margin-top: 20px;
-      border: 1px solid #00e6c0;
+      border: 1px solid var(--border-secondary);
+      transition: background 0.3s, border-color 0.3s;
+      color: var(--text-primary);
     }
     .refill-group {
       display: flex;
@@ -439,15 +601,16 @@
       bottom: 30px;
       left: 50%;
       transform: translateX(-50%);
-      background: #1a162f;
+      background: var(--toast-bg);
       backdrop-filter: blur(12px);
-      border: 1px solid #00e6c0;
-      color: #c4fff5;
+      border: 1px solid var(--toast-border);
+      color: var(--text-secondary);
       padding: 12px 28px;
       border-radius: 60px;
       font-weight: 600;
       z-index: 2000;
-      box-shadow: 0 0 20px #00e6c0;
+      box-shadow: 0 0 20px var(--border-secondary);
+      transition: background 0.3s, border-color 0.3s, color 0.3s;
     }
     .modal {
       position: fixed;
@@ -460,19 +623,22 @@
       z-index: 3000;
     }
     .modal-content {
-      background: #121028;
+      background: var(--bg-modal);
       border-radius: 48px;
       max-width: 400px;
       width: 90%;
       padding: 28px;
       text-align: center;
-      border: 1px solid #00e6c0;
+      border: 1px solid var(--border-secondary);
+      transition: background 0.3s, border-color 0.3s;
+      color: var(--text-primary);
     }
     @media (max-width: 800px) {
       .order-section { position: static; margin-top: 20px; }
       .navbar { flex-direction: column; gap: 15px; }
       .table-bar { justify-content: center; margin-top: 10px; }
       .table-number-input { width: 100%; justify-content: center; }
+      .customer-name-input { width: 100%; justify-content: center; }
       .action-buttons { width: 100%; justify-content: center; }
     }
 
@@ -482,12 +648,12 @@
       bottom: 24px;
       right: 24px;
       z-index: 1100;
-      background: rgba(10, 8, 18, 0.9);
+      background: var(--bg-card);
       backdrop-filter: blur(12px);
       padding: 12px 18px;
       border-radius: 60px;
-      border: 1px solid #00e6c0;
-      box-shadow: 0 0 15px rgba(0, 230, 200, 0.3);
+      border: 1px solid var(--border-primary);
+      box-shadow: var(--shadow-neon);
       display: flex;
       align-items: center;
       gap: 12px;
@@ -495,11 +661,11 @@
       font-size: 0.8rem;
       cursor: pointer;
       transition: 0.2s;
-      color: #d0fffc;
+      color: var(--text-secondary);
     }
     .music-control i {
       font-size: 1.4rem;
-      color: #00e6c0;
+      color: var(--border-secondary);
     }
     .music-control span {
       letter-spacing: 1px;
@@ -521,17 +687,27 @@
       <a href="Restaurant.html">Restaurant</a>
       <a href="Bar.html">Bar</a>
       <a href="Games.html">Games</a>
+      <!-- Theme toggle -->
+      <button class="theme-toggle" id="themeToggle" title="Toggle light/dark mode">
+        <i class="fas fa-sun" id="themeIcon"></i>
+      </button>
     </div>
   </div>
 
   <div class="table-bar">
     <div class="table-badge"><i class="fas fa-qrcode"></i> SCAN TO ORDER</div>
+
+    <div class="customer-name-input">
+      <label for="customerNameInput"><i class="fas fa-user"></i> NAME</label>
+      <input type="text" id="customerNameInput" placeholder="Enter your name" maxlength="40" autocomplete="off">
+      <span class="name-error" id="nameError">⚠️ Please enter your name</span>
+    </div>
     
-    <!-- TABLE NUMBER INPUT -->
+    <!-- TABLE NUMBER INPUT with updated error message -->
     <div class="table-number-input">
       <label for="tableNumberInput"><i class="fas fa-hashtag"></i> TABLE</label>
       <input type="number" id="tableNumberInput" placeholder="Enter table #" min="1" step="1">
-      <span class="table-error" id="tableError">⚠️ Please enter table number</span>
+      <span class="table-error" id="tableError">⚠️ Please enter a valid table number (1-50)</span>
     </div>
     
     <div class="action-buttons">
@@ -603,10 +779,10 @@
 
     <div class="order-section">
       <div class="order-panel">
-        <h3 style="font-weight:800; margin-bottom: 14px;"><i class="fas fa-users"></i> PARTY SPLIT · AUTO BILL</h3>
+        <h3 style="font-weight:800; margin-bottom: 14px; color: var(--text-primary);"><i class="fas fa-users"></i> PARTY SPLIT · AUTO BILL</h3>
         <div id="dinerTabs" class="diner-tabs"></div>
         <button class="btn-glass" id="addDinerBtn" style="font-size:0.7rem; padding:6px 16px;"><i class="fas fa-user-plus"></i> ADD PERSON</button>
-        <div style="margin-top: 12px;"><strong id="activeDinerName" style="font-size:1.1rem;">Person 1</strong>'s order
+        <div style="margin-top: 12px; color: var(--text-primary);"><strong id="activeDinerName" style="font-size:1.1rem;">Person 1</strong>'s order
           <div id="dinerItemsList" class="items-list"></div>
         </div>
         <div class="bill-breakdown">
@@ -615,7 +791,7 @@
           <div id="totalGroupBill" style="font-weight:800; margin: 12px 0;"></div>
           <div style="display: flex; align-items: center; gap: 12px; flex-wrap:wrap;">
             <span>⚡ EQUAL SPLIT</span>
-            <input type="number" id="equalSplitPeople" placeholder="# people" style="width:80px; border-radius:60px; padding:6px 12px; background:#1a112a; border:1px solid #00e6c0; color:#c4fff5;">
+            <input type="number" id="equalSplitPeople" placeholder="# people" style="width:80px; border-radius:60px; padding:6px 12px; background:var(--input-bg); border:1px solid var(--border-secondary); color:var(--input-text);">
             <span id="equalSplitAmount" style="font-weight:600;"></span>
           </div>
         </div>
@@ -635,6 +811,37 @@
 </div>
 
 <script>
+  // ============================================================
+  // THEME TOGGLE + LOCALSTORAGE
+  // ============================================================
+  const themeToggle = document.getElementById('themeToggle');
+  const themeIcon = document.getElementById('themeIcon');
+
+  function setTheme(light) {
+    if (light) {
+      document.body.classList.add('light-mode');
+      themeIcon.className = 'fas fa-moon';
+      localStorage.setItem('neonStopThemeBar', 'light');
+    } else {
+      document.body.classList.remove('light-mode');
+      themeIcon.className = 'fas fa-sun';
+      localStorage.setItem('neonStopThemeBar', 'dark');
+    }
+  }
+
+  // Load saved preference (default dark)
+  const savedTheme = localStorage.getItem('neonStopThemeBar');
+  if (savedTheme === 'light') {
+    setTheme(true);
+  } else {
+    setTheme(false); // default dark
+  }
+
+  themeToggle.addEventListener('click', () => {
+    const isLight = document.body.classList.contains('light-mode');
+    setTheme(!isLight);
+  });
+
   // ============================================================
   // MUSIC AUTOPLAY + TOGGLE (levels.mp3)
   // ============================================================
@@ -694,48 +901,88 @@
 
   // ========== EXPANDED BEVERAGE MENU (with Beers, Spirits, Coolers) ==========
   const beverageData = [
-    // 🍺 BEERS
     { id: 701, name: "Hop Prophet IPA", price: 7, type: "alcoholic", category: "beer", dietary: "vegan", allergens: ["gluten"], glutenFree: false, inStock: true, desc: "Citrus, pine, 6.8% ABV — bold west coast IPA.", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTPmGhPx5u-srVifiR16ZnLx9EWzfrhW8YYt7FEVwHaZA&s=10" },
     { id: 702, name: "Midnight Lager", price: 6.5, type: "alcoholic", category: "beer", dietary: "vegan", allergens: ["gluten"], inStock: true, desc: "Smooth dark lager with caramel notes.", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRrJdcb2_HA3QvvdpMhKbJpgfHZVcvZ-Vkl6dWaiYqqis3doqIDx1hl12Mi&s=10" },
     { id: 703, name: "Wheat Cloud", price: 6, type: "alcoholic", category: "beer", dietary: "vegan", allergens: ["gluten"], inStock: true, desc: "German-style hefeweizen, banana & clove.", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTovmb7-Wn9C_cmqSyTx0CXjeE0CieUzR1lzSf8BdT7JfzCYyYDjbhv6qvK&s=10" },
     { id: 704, name: "Oatmeal Stout", price: 7.5, type: "alcoholic", category: "beer", dietary: "vegan", allergens: ["gluten"], inStock: true, desc: "Roasted malt, chocolate, creamy mouthfeel.", img: "https://cdn-ilemcaj.nitrocdn.com/gEMhPnyKJctOREXbBSYZJCHBYSwlzENp/assets/images/optimized/rev-d4c8d06/www.summitbrewing.com/wp-content/uploads/2025/04/Summit-Brewing-Oatmeal-Stout.webp" },
     { id: 705, name: "Citra Session Ale", price: 6, type: "alcoholic", category: "beer", dietary: "vegan", allergens: ["gluten"], inStock: true, desc: "Light, tropical & crushable 4.5%", img: "https://commonrootsbrewing.com/wp-content/uploads/2022/02/CitraSession.jpeg" },
    { id: 706, name: "Kingfisher Ultra", price: 7, type: "alcoholic", category: "beer", dietary: "vegan", allergens: ["gluten"], inStock: true, desc: "Premium lager, crisp & smooth, 5% ABV — perfect with spicy bites.", img: "https://beyondbothshores.com/wp-content/uploads/2025/09/Best-Beach-Beer-In-Goa-Kingfisher-Ultra.jpg" },
-    // 🥃 SPIRITS (served neat / on rocks)
+    { id: 707, name: "Bud Light", price: 5, type: "alcoholic", category: "beer", dietary: "vegan", allergens: ["gluten"], inStock: true, desc: "Light, crisp American lager — smooth & refreshing.", img: "https://bevmo.com/cdn/shop/files/d2d9cbd1-555a-4abc-97c5-53b3c065c2a7_6c20aef0-da2c-4fd3-9a10-b662a8912d76.jpg?v=1761271324&width=1445" },
+    { id: 708, name: "Blue Moon Belgian White", price: 6.5, type: "alcoholic", category: "beer", dietary: "vegan", allergens: ["gluten"], inStock: true, desc: "Belgian-style witbier with orange peel & coriander — smooth & citrusy.", img: "https://i0.wp.com/www.nearof.com/wp-content/uploads/2026/06/2026-0614-blue-moon-NA-beer-01-1600w.jpg?resize=800%2C538&ssl=1" },
+    { id: 709, name: "Sierra Nevada Pale Ale", price: 6.5, type: "alcoholic", category: "beer", dietary: "vegan", allergens: ["gluten"], inStock: true, desc: "Classic American pale ale with pine & citrus notes.", img: "https://craftypint.com/thumb/2800x1440/crop/https/craftypint.s3.amazonaws.com/crafty-v4/news/sierra-nevada-231115-151732.jpg" },
+    { id: 710, name: "Guinness Draught", price: 7, type: "alcoholic", category: "beer", dietary: "vegan", allergens: ["gluten"], inStock: true, desc: "Rich, creamy Irish stout with notes of coffee & chocolate.", img: "data:image/jpeg;base64,PLACEHOLDER" },
+    { id: 711, name: "New Belgium Fat Tire", price: 6, type: "alcoholic", category: "beer", dietary: "vegan", allergens: ["gluten"], inStock: true, desc: "Amber ale with toasty malt & subtle hop balance.", img: "https://www.westword.com/wp-content/uploads/sites/2/ww-media/mediaserver/den/2020-01/fat.tire.webp" },
     { id: 801, name: "Jack Daniel's Old No.7", price: 9, type: "alcoholic", category: "spirits", dietary: "vegan", allergens: [], inStock: true, desc: "Tennessee whiskey, vanilla & oak.", img: "https://www.theraremalt.com/cdn/shop/files/jack-daniels-old-no7-tennessee-whiskey-983906.jpg?v=1741972756" },
     { id: 802, name: "Grey Goose Vodka", price: 10, type: "alcoholic", category: "spirits", dietary: "vegan", allergens: [], inStock: true, desc: "Premium French vodka, smooth as silk.", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQvBMlXUiK0dvAa0UuQcjdgB75dpx0jyZQAh-ExqBpGrgbGgfGKqEm1P2E5&s=10" },
     { id: 803, name: "Hendrick's Gin", price: 11, type: "alcoholic", category: "spirits", dietary: "vegan", allergens: [], inStock: true, desc: "Infused with rose & cucumber. Served with tonic.", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRbfPXrEcHdoSaIt_N0DPy7l9Mp1E262EaqrBxqNhPA1OdcYnoI3YXB6Bk&s=10" },
     { id: 804, name: "Johnnie Walker Black Label", price: 12, type: "alcoholic", category: "spirits", dietary: "vegan", allergens: [], inStock: true, desc: "Iconic blended scotch, smoky & rich.", img: "https://images.ctfassets.net/waruwpig3jxu/rYk8WxpJ1ellZvibRckWT/0e8df23f16b39c6d986faf6f68af8fee/black-750ml_producthero_lifestyle-01_desktop.webp?&w=2560&q=80" },
     { id: 805, name: "Bacardi Superior Rum", price: 8, type: "alcoholic", category: "spirits", dietary: "vegan", allergens: [], inStock: true, desc: "White rum, light & crisp for mixing or sipping.", img: "https://www.winefetch.com//images/sites/publicprinceton/gallery/bacardi%20superior%20lifestyle.jpg" },
     { id: 806, name: "Don Julio Blanco", price: 13, type: "alcoholic", category: "spirits", dietary: "vegan", allergens: [], inStock: true, desc: "Premium tequila, agave forward.", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTKzIyJUg5U-LMdQ9px9uxZQ-zJMfBmZoG0XlQg8-YHFBUS1et_a__kwY35&s=10" },
-    // ✨ COOLERS / RTD (Breezer and more)
+    { id: 807, name: "Jameson Irish Whiskey", price: 9, type: "alcoholic", category: "spirits", dietary: "vegan", allergens: [], inStock: true, desc: "Smooth, triple-distilled Irish whiskey with hints of vanilla.", img: "https://woodshedwinenspirits.com/wp-content/uploads/2021/07/JamesonIrishWhiskey3.jpeg" },
+    { id: 808, name: "Maker's Mark Bourbon", price: 10, type: "alcoholic", category: "spirits", dietary: "vegan", allergens: [], inStock: true, desc: "Kentucky bourbon, soft & sweet with caramel notes.", img: "https://secretbottle.com.au/cdn/shop/products/makers-mark-kentucky-straight-bourbon-whiskey-700ml-184314_1800x1800.jpg?v=1647519326" },
+    { id: 809, name: "Absolut Vodka", price: 8, type: "alcoholic", category: "spirits", dietary: "vegan", allergens: [], inStock: true, desc: "Swedish vodka, clean & crisp, ideal for mixing.", img: "https://www.kroger.com/product/images/large/bottom/0083522900010" },
+    { id: 810, name: "Absolut Citron", price: 8.5, type: "alcoholic", category: "spirits", dietary: "vegan", allergens: [], inStock: true, desc: "Lemon-flavored vodka, zesty & refreshing.", img: "https://omiastore.com/wp-content/uploads/2023/12/ABSOLUT-VODKA-CITRON-ads.webp" },
+    { id: 811, name: "Bombay Sapphire Gin", price: 10, type: "alcoholic", category: "spirits", dietary: "vegan", allergens: [], inStock: true, desc: "Premium gin with 10 botanicals, smooth & floral.", img: "https://www.thebottleclub.com/cdn/shop/files/Bombay_Sapphire_Premier_Cru_Gin_Description_imag_e_85796bfb-c290-47fc-84f6-c038a25da026.jpg?v=1739294962&width=1200" },
+    { id: 812, name: "Captain Morgan Spiced Rum", price: 8, type: "alcoholic", category: "spirits", dietary: "vegan", allergens: [], inStock: true, desc: "Spiced rum with vanilla, caramel, and spice.", img: "https://static.livcheers.com/static/content/images/brand-content/captain-morgan/photo-3.webp" },
+    { id: 814, name: "Hennessy VS Cognac", price: 13, type: "alcoholic", category: "spirits", dietary: "vegan", allergens: [], inStock: true, desc: "Classic cognac, bold & fruity with oak notes.", img: "https://www.theliquorshop.com.sg/cdn/shop/files/6784d0494f9b7_1736757321_900x528.jpg?v=1736759037" },
+    { id: 815, name: "Fireball Cinnamon Whisky", price: 7, type: "alcoholic", category: "spirits", dietary: "vegan", allergens: [], inStock: true, desc: "Cinnamon-flavored whisky, sweet & spicy.", img: "https://s3.ap-southeast-1.amazonaws.com/cdn1.sgliteasset.com/theliquo/images/texteditor/fireball_image_1705457953.jpg" },
     { id: 901, name: "Bacardi Breezer - Strawberry", price: 5.5, type: "alcoholic", category: "cooler", dietary: "vegan", allergens: [], inStock: true, desc: "Sweet strawberry, 4% ABV ready-to-drink.", img: "https://pintplease.s3.eu-west-1.amazonaws.com/beer/profile/breezer_sweet_strawberry_334713-167812012.jpeg" },
     { id: 902, name: "Bacardi Breezer - Lime", price: 5.5, type: "alcoholic", category: "cooler", dietary: "vegan", allergens: [], inStock: true, desc: "Zesty lime, refreshing & bubbly.", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRwR9l5Jv3r1p4p3Z2aKzo6zmZ-sJrCHMib8pSNZ5swog&s" },
     { id: 903, name: "Smirnoff Ice (Original)", price: 5, type: "alcoholic", category: "cooler", dietary: "vegan", allergens: [], inStock: true, desc: "Citrus malt beverage, crisp & clean.", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQRh6LL_5tS38tvKBmdDAL4-FhXP8U7m-IAGF8roNGGedOb_qX2w8W0BvaZ&s=10" },
     { id: 904, name: "Mike's Hard Lemonade", price: 6, type: "alcoholic", category: "cooler", dietary: "vegan", allergens: [], inStock: true, desc: "Hard lemonade with real lemon taste.", img: "https://static.wixstatic.com/media/8f1abd_88fa12d50db2421ca8de8acff9b4617b~mv2.png/v1/fill/w_744,h_400,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/8f1abd_88fa12d50db2421ca8de8acff9b4617b~mv2.png" },
     { id: 905, name: "White Claw - Mango", price: 6.5, type: "alcoholic", category: "cooler", dietary: "glutenfree", glutenFree: true, allergens: [], inStock: true, desc: "Hard seltzer, 5% ABV, gluten-free.", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRv18lrfjbaxwJHKwz9lxmFyeYWeIfX7xCNBs_gpOyoRau4HGS-gU7EHo58&s=10" },
-    // 🍸 COCKTAILS (original + new)
+    { id: 906, name: "Bacardi Breezer - Peach", price: 5.5, type: "alcoholic", category: "cooler", dietary: "vegan", allergens: [], inStock: true, desc: "Sweet peach, 4% ABV ready-to-drink.", img: "https://static.livcheers.com/static/content/images/liquor/LCIN05224.webp" },
+    { id: 913, name: "Twisted Tea - Original", price: 6, type: "alcoholic", category: "cooler", dietary: "vegan", allergens: [], inStock: true, desc: "Hard iced tea, smooth & refreshing.", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSGxy6TKOPkMiMLVf4pFT9h02PcSOV1--L8sA&s" },
+    { id: 908, name: "Smirnoff Ice - Raspberry", price: 5, type: "alcoholic", category: "cooler", dietary: "vegan", allergens: [], inStock: true, desc: "Raspberry malt beverage, crisp & fruity.", img: "https://www.chowhound.com/img/gallery/every-single-smirnoff-ice-flavor-ranked/3-smirnoff-ice-raspberry-1756140525.jpg" },
+    { id: 909, name: "Smirnoff Ice - Green Apple", price: 5, type: "alcoholic", category: "cooler", dietary: "vegan", allergens: [], inStock: true, desc: "Sour green apple malt beverage.", img: "https://images.untp.beer/crop?width=640&height=640&stripmeta=true&url=https://untappd.s3.amazonaws.com/photos/2026_06_05/21886f9c4762d8a464daa56f919e5334_c_1575606015_raw.jpg" },
+    { id: 910, name: "White Claw - Black Cherry", price: 6.5, type: "alcoholic", category: "cooler", dietary: "glutenfree", glutenFree: true, allergens: [], inStock: true, desc: "Hard seltzer, 5% ABV, gluten-free.", img: "https://thissillygirlskitchen.com/wp-content/uploads/2015/08/Black-Cherry-Sangria-from-ThisSillyGirlsLife.com-7.jpg" },
+    { id: 911, name: "White Claw - Watermelon", price: 6.5, type: "alcoholic", category: "cooler", dietary: "glutenfree", glutenFree: true, allergens: [], inStock: true, desc: "Hard seltzer, 5% ABV, gluten-free.", img: "https://xoxobella.com/wp-content/uploads/2022/05/watermelon_strawberry_white_claw-5.jpg" },
     { id: 201, name: "Old Fashioned", price: 14, type: "alcoholic", category: "cocktail", dietary: "vegan", allergens: [], inStock: true, desc: "Whiskey, sugar, bitters, orange twist.", img: "https://www.vindulge.com/wp-content/uploads/2024/02/Smoked-Old-Fashioned-FI.jpg" },
     { id: 202, name: "Margarita", price: 12, type: "alcoholic", category: "cocktail", dietary: "vegan", allergens: [], inStock: true, desc: "Tequila, lime, triple sec.", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSXQ5F28Fet0OnhQ7MJ72wlX_yOl491vnyID3FJHDuD4zSfxgwXXGL6wjx0&s=10" },
     { id: 203, name: "Espresso Martini", price: 13, type: "alcoholic", category: "cocktail", dietary: "vegan", allergens: [], inStock: true, desc: "Vodka, coffee liqueur, espresso.", img: "https://static-prod.remymartin.com/app/uploads/2025/02/remy-martin-cocktails-remy-espresso-1x1-250220-02.jpg" },
     { id: 204, name: "Mojito", price: 11, type: "alcoholic", category: "cocktail", dietary: "vegan", allergens: [], inStock: true, desc: "Rum, mint, lime, soda.", img: "https://food.fnr.sndimg.com/content/dam/images/food/fullset/2023/4/04/FNK_NONALCOHOLIC_MOJITO_s4x3.jpg.rend.hgtvcom.616.462.suffix/1680705973123.webp" },
 { id: 324, name: "Blue Lagoon", price: 11, type: "alcoholic", category: "cocktail", dietary: "vegan", allergens: [], inStock: true, desc: "Vodka, blue curacao, lemonade, lemon slice — vibrant & citrusy.", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRi86P4bZT9dugVzGiVdPtSLexsNAJ-tI81TbjvvwRFGWc5EWTBjJAZRTAt&s=10" },
-    // 🥤 MOCKTAILS (non-alcoholic classics)
+    { id: 221, name: "Whiskey Sour", price: 13, type: "alcoholic", category: "cocktail", dietary: "vegan", allergens: ["egg"], inStock: true, desc: "Whiskey, lemon, sugar, egg white — classic & foamy.", img: "https://www.marthastewart.com/thmb/tbNcHSfi2JSUELHZ6VzkB42KdiU=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/MSL-RM-316574-whiskey-sour-hero-1223-fccd689c7cd944658cbd17c07ac39440.jpg" },
+    { id: 223, name: "French 75", price: 14, type: "alcoholic", category: "cocktail", dietary: "vegan", allergens: [], inStock: true, desc: "Gin, champagne, lemon — elegant & bubbly.", img: "https://pinchandswirl.com/wp-content/uploads/2015/12/French-75-cocktails-with-lemons-and-Champagne-in-the-background-featured-1.jpg" },
+    { id: 224, name: "Bellini", price: 13, type: "alcoholic", category: "cocktail", dietary: "vegan", allergens: [], inStock: true, desc: "Prosecco, peach puree — Italian classic.", img: "https://www.giallozafferano.com/images/228-22850/bellini-cocktail_1200x800.jpg" },
+       { id: 226, name: "Sidecar", price: 14, type: "alcoholic", category: "cocktail", dietary: "vegan", allergens: [], inStock: true, desc: "Cognac, triple sec, lemon — bold & citrusy.", img: "https://www.thebottleclub.com/cdn/shop/articles/Sidecar_Cocktail_Recipe.jpg?v=1703659562" },
+    { id: 227, name: "White Russian", price: 12, type: "alcoholic", category: "cocktail", dietary: "dairy", allergens: ["dairy"], inStock: true, desc: "Vodka, coffee liqueur, cream — smooth & rich.", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTucnNzPfP2DWobW1jC1VN5h8NvwEoo3Z0lGw&s" },
+    { id: 228, name: "Black Russian", price: 11, type: "alcoholic", category: "cocktail", dietary: "vegan", allergens: [], inStock: true, desc: "Vodka, coffee liqueur — bold & bitter.", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRqDSGwtUAYV-Lnel69KLKFtOZsSw5R_TgRMA&s" },
+        { id: 230, name: "Paloma", price: 10, type: "alcoholic", category: "cocktail", dietary: "vegan", allergens: [], inStock: true, desc: "Tequila, grapefruit soda, lime — refreshing & zesty.", img: "https://www.zippsliquor.com/wp-content/uploads/2026/01/authentic-texas-paloma-cocktail-highball-1.jpg" },
     { id: 301, name: "Sunrise Mocktail", price: 7, type: "non-alcoholic", category: "mocktail", dietary: "vegan", allergens: [], inStock: true, desc: "Orange & pineapple juice, grenadine.", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSO5IOpRNagS9asaDR_lC2rtWSt8wd1uO_b0XWNBAv2-sxYrzgiFNf3he_J&s=10" },
     { id: 302, name: "Virgin Piña Colada", price: 8, type: "non-alcoholic", category: "mocktail", dietary: "vegan", allergens: [], inStock: true, desc: "Pineapple, coconut cream.", img: "https://images.immediate.co.uk/production/volatile/sites/2/2022/11/Virgin-pina-colada-247c380.jpg" },
     { id: 303, name: "Cucumber Basil Spritzer", price: 6.5, type: "non-alcoholic", category: "mocktail", dietary: "vegan", allergens: [], inStock: true, desc: "Cucumber, basil, soda.", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQONtFezRin2wKMhE5lTQzHkRtxcAss39K0jSPcB5h27JlzIKNUbexYcSmj&s=10" },
     { id: 323, name: "Virgin Mojito", price: 6.9, type: "non-alcoholic", category: "mocktail", dietary: "vegan", allergens: [], inStock: true, desc: "Fresh mint, lime, cane sugar, soda water — crisp & alcohol‑free mojito.", img: "https://food.fnr.sndimg.com/content/dam/images/food/fullset/2023/4/04/FNK_NONALCOHOLIC_MOJITO_s4x3.jpg.rend.hgtvcom.616.462.suffix/1680705973123.webp" },
 { id: 325, name: "Blue Lagoon (NA)", price: 7, type: "non-alcoholic", category: "mocktail", dietary: "vegan", allergens: [], inStock: true, desc: "Blue curacao syrup, lemonade, sprite, lime — electric blue refreshment.", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRi86P4bZT9dugVzGiVdPtSLexsNAJ-tI81TbjvvwRFGWc5EWTBjJAZRTAt&s=10" },
-    // 🥤 SOFT DRINKS
+    { id: 326, name: "Bloody Mary", price: 6.5, type: "non-alcoholic", category: "mocktail", dietary: "vegan", allergens: [], inStock: true, desc: "Tomato juice, spices, celery — savory & spicy.", img: "https://www.seriouseats.com/thmb/sLMvhR4uyBmj5cL8xLH8BQjG14I=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/20230908-SEA-BloodyMary-TwoBites-hero-ace8a18066504a94ae50222dcedfc140.jpg" },
+    { id: 327, name: "Peach Bellini (NA)", price: 7, type: "non-alcoholic", category: "mocktail", dietary: "vegan", allergens: [], inStock: true, desc: "Peach puree, soda water — fruity & sparkling.", img: "https://sansdrinks.com.au/cdn/shop/articles/123_7355b184-84e7-4e78-9fad-fe47af16bd1f.webp?v=1771557336" },
+    { id: 328, name: "Strawberry Lemonade", price: 6.5, type: "non-alcoholic", category: "mocktail", dietary: "vegan", allergens: [], inStock: true, desc: "Fresh strawberry, lemon, soda — sweet & tart.", img: "https://i0.wp.com/thejoyfilledkitchen.com/wp-content/uploads/2021/04/strawberry-Lemonade-1-2.jpg?resize=740%2C760&ssl=1" },
+    { id: 329, name: "Coconut Lime Cooler", price: 7, type: "non-alcoholic", category: "mocktail", dietary: "vegan", allergens: [], inStock: true, desc: "Coconut water, lime, mint — tropical & hydrating.", img: "https://thumbs.dreamstime.com/b/coconut-lime-cooler-shavings-garnish-382670338.jpg" },
+        { id: 332, name: "Pomegranate Spritz", price: 7, type: "non-alcoholic", category: "mocktail", dietary: "vegan", allergens: [], inStock: true, desc: "Pomegranate juice, lime, soda — tart & refreshing.", img: "https://meijerspecialtypharmacy.com/wp-content/uploads/2019/09/Pomegranate-Spritz.jpg" },
+    { id: 333, name: "Tropical Sunset", price: 7.5, type: "non-alcoholic", category: "mocktail", dietary: "vegan", allergens: [], inStock: true, desc: "Passion fruit, orange, pineapple — tropical bliss.", img: "https://cdn.apartmenttherapy.info/image/upload/f_jpg,q_auto:eco,c_fill,g_auto,w_1500,ar_4:3/k%2FPhoto%2FRecipes%2F2024-07-malibu-sunset%2Fmalibu-sunset-336" },
+    { id: 334, name: "Kiwi Cooler", price: 6.5, type: "non-alcoholic", category: "mocktail", dietary: "vegan", allergens: [], inStock: true, desc: "Kiwi, lime, soda — sweet & tangy.", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT36vFSgtmfT53GH64jEy1Bhdqa_nqv8jSLHQ&s" },
     { id: 401, name: "Coca-Cola", price: 3, type: "non-alcoholic", category: "softdrink", dietary: "vegan", allergens: [], inStock: true, desc: "Classic cola with ice.", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRfErcwGbxB6sm4qeanfq3PXCQHczrO9PJc4gsuVpkzEb-oll-ZL6U0bIw&s=10" },
     { id: 402, name: "Ginger Ale", price: 3.5, type: "non-alcoholic", category: "softdrink", dietary: "vegan", allergens: [], inStock: true, desc: "Spicy-sweet.", img: "https://www.fentimansusa.com/cdn/shop/files/fentimans_ginger-ale.jpg?v=1681506563&width=1920" },
-    // 🍊 JUICES
     { id: 501, name: "Fresh Orange Juice", price: 4, type: "non-alcoholic", category: "juice", dietary: "vegan", allergens: [], inStock: true, desc: "Cold-pressed.", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT2otz3gyoosC8bqHSzUPUg-PJ7c1zRKlw_ZO1DFyVIzZAWFCgoZBU5UzU&s=10" },
     { id: 502, name: "Watermelon Mint", price: 5, type: "non-alcoholic", category: "juice", dietary: "vegan", allergens: [], inStock: true, desc: "Blended watermelon, mint.", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKlwilWxXruVMtSThH_p7wYN8tc6_3t2NEVkCg4OIO9AUIoqGnO7PcN6k&s=10" },
-    // 🍻 SHOTS
+    { id: 403, name: "Sprite", price: 3, type: "non-alcoholic", category: "softdrink", dietary: "vegan", allergens: [], inStock: true, desc: "Crisp lemon-lime soda, perfectly bubbly.", img: "https://images.unsplash.com/photo-1680404005217-a441afdefe83?fm=jpg&q=60&w=3000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8c3ByaXRlfGVufDB8fDB8fHww" },
+    { id: 404, name: "Fanta Orange", price: 3, type: "non-alcoholic", category: "softdrink", dietary: "vegan", allergens: [], inStock: true, desc: "Bright, fruity orange soda with a classic zing.", img: "https://m.media-amazon.com/images/I/61S5o-suL5L._AC_UF350,350_QL80_.jpg" },
+    { id: 405, name: "Tonic Water", price: 3, type: "non-alcoholic", category: "softdrink", dietary: "vegan", allergens: [], inStock: true, desc: "Crisp, bitter-sweet tonic with a hint of citrus.", img: "https://www.fentimans.com/cdn/shop/files/fentimans_valencian-orange_tonic-water.jpg?v=1681507168&width=1920" },
+    { id: 406, name: "Club Soda", price: 2.5, type: "non-alcoholic", category: "softdrink", dietary: "vegan", allergens: [], inStock: true, desc: "Effervescent soda water, perfect with lime.", img: "https://media.istockphoto.com/id/641651132/photo/gin-tonic-cocktail.jpg?s=612x612&w=0&k=20&c=TxW-4e0GCVR-FoF4lkwnX2CLSTy2yVF5k5CGTTdx7TY=" },
+    { id: 407, name: "Mountain Dew", price: 3.5, type: "non-alcoholic", category: "softdrink", dietary: "vegan", allergens: [], inStock: true, desc: "Energizing citrus soda with a bold kick.", img: "https://imgproxy.divecdn.com/GbS5Evejw2q4Z7jzYG3UZfZB27wK1awT442c8JIxjCE/g:ce/rs:fill:1200:675:1/Z3M6Ly9kaXZlc2l0ZS1zdG9yYWdlL2RpdmVpbWFnZS80X0hlcm8tQ2Fuc19sb3Jlcy5qcGc=.webp" },
+      { id: 503, name: "Apple Juice", price: 4, type: "non-alcoholic", category: "juice", dietary: "vegan", allergens: [], inStock: true, desc: "100% pure pressed apple juice, sweet & crisp.", img: "https://cookingchew.com/wp-content/uploads/2023/03/Recipes-Using-Apple-Juice-CO2926-FE-min.jpg" },
+    { id: 504, name: "Cranberry Juice", price: 4.5, type: "non-alcoholic", category: "juice", dietary: "vegan", allergens: [], inStock: true, desc: "Tart and refreshing cranberry juice.", img: "https://post.healthline.com/wp-content/uploads/2021/07/Cranberry_Juice_1296x728-header-1296x729.jpg" },
+    { id: 505, name: "Pineapple Juice", price: 4.5, type: "non-alcoholic", category: "juice", dietary: "vegan", allergens: [], inStock: true, desc: "Sweet & tangy tropical pineapple juice.", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRgxXZsFDEjoBp_P7-bNnDBjr7KcyptLHGnfg&s" },
+    { id: 506, name: "Grapefruit Juice", price: 4.5, type: "non-alcoholic", category: "juice", dietary: "vegan", allergens: [], inStock: true, desc: "Zesty pink grapefruit juice, bittersweet.", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQEbm-QCUgfEDHW-c4yIraGRHmN0dbiDkjrnw&s" },
     { id: 601, name: "Tequila Shot", price: 6, type: "alcoholic", category: "shots", dietary: "vegan", allergens: [], inStock: true, desc: "Reposado, lime, salt.", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQhlEa29Vrs4xCLA9_G-yjEfQQO5OatIF2xoQuH9KBZ9M9XPkozA2fzsqjz&s=10" },
     { id: 602, name: "Jägerbomb", price: 8, type: "alcoholic", category: "shots", dietary: "vegan", allergens: [], inStock: true, desc: "Jägermeister + energy.", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYErChFTb98IIT3ykBvqONTTNQOsTgOcvo3xnooxsCuq0sNnZhoF-Xa3w&s=10" },
-  ];
+    { id: 604, name: "Lemon Drop Shot", price: 7, type: "alcoholic", category: "shots", dietary: "vegan", allergens: [], inStock: true, desc: "Vodka, lemon, sugar – sweet & sour.", img: "https://partylicious.net/wp-content/uploads/2023/01/lemon-drop-shot-up-close-min-500x500.jpg" },
+    { id: 605, name: "Sour Apple Shot", price: 6.5, type: "alcoholic", category: "shots", dietary: "vegan", allergens: [], inStock: true, desc: "Sour apple schnapps, vodka – tangy & tart.", img: "https://www.thecocktailproject.com/sites/default/files/styles/recipe_slider_img/public/Caramel_Apple_Shot_MG_6444_Crop.jpg.webp?itok=2AW0OEt8" },
+    { id: 606, name: "Tequila Sunrise Shot", price: 7, type: "alcoholic", category: "shots", dietary: "vegan", allergens: [], inStock: true, desc: "Tequila, orange juice, grenadine – layered sunrise.", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6HesthJ3nXeAhJft8E4mmI1NNBk_zb_L1Lg&s" },
+    { id: 607, name: "Irish Car Bomb", price: 8, type: "alcoholic", category: "shots", dietary: "dairy", allergens: ["dairy"], inStock: true, desc: "Irish whiskey, Baileys, Guinness – bold & creamy.", img: "https://i.guim.co.uk/img/media/8198a3ecffd15f8ffcba59e0558a4082a911a898/0_83_4928_2956/master/4928.jpg?width=1200&height=900&quality=85&auto=format&fit=crop&s=fea4d1df562e258dbb23e5691f290de4" },
+    { id: 608, name: "Buttery Nipple", price: 7, type: "alcoholic", category: "shots", dietary: "dairy", allergens: ["dairy"], inStock: true, desc: "Butterscotch schnapps, Baileys – smooth & sweet.", img: "https://amandascookin.com/wp-content/uploads/2023/06/Buttery-Nipple-Shot-FB.jpg" },
+    { id: 609, name: "B-52 Shot", price: 8, type: "alcoholic", category: "shots", dietary: "dairy", allergens: ["dairy"], inStock: true, desc: "Kahlua, Baileys, Grand Marnier – layered classic.", img: "https://www.thebottleclub.com/cdn/shop/articles/B-52_Shot_Cocktail_Recipe-230585.jpg?v=1707229578" },
+     ];
 
   // State
   let diners = [{ id: "d1", name: "Person 1", items: [] }];
@@ -746,15 +993,93 @@
   let currentAllergies = [];
   let searchQuery = "";
 
-  // Helper to get table number
-  function getTableNumber() {
-    const input = document.getElementById('tableNumberInput');
-    const val = parseInt(input.value);
-    if (!val || val <= 0) return null;
+  // Strictly checks and requires a real name instead of the default
+  function forceValidName(diner) {
+    while (!diner.name || diner.name.trim() === "" || diner.name === "Person 1") {
+      let customName = prompt(`Please enter a valid Customer Name for this person (Required):`);
+      if (customName && customName.trim() !== "") {
+        diner.name = customName.trim();
+        renderAll();
+        break;
+      }
+    }
+  }
+
+  // ============ CUSTOMER NAME (required before ordering) ============
+  function getCustomerName() {
+    const input = document.getElementById('customerNameInput');
+    const val = input.value.trim();
+    if (!val) return null;
     return val;
   }
 
+  function validateCustomerName() {
+    const val = getCustomerName();
+    const errorEl = document.getElementById('nameError');
+    const input = document.getElementById('customerNameInput');
+    if (!val) {
+      errorEl.classList.add('show');
+      input.style.borderBottom = '2px solid #ff4444';
+      return false;
+    } else {
+      errorEl.classList.remove('show');
+      input.style.borderBottom = 'none';
+      return true;
+    }
+  }
+  // =====================================================================
+
+  // ============ TABLE NUMBER LIMIT (1–50) ============
+  function getTableNumber() {
+    const input = document.getElementById('tableNumberInput');
+    const val = parseInt(input.value);
+    if (!val || val <= 0 || val > 50) return null;
+    return val;
+  }
+
+  function validateTableNumber() {
+    const val = getTableNumber();
+    const errorEl = document.getElementById('tableError');
+    const input = document.getElementById('tableNumberInput');
+    if (!val) {
+      errorEl.classList.add('show');
+      const currentVal = parseInt(input.value);
+      if (currentVal > 50) {
+        errorEl.textContent = '⚠️ Table number cannot exceed 50';
+      } else {
+        errorEl.textContent = '⚠️ Please enter a valid table number (1-50)';
+      }
+      input.style.borderBottom = '2px solid #ff4444';
+      return false;
+    } else {
+      errorEl.classList.remove('show');
+      input.style.borderBottom = 'none';
+      return true;
+    }
+  }
+  // =============================================================
+
+  // Requires BOTH a valid customer name and table number before any ordering action proceeds.
+  function requireOrderDetails() {
+    const nameOk = validateCustomerName();
+    const tableOk = validateTableNumber();
+    if (!nameOk && !tableOk) {
+      showToast("⚠️ Please enter your name and table number first!");
+      return false;
+    }
+    if (!nameOk) {
+      showToast("⚠️ Please enter your name first!");
+      return false;
+    }
+    if (!tableOk) {
+      showToast("⚠️ Please enter a valid table number (1-50)!");
+      return false;
+    }
+    return true;
+  }
+
   function showTableError(show) {
+    // Kept for compatibility (not used anymore, but harmless)
     const errorEl = document.getElementById('tableError');
     const input = document.getElementById('tableNumberInput');
     if (show) {
@@ -764,16 +1089,6 @@
       errorEl.classList.remove('show');
       input.style.borderBottom = 'none';
     }
-  }
-
-  function validateTableNumber() {
-    const val = getTableNumber();
-    if (!val) {
-      showTableError(true);
-      return false;
-    }
-    showTableError(false);
-    return true;
   }
 
   function showToast(msg) { let t=document.querySelector('.toast'); if(t) t.remove(); let div=document.createElement('div'); div.className='toast'; div.innerHTML=msg; document.body.appendChild(div); setTimeout(()=>div.remove(),2500); }
@@ -794,7 +1109,7 @@
     const container = document.getElementById(containerId);
     if (!container) return;
     const filtered = beverageData.filter(i => categoriesArray.includes(i.category) && isItemVisible(i));
-    if (filtered.length === 0) { container.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:40px;">✨ NO DRINKS FOUND — TRY OTHER FILTERS ✨</div>`; return; }
+    if (filtered.length === 0) { container.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:40px; color: var(--text-muted);">✨ NO DRINKS FOUND — TRY OTHER FILTERS ✨</div>`; return; }
     container.innerHTML = filtered.map(item => `
       <div class="dish-card">
         <div class="card-img" style="background-image: url('${item.img}'); background-size: cover; background-position: center;">
@@ -812,7 +1127,13 @@
       </div>
     `).join('');
     container.querySelectorAll('.order-btn[data-id]').forEach(btn => {
-      if (!btn.disabled) btn.addEventListener('click', () => { const found = beverageData.find(i => i.id === parseInt(btn.dataset.id)); if(found && found.inStock) addItemToActiveDiner(found); else showToast("UNAVAILABLE"); });
+      if (!btn.disabled) btn.addEventListener('click', () => {
+        if (!requireOrderDetails()) return;
+        const activeDiner = diners.find(d => d.id === activeDinerId);
+        forceValidName(activeDiner);
+        const found = beverageData.find(i => i.id === parseInt(btn.dataset.id));
+        if(found && found.inStock) addItemToActiveDiner(found); else showToast("UNAVAILABLE");
+      });
     });
   }
 
@@ -845,7 +1166,7 @@
   function renderCurrentDinerItems() {
     const diner = diners.find(d => d.id === activeDinerId);
     const container = document.getElementById("dinerItemsList");
-    if (!diner || diner.items.length === 0) { container.innerHTML = "<div style='padding:12px; color:#aa9f8a;'>No beverages — tap menu to order.</div>"; document.getElementById("activeDinerName").innerText = diner?.name; return; }
+    if (!diner || diner.items.length === 0) { container.innerHTML = "<div style='padding:12px; color: var(--text-muted);'>No beverages — tap menu to order.</div>"; document.getElementById("activeDinerName").innerText = diner?.name; return; }
     document.getElementById("activeDinerName").innerText = diner.name;
     container.innerHTML = diner.items.map(it => `<div class="order-item"><span><strong>${it.name}</strong> x${it.quantity}</span><span>$${(it.price*it.quantity).toFixed(2)} <button class="qty-dec" data-id="${it.id}">-</button> <button class="qty-inc" data-id="${it.id}">+</button> <button class="item-remove" data-id="${it.id}"><i class="fas fa-trash-alt"></i></button></span></div>`).join('');
     container.querySelectorAll('.qty-inc').forEach(btn => btn.addEventListener('click',()=>{ const id=parseInt(btn.dataset.id); const entry=diner.items.find(i=>i.id===id); if(entry){entry.quantity++; renderAll();} }));
@@ -871,51 +1192,57 @@
   document.querySelectorAll("[data-cat]").forEach(btn => btn.addEventListener("click", () => { document.querySelectorAll("[data-cat]").forEach(b=>b.classList.remove("active")); btn.classList.add("active"); currentCategory = btn.dataset.cat; renderAll(); }));
   document.querySelectorAll("[data-diet]").forEach(btn => btn.addEventListener("click", () => { document.querySelectorAll("[data-diet]").forEach(b=>b.classList.remove("active")); btn.classList.add("active"); currentDietary = btn.dataset.diet; renderAll(); }));
   document.querySelectorAll(".allergy-group input").forEach(cb => cb.addEventListener("change", () => { currentAllergies = Array.from(document.querySelectorAll(".allergy-group input:checked")).map(c=>c.value); renderAll(); }));
-  document.getElementById("addDinerBtn").addEventListener("click", () => { diners.push({ id: "d"+Date.now(), name: `Person ${diners.length+1}`, items: [] }); activeDinerId = diners[diners.length-1].id; renderAll(); });
-  
-  // Table number validation for all actions
-  document.getElementById("callWaiterBtn").onclick = () => {
-    if (!validateTableNumber()) {
-      showToast("⚠️ Please enter your table number first!");
-      return;
+
+  document.getElementById("addDinerBtn").addEventListener("click", () => {
+    if (!requireOrderDetails()) return;
+    let name = "";
+    while(!name || name.trim() === "") {
+      name = prompt("Please enter the name for this person (Required):");
+      if (name === null) return;
     }
+    diners.push({ id: "d"+Date.now(), name: name.trim(), items: [] });
+    activeDinerId = diners[diners.length-1].id;
+    renderAll();
+  });
+  
+  // Table number + customer name validation for all actions
+  document.getElementById("callWaiterBtn").onclick = () => {
+    if (!requireOrderDetails()) return;
     const tableNum = getTableNumber();
     showToast(`🛎️ WAITER ALERTED · TABLE ${tableNum}`);
   };
   
   document.getElementById("waterRefillBtn").onclick = () => {
-    if (!validateTableNumber()) {
-      showToast("⚠️ Please enter your table number first!");
-      return;
-    }
+    if (!requireOrderDetails()) return;
     const tableNum = getTableNumber();
     showToast(`💧 WATER REFILL REQUESTED · TABLE ${tableNum}`);
   };
   document.getElementById("napkinsBtn").onclick = () => {
-    if (!validateTableNumber()) {
-      showToast("⚠️ Please enter your table number first!");
-      return;
-    }
+    if (!requireOrderDetails()) return;
     const tableNum = getTableNumber();
     showToast(`🧻 NAPKINS ON THE WAY · TABLE ${tableNum}`);
   };
   document.getElementById("saucesBtn").onclick = () => {
-    if (!validateTableNumber()) {
-      showToast("⚠️ Please enter your table number first!");
-      return;
-    }
+    if (!requireOrderDetails()) return;
     const tableNum = getTableNumber();
     showToast(`🥫 SAUCES REQUESTED · TABLE ${tableNum}`);
   };
   
   document.getElementById("sendToKitchenBtn").onclick = () => {
-    if (!validateTableNumber()) {
-      showToast("⚠️ Please enter your table number first!");
-      return;
-    }
+    if (!requireOrderDetails()) return;
     const tableNum = getTableNumber();
+
+    // Verify all active diners have real names assigned
+    let orderExists = false;
+    for (let i = 0; i < diners.length; i++) {
+      if (diners[i].items.length > 0) {
+        forceValidName(diners[i]);
+        orderExists = true;
+      }
+    }
+
     let orders = diners.map(d => `${d.name}: ${d.items.map(i=>`${i.name} x${i.quantity}`).join(', ')}`).filter(o=>o.includes(':')).join('\n');
-    if (!orders) {
+    if (!orderExists || !orders) {
       showToast("⚠️ No items in order! Add some drinks first.");
       return;
     }
@@ -923,15 +1250,42 @@
     showToast(`🔥 ORDER SENT TO BAR! TABLE ${tableNum}`);
   };
   
-  // Table number input validation - remove error on typing
-  document.getElementById("tableNumberInput").addEventListener("input", () => {
-    if (getTableNumber()) {
-      showTableError(false);
-    }
+  // ============ Input events use live validation ============
+  document.getElementById("tableNumberInput").addEventListener("input", function() {
+    validateTableNumber();
   });
+  document.getElementById("customerNameInput").addEventListener("input", function() {
+    validateCustomerName();
+  });
+  // ============================================================
   
   let modalActive = false;
-  document.getElementById("scanDishBtn").onclick = () => { if(modalActive) return; modalActive=true; const modalDiv = document.createElement('div'); modalDiv.className='modal'; modalDiv.innerHTML=`<div class="modal-content"><h3><i class="fas fa-camera"></i> SCAN DRINK</h3><video id="scanVideo" autoplay playsinline style="width:100%; border-radius:28px;"></video><button id="captureScanBtn" class="btn-primary" style="margin:12px;">🔍 IDENTIFY & REORDER</button><button id="closeScanBtn" class="btn-glass">CANCEL</button><p id="scanResult" style="margin-top:12px;"></p></div>`; document.body.appendChild(modalDiv); let stream=null; const video=modalDiv.querySelector('#scanVideo'); navigator.mediaDevices.getUserMedia({video:true}).then(s=>{stream=s; video.srcObject=s; video.play();}).catch(()=>document.getElementById("scanResult").innerText="[CAMERA MOCK MODE]"); modalDiv.querySelector('#captureScanBtn').onclick=()=>{const avail=beverageData.filter(i=>i.inStock && isItemVisible(i)); if(!avail.length){document.getElementById("scanResult").innerText="No available drinks."; return;} const rand=avail[Math.floor(Math.random()*avail.length)]; document.getElementById("scanResult").innerHTML=`🤖 RECOGNIZED: ${rand.name}<br><button id="confirmAddScan" class="btn-primary" style="margin-top:8px;">ADD TO ${diners.find(d=>d.id===activeDinerId)?.name}</button>`; document.getElementById("confirmAddScan")?.addEventListener("click",()=>{addItemToActiveDiner(rand); closeModal();}); }; function closeModal(){ if(stream) stream.getTracks().forEach(t=>t.stop()); modalDiv.remove(); modalActive=false; } modalDiv.querySelector('#closeScanBtn').onclick=closeModal; };
+  document.getElementById("scanDishBtn").onclick = () => {
+    if(modalActive) return;
+    if (!requireOrderDetails()) return;
+    modalActive=true;
+    const modalDiv = document.createElement('div');
+    modalDiv.className='modal';
+    modalDiv.innerHTML=`<div class="modal-content"><h3><i class="fas fa-camera"></i> SCAN DRINK</h3><video id="scanVideo" autoplay playsinline style="width:100%; border-radius:28px;"></video><button id="captureScanBtn" class="btn-primary" style="margin:12px;">🔍 IDENTIFY & REORDER</button><button id="closeScanBtn" class="btn-glass">CANCEL</button><p id="scanResult" style="margin-top:12px;"></p></div>`;
+    document.body.appendChild(modalDiv);
+    let stream=null;
+    const video=modalDiv.querySelector('#scanVideo');
+    navigator.mediaDevices.getUserMedia({video:true}).then(s=>{stream=s; video.srcObject=s; video.play();}).catch(()=>document.getElementById("scanResult").innerText="[CAMERA MOCK MODE]");
+    modalDiv.querySelector('#captureScanBtn').onclick=()=>{
+      const avail=beverageData.filter(i=>i.inStock && isItemVisible(i));
+      if(!avail.length){document.getElementById("scanResult").innerText="No available drinks."; return;}
+      const rand=avail[Math.floor(Math.random()*avail.length)];
+      const activeDiner = diners.find(d=>d.id===activeDinerId);
+      document.getElementById("scanResult").innerHTML=`🤖 RECOGNIZED: ${rand.name}<br><button id="confirmAddScan" class="btn-primary" style="margin-top:8px;">ADD TO ${activeDiner?.name}</button>`;
+      document.getElementById("confirmAddScan")?.addEventListener("click",()=>{
+        forceValidName(activeDiner);
+        addItemToActiveDiner(rand);
+        closeModal();
+      });
+    };
+    function closeModal(){ if(stream) stream.getTracks().forEach(t=>t.stop()); modalDiv.remove(); modalActive=false; }
+    modalDiv.querySelector('#closeScanBtn').onclick=closeModal;
+  };
   
   renderAll();
 </script>
