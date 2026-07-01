@@ -4,12 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
   <title>NEON STOP · Restaurant</title>
-  <!-- Fonts & Icons -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,500;14..32,700;14..32,800;14..32,900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
     /* ============================================================
-       THEMING (CSS Variables)
+       THEMING (CSS Variables) — orange/red palette
     ============================================================ */
     :root {
       /* Dark theme (default) */
@@ -26,7 +25,7 @@
       --text-primary: #eef5ff;
       --text-secondary: #ffd6b0;
       --text-muted: #bbaa99;
-      --text-dark: #0f0f1a;
+      --text-dark: #0e0e1c;
       --border-primary: rgba(255, 100, 50, 0.4);
       --border-secondary: #ff6a2e;
       --shadow-neon: 0 0 15px rgba(255, 70, 30, 0.2);
@@ -44,44 +43,45 @@
       --toast-bg: #1a162f;
       --toast-border: #ff7e3a;
       --toggle-bg: #1c1c2a;
+      --error-color: #ff4444;
     }
 
     /* Light theme – applied when body has class .light-mode */
     body.light-mode {
-      --bg-primary: #f5f0f0;
-      --bg-gradient-from: #f5f0f0;
-      --bg-gradient-to: #e8e0e0;
-      --bg-navbar: rgba(255, 248, 248, 0.85);
+      --bg-primary: #fff8f5;
+      --bg-gradient-from: #fff8f5;
+      --bg-gradient-to: #ffe8de;
+      --bg-navbar: rgba(255, 250, 248, 0.85);
       --bg-card: rgba(255, 255, 255, 0.92);
-      --bg-filter: rgba(255, 248, 248, 0.9);
-      --bg-panel: rgba(255, 248, 248, 0.92);
-      --bg-items: #f5f0f0;
-      --bg-bill: #faf5f5;
+      --bg-filter: rgba(255, 250, 248, 0.9);
+      --bg-panel: rgba(255, 250, 248, 0.92);
+      --bg-items: #fff8f5;
+      --bg-bill: #fffaf7;
       --bg-modal: #ffffff;
-      --text-primary: #1a1a2e;
-      --text-secondary: #3d2a1a;
-      --text-muted: #5a4a3a;
+      --text-primary: #2a1a12;
+      --text-secondary: #7a3a1a;
+      --text-muted: #6a5648;
       --text-dark: #1a1a2e;
-      --border-primary: rgba(200, 100, 50, 0.4);
-      --border-secondary: #cc6633;
-      --shadow-neon: 0 0 15px rgba(200, 100, 50, 0.15);
-      --shadow-card: 0 0 20px rgba(200, 100, 50, 0.2);
+      --border-primary: rgba(255, 100, 50, 0.35);
+      --border-secondary: #ff6a2e;
+      --shadow-neon: 0 0 15px rgba(255, 100, 50, 0.15);
+      --shadow-card: 0 0 20px rgba(255, 100, 50, 0.2);
       --input-bg: #ffffff;
-      --input-border: #cc6633;
-      --input-text: #1a1a2e;
-      --pill-bg: #f0ecec;
-      --pill-border: #cc663360;
-      --pill-active: #cc6633;
-      --badge-bg: #f0e8e8;
-      --badge-color: #4a3a2a;
-      --scrollbar-track: #e8e0e0;
-      --scrollbar-thumb: #cc6633;
-      --toast-bg: #f5f0f0;
-      --toast-border: #cc6633;
-      --toggle-bg: #d0c8c8;
+      --input-border: #ff6a2e;
+      --input-text: #2a1a12;
+      --pill-bg: #fff0e8;
+      --pill-border: #ff6a2e60;
+      --pill-active: #ff6a2e;
+      --badge-bg: #ffece0;
+      --badge-color: #7a3a1a;
+      --scrollbar-track: #ffe8de;
+      --scrollbar-thumb: #ff6a2e;
+      --toast-bg: #fff5f0;
+      --toast-border: #ff6a2e;
+      --toggle-bg: #ffe0d0;
+      --error-color: #d92b2b;
     }
 
-    /* Reset & base */
     * {
       margin: 0;
       padding: 0;
@@ -161,7 +161,7 @@
 
     /* Theme toggle button */
     .theme-toggle {
-      background: none;
+      background: var(--bg-card);
       border: 1px solid var(--border-primary);
       border-radius: 50%;
       width: 40px;
@@ -173,7 +173,6 @@
       color: var(--text-secondary);
       cursor: pointer;
       transition: 0.2s;
-      background: var(--bg-card);
     }
     .theme-toggle:hover {
       border-color: var(--border-secondary);
@@ -234,17 +233,63 @@
       border-bottom: 2px solid var(--border-secondary);
     }
     .table-number-input input::placeholder {
-      color: #665544;
+      color: #99887a;
       font-weight: 400;
       font-size: 0.8rem;
     }
     .table-number-input .table-error {
-      color: #ff4444;
+      color: var(--error-color);
       font-size: 0.7rem;
       font-weight: 600;
       display: none;
     }
     .table-number-input .table-error.show {
+      display: inline;
+    }
+
+    .customer-name-input {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--bg-card);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--border-secondary);
+      border-radius: 60px;
+      padding: 6px 16px;
+      box-shadow: var(--shadow-neon);
+      transition: background 0.3s, border-color 0.3s;
+    }
+    .customer-name-input label {
+      font-weight: 700;
+      color: #ffa06e;
+      font-size: 0.85rem;
+      white-space: nowrap;
+    }
+    .customer-name-input input {
+      background: transparent;
+      border: none;
+      color: var(--input-text);
+      font-weight: 700;
+      font-size: 1rem;
+      padding: 6px 8px;
+      width: 140px;
+      outline: none;
+    }
+    .customer-name-input input:focus {
+      border-bottom: 2px solid var(--border-secondary);
+    }
+    .customer-name-input input::placeholder {
+      color: #99887a;
+      font-weight: 400;
+      font-size: 0.8rem;
+    }
+    .customer-name-input .name-error {
+      color: var(--error-color);
+      font-size: 0.7rem;
+      font-weight: 600;
+      display: none;
+    }
+    .customer-name-input .name-error.show {
       display: inline;
     }
 
@@ -314,7 +359,7 @@
       border-radius: 36px;
       padding: 18px 24px;
       margin-bottom: 32px;
-      border: 1px solid #ff6020;
+      border: 1px solid var(--border-secondary);
       box-shadow: 0 8px 20px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,100,50,0.2);
       transition: background 0.3s, border-color 0.3s;
     }
@@ -324,7 +369,7 @@
       gap: 20px;
       align-items: center;
       margin-bottom: 18px;
-      border-bottom: 1px dashed #ff6a2e40;
+      border-bottom: 1px dashed var(--border-secondary)40;
       padding-bottom: 12px;
     }
     .filter-row:last-child {
@@ -390,9 +435,9 @@
       transition: background 0.3s, color 0.3s, border-color 0.3s;
     }
     .light-mode .camera-scan-btn {
-      background: #f0e8e8;
-      color: #3d2a1a;
-      border-color: #cc6633;
+      background: #fff0e8;
+      color: #7a3a1a;
+      border-color: #ff6a2e;
     }
 
     /* MENU SECTIONS */
@@ -410,7 +455,7 @@
       background-clip: text;
       color: transparent;
       text-shadow: 0 0 6px #ff6a2e40;
-      border-left: 4px solid #ff6a2e;
+      border-left: 4px solid var(--border-secondary);
       padding-left: 18px;
     }
     .menu-grid {
@@ -429,7 +474,7 @@
     .dish-card:hover {
       transform: translateY(-8px);
       border-color: #ff944e;
-      box-shadow: 0 0 20px rgba(255, 100, 50, 0.5);
+      box-shadow: var(--shadow-card);
     }
     .card-img {
       height: 180px;
@@ -511,7 +556,7 @@
       border-radius: 38px;
       padding: 24px;
       border: 1px solid var(--border-secondary);
-      box-shadow: var(--shadow-neon);
+      box-shadow: 0 0 20px rgba(255, 100, 50, 0.2);
       transition: background 0.3s, border-color 0.3s, box-shadow 0.3s;
     }
     .diner-tabs {
@@ -559,7 +604,7 @@
       border-radius: 28px;
       padding: 16px;
       margin-top: 20px;
-      border: 1px solid #ff862e;
+      border: 1px solid var(--border-secondary);
       transition: background 0.3s, border-color 0.3s;
       color: var(--text-primary);
     }
@@ -601,7 +646,7 @@
       width: 90%;
       padding: 28px;
       text-align: center;
-      border: 1px solid #ff7e3a;
+      border: 1px solid var(--border-secondary);
       transition: background 0.3s, border-color 0.3s;
       color: var(--text-primary);
     }
@@ -610,6 +655,7 @@
       .navbar { flex-direction: column; gap: 15px; }
       .table-bar { justify-content: center; margin-top: 10px; }
       .table-number-input { width: 100%; justify-content: center; }
+      .customer-name-input { width: 100%; justify-content: center; }
       .action-buttons { margin-left: 0; width: 100%; justify-content: center; }
     }
 
@@ -623,8 +669,8 @@
       backdrop-filter: blur(12px);
       padding: 12px 18px;
       border-radius: 60px;
-      border: 1px solid var(--border-primary);
-      box-shadow: var(--shadow-neon);
+      border: 1px solid var(--border-secondary);
+      box-shadow: 0 0 15px rgba(255, 100, 50, 0.3);
       display: flex;
       align-items: center;
       gap: 12px;
@@ -651,7 +697,6 @@
 </head>
 <body>
 <div class="app-container">
-  <!-- NAVBAR -->
   <div class="navbar">
     <div class="logo"><i class="fas fa-utensils"></i> NEON STOP</div>
     <div class="nav-links">
@@ -666,16 +711,21 @@
     </div>
   </div>
 
-  <!-- TABLE INFO & ACTION BUTTONS -->
   <div class="table-bar">
     <div class="table-badge">
       <i class="fas fa-qrcode"></i> SCAN TO ORDER
+    </div>
+
+    <div class="customer-name-input">
+      <label for="customerNameInput"><i class="fas fa-user"></i> NAME</label>
+      <input type="text" id="customerNameInput" placeholder="Enter your name" maxlength="40" autocomplete="off">
+      <span class="name-error" id="nameError">⚠️ Please enter your name</span>
     </div>
     
     <div class="table-number-input">
       <label for="tableNumberInput"><i class="fas fa-hashtag"></i> TABLE</label>
       <input type="number" id="tableNumberInput" placeholder="Enter table #" min="1" step="1">
-      <span class="table-error" id="tableError">⚠️ Please enter table number</span>
+      <span class="table-error" id="tableError">⚠️ Please enter a valid table number (1-50)</span>
     </div>
     
     <div class="action-buttons">
@@ -685,7 +735,6 @@
   </div>
 
   <div class="dashboard">
-    <!-- LEFT MENU -->
     <div class="menu-section">
       <div class="filter-card">
         <div class="filter-row">
@@ -697,7 +746,6 @@
           </select>
           <input type="text" id="searchDish" class="search-input" placeholder="🔍 SEARCH DISH... (e.g. biryani, pasta)">
         </div>
-        <!-- CUISINE row -->
         <div class="filter-row">
           <span class="filter-label"><i class="fas fa-globe"></i> CUISINE</span>
           <div class="pill-group">
@@ -707,7 +755,6 @@
             <button data-cuisine="chinese" class="pill">🥢 CHINESE</button>
           </div>
         </div>
-        <!-- TYPE row -->
         <div class="filter-row">
           <span class="filter-label"><i class="fas fa-tag"></i> TYPE</span>
           <div class="pill-group">
@@ -736,17 +783,14 @@
         </div>
       </div>
 
-      <!-- STARTERS -->
       <div class="menu-category">
         <div class="section-title">🔥 STARTERS & APPETIZERS</div>
         <div id="starterGrid" class="menu-grid"></div>
       </div>
-      <!-- MAIN COURSE -->
       <div class="menu-category">
         <div class="section-title">⚔️ MAIN COURSE</div>
         <div id="mainGrid" class="menu-grid"></div>
       </div>
-      <!-- DESSERTS -->
       <div class="menu-category">
         <div class="section-title">🍰 DESSERTS</div>
         <div id="dessertGrid" class="menu-grid"></div>
@@ -759,7 +803,6 @@
       </div>
     </div>
 
-    <!-- RIGHT ORDER PANEL -->
     <div class="order-section">
       <div class="order-panel">
         <h3 style="font-weight:800; margin-bottom: 14px; color: var(--text-primary);"><i class="fas fa-users"></i> PARTY SPLIT · AUTO BILL</h3>
@@ -784,7 +827,6 @@
   </div>
 </div>
 
-<!-- MUSIC CONTROL (autoplay with levels.mp3) -->
 <audio id="bgMusic" loop preload="auto">
   <source src="levels.mp3" type="audio/mpeg">
 </audio>
@@ -883,12 +925,12 @@
     }
   }, { once: false });
 
-  // ========== RESTAURANT LOGIC (unchanged) ==========
+  // ========== RESTAURANT LOGIC ==========
   const menuData = [
     // STARTERS
     { id: 101, name: "Chicken Tikka (Lahori)", price: 9.9, diet: "nonveg", allergens: ["dairy"], inStock: true, cuisine: "indian", course: "starter", description: "Charcoal-grilled, spiced yoghurt chicken — electrifying flavor.", img: "https://www.eitanbernath.com/wp-content/uploads/2020/10/Chicken-Tikka-LOW-RES-1.jpg" },
     { id: 102, name: "Veg Spring Rolls", price: 6.5, diet: "veg", allergens: ["gluten"], inStock: true, cuisine: "chinese", course: "starter", description: "Crispy rolls, sweet chili dip, crunchy veggies.", img: "https://i0.wp.com/s.lightorangebean.com/media/20240914144947/Thai-Veggie-Spring-Rolls_done.png?resize=480%2C270&quality=80&ssl=1" },
-    { id: 104, name: "Arancini (Saffron Balls)", price: 8.2, diet: "veg", allergens: ["dairy","gluten"], inStock: true, cuisine: "italian", course: "starter", description: "Crispy risotto, mozzarella core, marinara.", img: "https://www.homemadeitaliancooking.com/wp-content/uploads/2015/12/Lbster-Arancini-with-Saffron-Aioli-2.jpg" },
+    { id: 104, name: "Arancini (Saffron Balls)", price: 8.2, diet: "veg", allergens: ["dairy","gluten"], inStock: true, cuisine: "italian", course: "starter", description: "Crispy risotto, mozzarella core, marinara.", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQyZSn2Smpi2KWj9KGfYtad4z179sMJA1yNXZSmchqQp4I51OEHPOzPwnrt&s=10" },
     { id: 105, name: "Jain Crispy Lotus Stem", price: 7.4, diet: "jain", allergens: [], inStock: true, cuisine: "indian", course: "starter", description: "Thin lotus chips, Jain spices — crunchy AF.", img: "https://images.squarespace-cdn.com/content/5991274d197aea88ba19f055/1736171745094-GC7UW4ROH36QJIDU4G7V/Lotus+Stem+Chaat+1resized.jpg?format=1500w&content-type=image%2Fjpeg" },
     { id: 106, name: "Chilli Paneer (Indo-Chinese)", price: 8.5, diet: "veg", allergens: ["dairy"], inStock: true, cuisine: "chinese", course: "starter", description: "Spicy paneer cubes, bell peppers, umami sauce.", img: "https://instamart-media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,h_960,w_960//InstamartAssets/chilli_paneer.webp?updatedAt=1727161410434" },
     { id: 107, name: "Lamb Seekh Kebab", price: 10.9, diet: "nonveg", allergens: [], inStock: true, cuisine: "indian", course: "starter", description: "Minced lamb, herbs, charcoal grilled.", img: "https://www.carolinescooking.com/wp-content/uploads/2021/04/lamb-shish-kebab-featured-pic-sq-2.jpg" },
@@ -902,7 +944,7 @@
     { id: 203, name: "Wok Hakka Noodles (Veg)", price: 11.5, diet: "veg", allergens: ["gluten"], inStock: true, cuisine: "chinese", course: "main", description: "Stir-fried noodles, veggies, secret sauce.", img: "https://www.cubesnjuliennes.com/wp-content/uploads/2020/06/Chicken-Hakka-Noodles-Recipe-1.jpg" },
     { id: 204, name: "Vegan Khao Suey", price: 14.8, diet: "vegan", allergens: ["nuts"], inStock: true, cuisine: "chinese", course: "main", description: "Coconut noodle soup, crispy toppings.", img: "https://www.mondaycampaigns.org/wp-content/uploads/2021/02/9dad4c_6a6a5bd7930e4b76aee03089796122f9mv2-Nara-Sandberg.jpg" },
     { id: 205, name: "Jain Paneer Lababdar", price: 15.2, diet: "jain", allergens: ["dairy"], inStock: true, cuisine: "indian", course: "main", description: "No onion/garlic creamy paneer gravy.", img: "https://img-global.cpcdn.com/recipes/a6096cdaaf251115/680x781cq80/%E0%A4%AA%E0%A4%A8%E0%A4%B0-%E0%A4%B2%E0%A4%AC%E0%A4%AC%E0%A4%A6%E0%A4%B0-paneer-lababdar-recipe-in-hindi-%E0%A4%B0%E0%A4%B8%E0%A4%AA-%E0%A4%AE%E0%A4%96%E0%A4%AF-%E0%A4%A4%E0%A4%B8%E0%A4%B5%E0%A4%B0.jpg" },
-   { id: 206, name: "Ratatouille (Provençal)", price: 14.9, diet: "vegan", allergens: [], inStock: true, cuisine: "italian", course: "main", description: "Slow-cooked summer vegetables in herb tomato sauce – rustic and vibrant.", img: "https://media.hellofresh.com/q_100,w_3840,f_auto,c_limit,fl_lossy/recipes/image/oven-baked-ratatouille-risotto-3d2e0442.jpg" },
+    { id: 206, name: "Ratatouille (Provençal)", price: 14.9, diet: "vegan", allergens: [], inStock: true, cuisine: "italian", course: "main", description: "Slow-cooked summer vegetables in herb tomato sauce – rustic and vibrant.", img: "https://media.hellofresh.com/q_100,w_3840,f_auto,c_limit,fl_lossy/recipes/image/oven-baked-ratatouille-risotto-3d2e0442.jpg" },
     { id: 207, name: "Chicken Biryani (Hyderabadi)", price: 17.9, diet: "nonveg", allergens: ["nuts"], inStock: true, cuisine: "indian", course: "main", description: "Layered basmati, spiced chicken, caramelized onions.", img: "https://www.licious.in/blog/wp-content/uploads/2020/12/Hyderabadi-chicken-Biryani.jpg" },
     { id: 208, name: "Goan Fish Curry", price: 19.5, diet: "nonveg", allergens: ["dairy"], inStock: true, cuisine: "indian", course: "main", description: "Coconut, tamarind, fresh catch.", img: "https://foodandhospitality.incrediblegoa.org/wp-content/uploads/2023/06/Goan-Fish-Curry.jpeg" },
     { id: 209, name: "Penne Arrabbiata", price: 12.9, diet: "veg", allergens: ["gluten"], inStock: true, cuisine: "italian", course: "main", description: "Spicy tomato garlic penne.", img: "https://www.andy-cooks.com/cdn/shop/articles/20250710035519-andy-20cooks-20-20quick-20arrabbiata-20pasta-20recipe_daf853ef-dee8-4da0-8701-b8dda36397bf.jpg?v=1773806187" },
@@ -946,34 +988,102 @@
   let currentMeatPref = "all";
   let searchQuery = "";
 
-  // Helper to get table number
-  function getTableNumber() {
-    const input = document.getElementById('tableNumberInput');
-    const val = parseInt(input.value);
-    if (!val || val <= 0) return null;
+  // Strictly checks and requires a real name instead of the default
+  function forceValidName(diner) {
+    while (!diner.name || diner.name.trim() === "" || diner.name === "Person 1") {
+      let customName = prompt(`Please enter a valid Customer Name for this person (Required):`);
+      if (customName && customName.trim() !== "") {
+        diner.name = customName.trim();
+        renderAll();
+        break;
+      }
+    }
+  }
+
+  // ============ CUSTOMER NAME (required before ordering) ============
+  function getCustomerName() {
+    const input = document.getElementById('customerNameInput');
+    const val = input.value.trim();
+    if (!val) return null;
     return val;
   }
 
-  function showTableError(show) {
-    const errorEl = document.getElementById('tableError');
-    const input = document.getElementById('tableNumberInput');
-    if (show) {
+  function validateCustomerName() {
+    const val = getCustomerName();
+    const errorEl = document.getElementById('nameError');
+    const input = document.getElementById('customerNameInput');
+    if (!val) {
       errorEl.classList.add('show');
-      input.style.borderBottom = '2px solid #ff4444';
+      input.style.borderBottom = '2px solid var(--error-color)';
+      return false;
     } else {
       errorEl.classList.remove('show');
       input.style.borderBottom = 'none';
+      return true;
     }
+  }
+  // =====================================================================
+
+  // ============ TABLE NUMBER LIMIT (1–50) ============
+  function getTableNumber() {
+    const input = document.getElementById('tableNumberInput');
+    const val = parseInt(input.value);
+    if (!val || val <= 0 || val > 50) return null;
+    return val;
   }
 
   function validateTableNumber() {
     const val = getTableNumber();
+    const errorEl = document.getElementById('tableError');
+    const input = document.getElementById('tableNumberInput');
     if (!val) {
-      showTableError(true);
+      errorEl.classList.add('show');
+      const currentVal = parseInt(input.value);
+      if (currentVal > 50) {
+        errorEl.textContent = '⚠️ Table number cannot exceed 50';
+      } else {
+        errorEl.textContent = '⚠️ Please enter a valid table number (1-50)';
+      }
+      input.style.borderBottom = '2px solid var(--error-color)';
+      return false;
+    } else {
+      errorEl.classList.remove('show');
+      input.style.borderBottom = 'none';
+      return true;
+    }
+  }
+  // =============================================================
+
+  // Requires BOTH a valid customer name and table number before any ordering action proceeds.
+  function requireOrderDetails() {
+    const nameOk = validateCustomerName();
+    const tableOk = validateTableNumber();
+    if (!nameOk && !tableOk) {
+      showToast("⚠️ Please enter your name and table number first!");
       return false;
     }
-    showTableError(false);
+    if (!nameOk) {
+      showToast("⚠️ Please enter your name first!");
+      return false;
+    }
+    if (!tableOk) {
+      showToast("⚠️ Please enter a valid table number (1-50)!");
+      return false;
+    }
     return true;
+  }
+
+  function showTableError(show) {
+    // Kept for compatibility (not used anymore, but harmless)
+    const errorEl = document.getElementById('tableError');
+    const input = document.getElementById('tableNumberInput');
+    if (show) {
+      errorEl.classList.add('show');
+      input.style.borderBottom = '2px solid var(--error-color)';
+    } else {
+      errorEl.classList.remove('show');
+      input.style.borderBottom = 'none';
+    }
   }
 
   function renderAll() { renderMenuSections(); renderDinerTabs(); renderCurrentDinerItems(); renderSplitBill(); }
@@ -985,7 +1095,6 @@
     if (currentDietFilter !== "all" && item.diet !== currentDietFilter) return false;
     if (currentAllergies.length && item.allergens.some(a => currentAllergies.includes(a))) return false;
     if (searchQuery && !item.name.toLowerCase().includes(searchQuery) && !item.description.toLowerCase().includes(searchQuery)) return false;
-    // Type filter
     if (currentTypeFilter !== "all") {
       if (currentTypeFilter === "sizzler" && !item.name.toLowerCase().includes("sizzler")) return false;
       if (currentTypeFilter === "burger" && !item.name.toLowerCase().includes("burger")) return false;
@@ -1015,7 +1124,13 @@
       </div>
     `).join('');
     container.querySelectorAll('.order-btn[data-id]').forEach(btn => {
-      if (!btn.disabled) btn.addEventListener('click', () => { const found = menuData.find(i => i.id === parseInt(btn.dataset.id)); if(found && found.inStock) addItemToActiveDiner(found); else showToast("UNAVAILABLE"); });
+      if (!btn.disabled) btn.addEventListener('click', () => { 
+        if (!requireOrderDetails()) return;
+        const activeDiner = diners.find(d => d.id === activeDinerId);
+        forceValidName(activeDiner);
+        const found = menuData.find(i => i.id === parseInt(btn.dataset.id)); 
+        if(found && found.inStock) addItemToActiveDiner(found); else showToast("UNAVAILABLE"); 
+      });
     });
   }
 
@@ -1033,7 +1148,14 @@
     container.innerHTML = diners.map(d => `<div class="diner-pill ${activeDinerId === d.id ? 'active' : ''}" data-id="${d.id}">👤 ${d.name} (${d.items.reduce((s,i)=>s+i.quantity,0)}) ${diners.length>1?`<i class="fas fa-times-circle" style="margin-left:6px;"></i>`:''}</div>`).join('');
     container.querySelectorAll('.diner-pill').forEach(el => {
       const id = el.dataset.id;
-      el.addEventListener('click', (e) => { if(e.target.tagName === 'I') { if(diners.length>1){ diners = diners.filter(d=>d.id!==id); if(activeDinerId===id) activeDinerId=diners[0].id; renderAll(); } else showToast("At least one person needed"); } else { activeDinerId = id; renderAll(); } });
+      el.addEventListener('click', (e) => { 
+        if(e.target.tagName === 'I') { 
+          if(diners.length>1){ diners = diners.filter(d=>d.id!==id); if(activeDinerId===id) activeDinerId=diners[0].id; renderAll(); } else showToast("At least one person needed"); 
+        } else { 
+          activeDinerId = id; 
+          renderAll(); 
+        } 
+      });
     });
   }
 
@@ -1058,7 +1180,6 @@
     else document.getElementById("equalSplitAmount").innerText = "";
   }
 
-  // Event listeners
   document.getElementById("meatPreference").addEventListener("change", e => { currentMeatPref = e.target.value; renderAll(); });
   document.getElementById("searchDish").addEventListener("input", e => { searchQuery = e.target.value.toLowerCase(); renderAll(); });
 
@@ -1089,69 +1210,120 @@
   }));
 
   document.getElementById("addDinerBtn").addEventListener("click", () => {
-    diners.push({ id: "d"+Date.now(), name: `Person ${diners.length+1}`, items: [] });
+    if (!requireOrderDetails()) return;
+    let name = "";
+    while(!name || name.trim() === "") {
+      name = prompt("Please enter the name for this person (Required):");
+      if (name === null) return;
+    }
+    diners.push({ id: "d"+Date.now(), name: name.trim(), items: [] });
     activeDinerId = diners[diners.length-1].id;
     renderAll();
   });
   
   document.getElementById("callWaiterBtn").onclick = () => {
-    if (!validateTableNumber()) {
-      showToast("⚠️ Please enter your table number first!");
-      return;
-    }
+    if (!requireOrderDetails()) return;
     const tableNum = getTableNumber();
     showToast(`🛎️ WAITER ALERTED · TABLE ${tableNum}`);
   };
   
   document.getElementById("waterRefillBtn").onclick = () => {
-    if (!validateTableNumber()) {
-      showToast("⚠️ Please enter your table number first!");
-      return;
-    }
+    if (!requireOrderDetails()) return;
     const tableNum = getTableNumber();
     showToast(`💧 WATER REFILL REQUESTED · TABLE ${tableNum}`);
   };
   document.getElementById("napkinsBtn").onclick = () => {
-    if (!validateTableNumber()) {
-      showToast("⚠️ Please enter your table number first!");
-      return;
-    }
+    if (!requireOrderDetails()) return;
     const tableNum = getTableNumber();
     showToast(`🧻 NAPKINS ON THE WAY · TABLE ${tableNum}`);
   };
   document.getElementById("saucesBtn").onclick = () => {
-    if (!validateTableNumber()) {
-      showToast("⚠️ Please enter your table number first!");
-      return;
-    }
+    if (!requireOrderDetails()) return;
     const tableNum = getTableNumber();
     showToast(`🥫 SAUCES REQUESTED · TABLE ${tableNum}`);
   };
   
   document.getElementById("sendToKitchenBtn").onclick = () => {
-    if (!validateTableNumber()) {
-      showToast("⚠️ Please enter your table number first!");
-      return;
-    }
+    if (!requireOrderDetails()) return;
     const tableNum = getTableNumber();
-    let orders = diners.map(d => `${d.name}: ${d.items.map(i=>`${i.name} x${i.quantity}`).join(', ')}`).filter(o=>o.includes(':')).join('\n');
-    if (!orders) {
+    const customerName = getCustomerName();
+
+    // Verify all active diners have item counts and real names assigned
+    let orderExists = false;
+    for (let i = 0; i < diners.length; i++) {
+      if (diners[i].items.length > 0) {
+        forceValidName(diners[i]);
+        orderExists = true;
+      }
+    }
+
+    if (!orderExists) {
       showToast("⚠️ No items in order! Add some dishes first.");
       return;
     }
-    alert(`⚡ ORDER SENT TO KITCHEN ⚡\nTABLE ${tableNum}\n${orders}`);
-    showToast(`🔥 ORDER SENT! TABLE ${tableNum}`);
+
+    let logsText = diners.map(d => `${d.name}: ${d.items.map(i=>`${i.name} x${i.quantity}`).join(', ')}`).filter(o=>o.includes(':')).join('\n');
+
+    // --- PACKAGING GOOGLE SHEET DATA PAYLOAD ---
+    const payload = {
+      sheetName: "Restaurant",
+      timestamp: new Date().toLocaleString(),
+      tableNumber: tableNum,
+      customerName: customerName,
+      orders: []
+    };
+
+    diners.forEach(diner => {
+      diner.items.forEach(item => {
+        payload.orders.push({
+          customerName: diner.name,
+          phoneNumber: "N/A", 
+          itemName: item.name,
+          quantity: item.quantity,
+          totalBill: (item.price * item.quantity).toFixed(2)
+        });
+      });
+    });
+
+    const sendBtn = document.getElementById("sendToKitchenBtn");
+    const originalText = sendBtn.innerHTML;
+    sendBtn.disabled = true;
+    sendBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> SENDING...`;
+
+    // RUN DATA TRANSMISSION TO YOUR SPECIFIED WEB APP URL
+    fetch("https://script.google.com/a/macros/stanislausinternational.in/s/AKfycbzHHwGxGb1pVqLNRUEc0ubHDbuKeE1sIHfeZc-ebXDfJdllMOaJuZ1ZQJSCD7zeRzmktg/exec", {
+      method: "POST",
+      mode: "no-cors",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    })
+    .then(() => {
+      alert(`⚡ ORDER SENT TO KITCHEN & GOOGLE SHEETS ⚡\nTABLE ${tableNum}\n${logsText}`);
+      showToast(`🔥 ORDER SENT! TABLE ${tableNum}`);
+    })
+    .catch(err => {
+      console.error(err);
+      showToast("❌ GOOGLE SHEETS SUBMISSION FAILED");
+    })
+    .finally(() => {
+      sendBtn.disabled = false;
+      sendBtn.innerHTML = originalText;
+    });
   };
   
-  document.getElementById("tableNumberInput").addEventListener("input", () => {
-    if (getTableNumber()) {
-      showTableError(false);
-    }
+  // ============ Input events use live validation ============
+  document.getElementById("tableNumberInput").addEventListener("input", function() {
+    validateTableNumber();
   });
+  document.getElementById("customerNameInput").addEventListener("input", function() {
+    validateCustomerName();
+  });
+  // ============================================================
   
   let modalActive = false;
   document.getElementById("scanDishBtn").onclick = () => {
     if(modalActive) return;
+    if (!requireOrderDetails()) return;
     modalActive=true;
     const modalDiv = document.createElement('div');
     modalDiv.className='modal';
@@ -1174,11 +1346,16 @@
       const avail=menuData.filter(i=>i.inStock && isItemVisible(i));
       if(!avail.length){document.getElementById("scanResult").innerText="No available dishes with current filters."; return;}
       const rand=avail[Math.floor(Math.random()*avail.length)];
+      const activeDiner = diners.find(d=>d.id===activeDinerId);
       document.getElementById("scanResult").innerHTML=`
         🤖 RECOGNIZED: ${rand.name}<br>
-        <button id="confirmAddScan" class="btn-primary" style="margin-top:8px;">ADD TO ${diners.find(d=>d.id===activeDinerId)?.name}</button>
+        <button id="confirmAddScan" class="btn-primary" style="margin-top:8px;">ADD TO ${activeDiner?.name}</button>
       `;
-      document.getElementById("confirmAddScan")?.addEventListener("click",()=>{addItemToActiveDiner(rand); closeModal();});
+      document.getElementById("confirmAddScan")?.addEventListener("click",()=>{
+        forceValidName(activeDiner);
+        addItemToActiveDiner(rand); 
+        closeModal();
+      });
     };
     function closeModal(){ if(stream) stream.getTracks().forEach(t=>t.stop()); modalDiv.remove(); modalActive=false; }
     modalDiv.querySelector('#closeScanBtn').onclick=closeModal;
