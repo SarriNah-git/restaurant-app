@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,7 +12,6 @@
        THEMING (CSS Variables)
     ============================================================ */
     :root {
-      /* Dark theme (default) */
       --bg-primary: #0b0b1a;
       --bg-gradient-from: #0b0b1a;
       --bg-gradient-to: #03030c;
@@ -169,29 +169,16 @@
       transform: scale(1.05);
     }
 
-    /* TABLE INFO ROW */
+    /* TABLE INFO ROW — now left‑aligned, without SCAN badge */
     .table-bar {
       display: flex;
-      justify-content: flex-end;
-      margin-bottom: 1.5rem;
+      justify-content: flex-start;
       flex-wrap: wrap;
-      gap: 15px;
+      gap: 15px 25px;
       align-items: center;
+      margin-bottom: 1.5rem;
     }
-    .table-badge {
-      background: linear-gradient(145deg, #00b8a0, #007a6e);
-      color: #fff;
-      padding: 8px 22px;
-      border-radius: 60px;
-      font-weight: 800;
-      font-size: 0.9rem;
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      box-shadow: 0 0 10px #00e6c0;
-    }
-    
-    /* CUSTOMER NAME INPUT */
+
     .customer-name-input {
       display: flex;
       align-items: center;
@@ -238,7 +225,6 @@
       display: inline;
     }
 
-    /* TABLE NUMBER INPUT */
     .table-number-input {
       display: flex;
       align-items: center;
@@ -288,6 +274,7 @@
     .action-buttons {
       display: flex;
       gap: 14px;
+      margin-left: auto;
     }
     .btn-glass {
       background: var(--bg-card);
@@ -636,10 +623,10 @@
     @media (max-width: 800px) {
       .order-section { position: static; margin-top: 20px; }
       .navbar { flex-direction: column; gap: 15px; }
-      .table-bar { justify-content: center; margin-top: 10px; }
+      .table-bar { justify-content: center; margin-top: 10px; flex-direction: column; align-items: stretch; }
       .table-number-input { width: 100%; justify-content: center; }
       .customer-name-input { width: 100%; justify-content: center; }
-      .action-buttons { width: 100%; justify-content: center; }
+      .action-buttons { width: 100%; justify-content: center; margin-left: 0; }
     }
 
     /* Music control button */
@@ -694,16 +681,14 @@
     </div>
   </div>
 
+  <!-- TABLE BAR: SCAN badge removed, name/table left aligned, action buttons right -->
   <div class="table-bar">
-    <div class="table-badge"><i class="fas fa-qrcode"></i> SCAN TO ORDER</div>
-
     <div class="customer-name-input">
       <label for="customerNameInput"><i class="fas fa-user"></i> NAME</label>
       <input type="text" id="customerNameInput" placeholder="Enter your name" maxlength="40" autocomplete="off">
       <span class="name-error" id="nameError">⚠️ Please enter your name</span>
     </div>
     
-    <!-- TABLE NUMBER INPUT with updated error message -->
     <div class="table-number-input">
       <label for="tableNumberInput"><i class="fas fa-hashtag"></i> TABLE</label>
       <input type="number" id="tableNumberInput" placeholder="Enter table #" min="1" step="1">
@@ -993,18 +978,6 @@
   let currentAllergies = [];
   let searchQuery = "";
 
-  // Strictly checks and requires a real name instead of the default
-  function forceValidName(diner) {
-    while (!diner.name || diner.name.trim() === "" || diner.name === "Person 1") {
-      let customName = prompt(`Please enter a valid Customer Name for this person (Required):`);
-      if (customName && customName.trim() !== "") {
-        diner.name = customName.trim();
-        renderAll();
-        break;
-      }
-    }
-  }
-
   // ============ CUSTOMER NAME (required before ordering) ============
   function getCustomerName() {
     const input = document.getElementById('customerNameInput');
@@ -1078,19 +1051,6 @@
     return true;
   }
 
-  function showTableError(show) {
-    // Kept for compatibility (not used anymore, but harmless)
-    const errorEl = document.getElementById('tableError');
-    const input = document.getElementById('tableNumberInput');
-    if (show) {
-      errorEl.classList.add('show');
-      input.style.borderBottom = '2px solid #ff4444';
-    } else {
-      errorEl.classList.remove('show');
-      input.style.borderBottom = 'none';
-    }
-  }
-
   function showToast(msg) { let t=document.querySelector('.toast'); if(t) t.remove(); let div=document.createElement('div'); div.className='toast'; div.innerHTML=msg; document.body.appendChild(div); setTimeout(()=>div.remove(),2500); }
 
   function isItemVisible(item) {
@@ -1130,7 +1090,6 @@
       if (!btn.disabled) btn.addEventListener('click', () => {
         if (!requireOrderDetails()) return;
         const activeDiner = diners.find(d => d.id === activeDinerId);
-        forceValidName(activeDiner);
         const found = beverageData.find(i => i.id === parseInt(btn.dataset.id));
         if(found && found.inStock) addItemToActiveDiner(found); else showToast("UNAVAILABLE");
       });
@@ -1236,7 +1195,16 @@
     let orderExists = false;
     for (let i = 0; i < diners.length; i++) {
       if (diners[i].items.length > 0) {
-        forceValidName(diners[i]);
+        // Make sure diner has a valid name (not "Person 1" without custom name)
+        if (diners[i].name === "Person 1" || diners[i].name.trim() === "") {
+          let customName = prompt(`Please enter a name for ${diners[i].name} (Required):`);
+          if (customName && customName.trim() !== "") {
+            diners[i].name = customName.trim();
+          } else {
+            showToast("⚠️ Please enter a valid name for all diners with orders!");
+            return;
+          }
+        }
         orderExists = true;
       }
     }
@@ -1278,7 +1246,6 @@
       const activeDiner = diners.find(d=>d.id===activeDinerId);
       document.getElementById("scanResult").innerHTML=`🤖 RECOGNIZED: ${rand.name}<br><button id="confirmAddScan" class="btn-primary" style="margin-top:8px;">ADD TO ${activeDiner?.name}</button>`;
       document.getElementById("confirmAddScan")?.addEventListener("click",()=>{
-        forceValidName(activeDiner);
         addItemToActiveDiner(rand);
         closeModal();
       });
